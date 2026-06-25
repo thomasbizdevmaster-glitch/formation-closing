@@ -3,501 +3,783 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Le Cerveau du Prospect — Module Neurosciences</title>
+<title>Le Cerveau du Prospect</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700&display=swap');
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --gold:#B8922A;--gold-light:#E8D59A;--gold-bg:#FBF5E8;
-  --navy:#1A2A3A;--navy-mid:#2C3E50;--slate:#475569;--slate-light:#94A3B8;
-  --border:#E2E8F0;--white:#fff;--green:#0F7A62;--green-bg:#E8F6F2;
+  --noir:#0A0A0A;
+  --noir-card:#141414;
+  --noir-mid:#1E1E1E;
+  --or:#C9A84C;
+  --or-pale:#E8D49A;
+  --or-bg:rgba(201,168,76,0.08);
+  --ivoire:#F5F0E8;
+  --ivoire-mid:#EDE7D9;
+  --blanc:#FFFFFF;
+  --gris:#888880;
+  --gris-light:#555550;
+  --vert:#2A6B4F;
+  --vert-bg:rgba(42,107,79,0.1);
 }
-body{font-family:'Inter',sans-serif;background:#0F1E2D;color:var(--white);min-height:100vh;-webkit-font-smoothing:antialiased}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--noir);color:var(--ivoire);min-height:100vh;-webkit-font-smoothing:antialiased;line-height:1.6}
 
-/* LOGIN */
-#login-screen{
-  position:fixed;inset:0;background:#0F1E2D;
-  display:flex;align-items:center;justify-content:center;
-  z-index:1000;padding:24px;
-}
-.login-card{
-  background:rgba(255,255,255,0.04);border:1px solid rgba(184,146,42,0.25);
-  border-radius:16px;padding:40px 36px;max-width:400px;width:100%;text-align:center;
-}
-.login-logo{
-  font-family:'DM Serif Display',serif;font-size:22px;color:var(--white);margin-bottom:6px;
-}
-.login-sub{font-size:12px;color:var(--slate-light);letter-spacing:2px;text-transform:uppercase;margin-bottom:32px;}
-.login-label{font-size:12px;color:var(--slate-light);text-align:left;margin-bottom:8px;font-weight:500;}
-.login-input{
-  width:100%;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);
-  border-radius:8px;padding:12px 16px;font-size:16px;color:var(--white);
-  text-align:center;letter-spacing:4px;font-weight:700;outline:none;
-  transition:border 0.2s;margin-bottom:16px;
-}
-.login-input:focus{border-color:var(--gold);}
-.login-btn{
-  width:100%;background:var(--gold);color:var(--white);font-size:14px;font-weight:600;
-  padding:13px;border-radius:8px;border:none;cursor:pointer;transition:background 0.2s;
-}
-.login-btn:hover{background:#A07820;}
-.login-error{font-size:12px;color:#E57373;margin-top:12px;display:none;}
-.login-note{font-size:11px;color:rgba(255,255,255,0.25);margin-top:20px;line-height:1.6;}
+/* ── LOGIN ── */
+#login{position:fixed;inset:0;background:var(--noir);display:flex;align-items:center;justify-content:center;z-index:999;padding:24px}
+.login-wrap{max-width:380px;width:100%;text-align:center}
+.login-mark{font-family:'Playfair Display',serif;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--or);margin-bottom:40px;display:block}
+.login-title{font-family:'Playfair Display',serif;font-size:32px;color:var(--blanc);line-height:1.2;margin-bottom:8px}
+.login-title em{font-style:italic;color:var(--or)}
+.login-sub{font-size:13px;color:var(--gris);margin-bottom:40px;line-height:1.7}
+.login-field label{display:block;font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--gris);margin-bottom:10px;text-align:left}
+.login-field input{width:100%;background:var(--noir-mid);border:1px solid #2A2A2A;border-radius:6px;padding:14px 18px;font-size:18px;color:var(--blanc);text-align:center;letter-spacing:6px;font-weight:600;outline:none;transition:border 0.2s;font-family:'Inter',sans-serif}
+.login-field input:focus{border-color:var(--or)}
+.login-btn{width:100%;margin-top:14px;background:var(--or);color:var(--noir);font-size:13px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:14px;border-radius:6px;border:none;cursor:pointer;transition:opacity 0.2s;font-family:'Inter',sans-serif}
+.login-btn:hover{opacity:0.85}
+.login-err{font-size:12px;color:#E07070;margin-top:12px;display:none}
+.login-hint{font-size:11px;color:var(--gris-light);margin-top:20px;line-height:1.7}
 
-/* APP */
-#app{display:none;}
+/* ── APP ── */
+#app{display:none}
 
-/* HEADER */
-.header{
-  background:rgba(15,30,45,0.95);border-bottom:1px solid rgba(184,146,42,0.15);
-  padding:14px 24px;display:flex;align-items:center;justify-content:space-between;
-  position:sticky;top:0;z-index:100;backdrop-filter:blur(10px);
-}
-.header-title{font-family:'DM Serif Display',serif;font-size:16px;color:var(--white);}
-.header-title span{color:var(--gold);}
-.header-progress{font-size:11px;color:var(--slate-light);}
-.progress-bar-wrap{width:100px;height:3px;background:rgba(255,255,255,0.1);border-radius:2px;margin-top:4px;}
-.progress-bar-fill{height:100%;background:var(--gold);border-radius:2px;transition:width 0.3s;}
+/* ── TOPBAR ── */
+.topbar{position:sticky;top:0;z-index:100;background:rgba(10,10,10,0.96);backdrop-filter:blur(12px);border-bottom:1px solid #1E1E1E;padding:0 32px;display:flex;align-items:center;justify-content:space-between;height:58px}
+.topbar-brand{font-family:'Playfair Display',serif;font-size:15px;color:var(--blanc)}
+.topbar-brand span{color:var(--or);font-style:italic}
+.topbar-right{display:flex;align-items:center;gap:20px}
+.prog-label{font-size:11px;color:var(--gris);letter-spacing:1px}
+.prog-track{width:120px;height:2px;background:#222;border-radius:2px}
+.prog-fill{height:100%;background:var(--or);border-radius:2px;transition:width 0.4s}
 
-/* LAYOUT */
-.layout{display:flex;min-height:calc(100vh - 57px);}
+/* ── LAYOUT ── */
+.layout{display:flex;min-height:calc(100vh - 58px)}
 
-/* SIDEBAR */
-.sidebar{
-  width:260px;flex-shrink:0;background:rgba(255,255,255,0.03);
-  border-right:1px solid rgba(255,255,255,0.06);
-  padding:20px 0;overflow-y:auto;max-height:calc(100vh - 57px);
-  position:sticky;top:57px;
-}
-.sidebar-section{padding:0 16px;margin-bottom:6px;}
-.sidebar-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--slate-light);padding:0 8px;margin-bottom:8px;}
-.sidebar-item{
-  display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:8px;
-  cursor:pointer;transition:background 0.15s;margin-bottom:2px;
-}
-.sidebar-item:hover{background:rgba(255,255,255,0.05);}
-.sidebar-item.active{background:rgba(184,146,42,0.12);border:1px solid rgba(184,146,42,0.2);}
-.sidebar-num{
-  width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,0.08);
-  font-size:10px;font-weight:700;color:var(--slate-light);
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;
-}
-.sidebar-item.active .sidebar-num{background:var(--gold);color:var(--white);}
-.sidebar-item.done .sidebar-num{background:var(--green);color:var(--white);}
-.sidebar-text{font-size:12px;color:rgba(255,255,255,0.6);line-height:1.4;}
-.sidebar-item.active .sidebar-text{color:var(--white);font-weight:500;}
-.sidebar-check{font-size:10px;color:var(--green);margin-left:auto;display:none;}
-.sidebar-item.done .sidebar-check{display:block;}
+/* ── SIDEBAR ── */
+.sidebar{width:240px;flex-shrink:0;background:var(--noir-card);border-right:1px solid #1A1A1A;padding:28px 0;position:sticky;top:58px;height:calc(100vh - 58px);overflow-y:auto}
+.sb-section{padding:0 20px;margin-bottom:4px}
+.sb-label{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gris-light);padding:0 8px;margin-bottom:10px;margin-top:16px;display:block}
+.sb-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:6px;cursor:pointer;transition:all 0.15s;margin-bottom:2px;border:1px solid transparent}
+.sb-item:hover{background:var(--noir-mid)}
+.sb-item.active{background:var(--or-bg);border-color:rgba(201,168,76,0.2)}
+.sb-dot{width:24px;height:24px;border-radius:50%;background:#222;border:1px solid #333;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:600;color:var(--gris);flex-shrink:0;transition:all 0.2s}
+.sb-item.active .sb-dot{background:var(--or);border-color:var(--or);color:var(--noir)}
+.sb-item.done .sb-dot{background:var(--vert);border-color:var(--vert);color:var(--blanc)}
+.sb-text{font-size:12px;color:var(--gris);line-height:1.35;transition:color 0.15s}
+.sb-item.active .sb-text{color:var(--ivoire);font-weight:500}
+.sb-item.done .sb-text{color:var(--gris)}
+.sb-check{margin-left:auto;font-size:10px;color:var(--vert);display:none}
+.sb-item.done .sb-check{display:block}
 
-/* MAIN */
-.main{flex:1;padding:32px 40px;max-width:800px;}
+/* ── MAIN ── */
+.main{flex:1;padding:48px 56px;max-width:860px}
+@media(max-width:900px){.main{padding:28px 20px}.sidebar{display:none}}
 
-/* PILLAR CARD */
-.pillar-header{margin-bottom:28px;}
-.pillar-tag{
-  display:inline-block;font-size:10px;font-weight:700;letter-spacing:2px;
-  text-transform:uppercase;color:var(--gold);border:1px solid rgba(184,146,42,0.3);
-  border-radius:4px;padding:4px 10px;margin-bottom:14px;
-}
-.pillar-title{font-family:'DM Serif Display',serif;font-size:clamp(24px,4vw,34px);color:var(--white);line-height:1.2;margin-bottom:12px;}
-.pillar-intro{
-  font-size:14px;color:rgba(255,255,255,0.65);line-height:1.85;
-  border-left:2px solid rgba(184,146,42,0.3);padding-left:16px;
-}
+/* ── INTRO ── */
+.intro-eyebrow{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--or);margin-bottom:20px;display:block}
+.intro-h1{font-family:'Playfair Display',serif;font-size:clamp(32px,5vw,52px);color:var(--blanc);line-height:1.15;margin-bottom:16px}
+.intro-h1 em{font-style:italic;color:var(--or)}
+.intro-p{font-size:15px;color:var(--gris);line-height:1.85;max-width:600px;margin-bottom:40px}
+.pillars-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:40px}
+.pillar-preview{background:var(--noir-card);border:1px solid #1E1E1E;border-radius:8px;padding:14px 16px;cursor:pointer;transition:all 0.2s}
+.pillar-preview:hover{border-color:rgba(201,168,76,0.3)}
+.pp-num{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--or);margin-bottom:5px}
+.pp-title{font-size:13px;color:var(--ivoire-mid);line-height:1.4}
+.start-btn{display:inline-flex;align-items:center;gap:10px;background:var(--or);color:var(--noir);font-size:12px;font-weight:600;letter-spacing:2px;text-transform:uppercase;padding:14px 32px;border-radius:6px;border:none;cursor:pointer;transition:opacity 0.2s;font-family:'Inter',sans-serif}
+.start-btn:hover{opacity:0.85}
+.start-btn svg{width:14px;height:14px}
 
-/* POINTS */
-.points{display:flex;flex-direction:column;gap:12px;margin:24px 0;}
-.point{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:16px 18px;}
-.point-bold{font-size:13px;font-weight:600;color:var(--gold);margin-bottom:5px;}
-.point-text{font-size:13px;color:rgba(255,255,255,0.65);line-height:1.7;}
+/* ── PILLAR PAGE ── */
+.pillar-eyebrow{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--or);margin-bottom:14px;display:block}
+.pillar-title{font-family:'Playfair Display',serif;font-size:clamp(26px,4vw,40px);color:var(--blanc);line-height:1.2;margin-bottom:24px}
 
-/* BLOCKS */
-.block{border-radius:10px;padding:16px 18px;margin:16px 0;}
-.block-ex{background:rgba(15,122,98,0.12);border:1px solid rgba(15,122,98,0.25);}
-.block-gold{background:rgba(184,146,42,0.08);border:1px solid rgba(184,146,42,0.25);}
-.block-label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px;}
-.block-ex .block-label{color:var(--green);}
-.block-gold .block-label{color:var(--gold);}
-.block-text{font-size:13px;line-height:1.8;color:rgba(255,255,255,0.7);}
+/* ANALOGY BLOCK */
+.analogy{background:var(--noir-mid);border-left:3px solid var(--or);border-radius:0 8px 8px 0;padding:20px 24px;margin-bottom:28px}
+.analogy-label{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--or);margin-bottom:8px}
+.analogy-text{font-size:14px;color:var(--ivoire);line-height:1.85;font-style:italic}
 
-/* EXERCISE */
-.exercise-section{
-  background:rgba(184,146,42,0.06);border:1px solid rgba(184,146,42,0.2);
-  border-radius:12px;padding:22px;margin-top:28px;
-}
-.exercise-title{font-size:13px;font-weight:700;color:var(--gold);margin-bottom:12px;text-transform:uppercase;letter-spacing:1px;}
-.exercise-text{font-size:13px;color:rgba(255,255,255,0.65);line-height:1.8;margin-bottom:16px;}
-.exercise-check-wrap{display:flex;align-items:center;gap:10px;cursor:pointer;}
-.exercise-check{
-  width:20px;height:20px;border-radius:4px;border:1.5px solid rgba(184,146,42,0.5);
-  display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.2s;
-}
-.exercise-check.checked{background:var(--gold);border-color:var(--gold);}
-.exercise-check-label{font-size:13px;color:rgba(255,255,255,0.6);font-weight:500;}
+/* CONCEPT BLOCKS */
+.concepts{display:flex;flex-direction:column;gap:16px;margin-bottom:28px}
+.concept{background:var(--noir-card);border:1px solid #1E1E1E;border-radius:8px;padding:20px 22px}
+.concept-title{font-size:12px;font-weight:600;color:var(--or);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+.concept-text{font-size:14px;color:rgba(245,240,232,0.7);line-height:1.85}
+.concept-text strong{color:var(--ivoire);font-weight:500}
 
-/* NAV */
-.pillar-nav{display:flex;gap:12px;margin-top:36px;padding-top:24px;border-top:1px solid rgba(255,255,255,0.07);}
-.nav-btn{
-  padding:10px 20px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;
-  border:none;transition:all 0.2s;
-}
-.nav-prev{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.6);}
-.nav-prev:hover{background:rgba(255,255,255,0.1);}
-.nav-next{background:var(--gold);color:var(--white);}
-.nav-next:hover{background:#A07820;}
+/* KEY INSIGHT */
+.insight{background:var(--or-bg);border:1px solid rgba(201,168,76,0.2);border-radius:8px;padding:18px 22px;margin-bottom:28px}
+.insight-label{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--or);margin-bottom:8px}
+.insight-text{font-size:14px;color:var(--ivoire);line-height:1.8}
 
-/* INTRO SCREEN */
-.intro-screen{padding:0;}
-.intro-hero{
-  background:linear-gradient(135deg,rgba(184,146,42,0.08) 0%,transparent 60%);
-  border:1px solid rgba(184,146,42,0.15);border-radius:14px;padding:32px;margin-bottom:28px;
-}
-.intro-eyebrow{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:12px;}
-.intro-h1{font-family:'DM Serif Display',serif;font-size:clamp(26px,5vw,40px);color:var(--white);line-height:1.2;margin-bottom:14px;}
-.intro-h1 em{color:var(--gold);font-style:italic;}
-.intro-desc{font-size:14px;color:rgba(255,255,255,0.6);line-height:1.8;}
-.intro-pillars{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:28px;}
-.intro-pillar{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:12px 14px;}
-.intro-pillar-num{font-size:10px;font-weight:700;color:var(--gold);margin-bottom:4px;}
-.intro-pillar-title{font-size:12px;color:rgba(255,255,255,0.7);line-height:1.4;}
-.start-btn{
-  display:inline-block;background:var(--gold);color:var(--white);font-size:15px;font-weight:600;
-  padding:14px 36px;border-radius:8px;border:none;cursor:pointer;transition:background 0.2s;
-}
-.start-btn:hover{background:#A07820;}
+/* EXERCISES */
+.exercises{margin-top:36px}
+.exercises-title{font-family:'Playfair Display',serif;font-size:20px;color:var(--blanc);margin-bottom:20px;padding-bottom:12px;border-bottom:1px solid #1E1E1E}
+.exercise{background:var(--noir-card);border:1px solid #1E1E1E;border-radius:10px;overflow:hidden;margin-bottom:12px}
+.ex-header{padding:16px 20px;cursor:pointer;display:flex;align-items:center;gap:14px;transition:background 0.15s}
+.ex-header:hover{background:var(--noir-mid)}
+.ex-num{width:28px;height:28px;border-radius:50%;background:var(--or-bg);border:1px solid rgba(201,168,76,0.3);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:var(--or);flex-shrink:0}
+.ex-title{font-size:13px;font-weight:500;color:var(--ivoire);flex:1}
+.ex-type{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gris);background:#1E1E1E;padding:3px 8px;border-radius:3px;flex-shrink:0}
+.ex-arrow{font-size:10px;color:var(--gris);transition:transform 0.2s;flex-shrink:0}
+.ex-body{padding:0 20px 20px;display:none}
+.ex-body.open{display:block}
+.ex-desc{font-size:13px;color:rgba(245,240,232,0.65);line-height:1.85;margin-bottom:14px;padding-top:4px}
+.ex-steps{list-style:none;display:flex;flex-direction:column;gap:8px}
+.ex-steps li{display:flex;gap:10px;font-size:13px;color:rgba(245,240,232,0.7);line-height:1.7}
+.ex-steps li::before{content:counter(step);counter-increment:step;width:20px;height:20px;border-radius:50%;background:#222;border:1px solid #333;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;color:var(--or);flex-shrink:0;margin-top:2px}
+.ex-steps{counter-reset:step}
+.ex-goal{margin-top:14px;background:var(--vert-bg);border:1px solid rgba(42,107,79,0.25);border-radius:6px;padding:12px 16px;font-size:12px;color:rgba(245,240,232,0.6);line-height:1.7}
+.ex-goal strong{color:rgba(245,240,232,0.85);font-weight:500}
+
+/* DONE BUTTON */
+.done-wrap{margin-top:32px;padding-top:24px;border-top:1px solid #1E1E1E;display:flex;align-items:center;gap:14px}
+.done-btn{display:inline-flex;align-items:center;gap:8px;background:transparent;border:1px solid #2A2A2A;color:var(--gris);font-size:12px;font-weight:500;letter-spacing:1px;padding:11px 22px;border-radius:6px;cursor:pointer;transition:all 0.2s;font-family:'Inter',sans-serif}
+.done-btn:hover{border-color:var(--or);color:var(--or)}
+.done-btn.checked{background:var(--or);border-color:var(--or);color:var(--noir);font-weight:600}
+.done-hint{font-size:12px;color:var(--gris-light)}
+
+/* NAV BUTTONS */
+.pillar-nav{display:flex;gap:10px;margin-top:36px}
+.nav-btn{padding:11px 22px;border-radius:6px;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;cursor:pointer;border:none;transition:all 0.2s;font-family:'Inter',sans-serif}
+.nav-prev{background:transparent;border:1px solid #2A2A2A;color:var(--gris)}
+.nav-prev:hover{border-color:#444;color:var(--ivoire)}
+.nav-next{background:var(--or);color:var(--noir)}
+.nav-next:hover{opacity:0.85}
 
 /* COMPLETION */
-.completion{
-  background:rgba(15,122,98,0.1);border:1px solid rgba(15,122,98,0.25);
-  border-radius:12px;padding:28px;margin-top:28px;text-align:center;display:none;
-}
-.completion h3{font-family:'DM Serif Display',serif;font-size:22px;color:var(--white);margin-bottom:8px;}
-.completion p{font-size:13px;color:rgba(255,255,255,0.6);line-height:1.7;margin-bottom:20px;}
-.completion-upsell{
-  background:rgba(184,146,42,0.08);border:1px solid rgba(184,146,42,0.25);
-  border-radius:10px;padding:18px;margin-top:16px;
-}
-.completion-upsell p{font-size:13px;color:rgba(255,255,255,0.7);margin-bottom:14px;}
-.upsell-btn{
-  display:inline-block;background:var(--gold);color:var(--white);
-  font-size:13px;font-weight:600;padding:11px 28px;border-radius:7px;
-  text-decoration:none;
-}
+.completion{background:var(--noir-card);border:1px solid rgba(201,168,76,0.2);border-radius:12px;padding:36px;text-align:center;margin-top:32px;display:none}
+.completion h3{font-family:'Playfair Display',serif;font-size:28px;color:var(--blanc);margin-bottom:12px}
+.completion p{font-size:14px;color:var(--gris);line-height:1.8;max-width:480px;margin:0 auto 28px}
+.upsell-box{background:var(--or-bg);border:1px solid rgba(201,168,76,0.2);border-radius:8px;padding:22px;margin-top:16px}
+.upsell-box p{font-size:13px;color:rgba(245,240,232,0.7);margin-bottom:16px;line-height:1.75}
+.upsell-btn{display:inline-block;background:var(--or);color:var(--noir);font-size:12px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;padding:12px 28px;border-radius:6px;text-decoration:none;transition:opacity 0.2s}
+.upsell-btn:hover{opacity:0.85}
 
-@media(max-width:700px){
-  .sidebar{display:none;}
-  .main{padding:20px;}
-  .intro-pillars{grid-template-columns:1fr;}
-}
+/* SCROLLBAR */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--noir)}
+::-webkit-scrollbar-thumb{background:#2A2A2A;border-radius:4px}
 </style>
 </head>
 <body>
 
 <!-- LOGIN -->
-<div id="login-screen">
-  <div class="login-card">
-    <div class="login-logo">Le Cerveau du Prospect</div>
-    <div class="login-sub">Module Neurosciences</div>
-    <div class="login-label">Code d'accès</div>
-    <input type="text" class="login-input" id="code-input" placeholder="• • • • • • •" maxlength="10" autocomplete="off">
-    <button class="login-btn" onclick="checkCode()">Accéder au module</button>
-    <div class="login-error" id="login-error">Code incorrect. Vérifie ton email de confirmation.</div>
-    <div class="login-note">Tu as reçu ton code par email après ton achat.<br>Problème ? Contacte thomas.bizdevmaster@gmail.com</div>
+<div id="login">
+  <div class="login-wrap">
+    <span class="login-mark">Formation Closing · Thomas</span>
+    <h1 class="login-title">Le Cerveau<br>du <em>Prospect</em></h1>
+    <p class="login-sub">Module Neurosciences — 9 piliers pour comprendre ce qui se passe vraiment dans la tête de ton prospect.</p>
+    <div class="login-field">
+      <label>Code d'accès</label>
+      <input type="text" id="code-inp" placeholder="••••••••" maxlength="12" autocomplete="off" onkeydown="if(event.key==='Enter')login()">
+    </div>
+    <button class="login-btn" onclick="login()">Accéder au module</button>
+    <div class="login-err" id="login-err">Code incorrect — vérifie ton email de confirmation.</div>
+    <p class="login-hint">Tu as reçu ton code par email après ton achat.<br>Problème ? thomas.bizdevmaster@gmail.com</p>
   </div>
 </div>
 
 <!-- APP -->
 <div id="app">
-  <div class="header">
-    <div class="header-title">Le Cerveau du <span>Prospect</span></div>
-    <div style="text-align:right">
-      <div class="header-progress" id="progress-text">0 / 9 piliers</div>
-      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="progress-bar" style="width:0%"></div></div>
+  <div class="topbar">
+    <div class="topbar-brand">Le Cerveau du <span>Prospect</span></div>
+    <div class="topbar-right">
+      <span class="prog-label" id="prog-label">0 / 9</span>
+      <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
     </div>
   </div>
-
   <div class="layout">
-    <div class="sidebar" id="sidebar">
-      <div class="sidebar-section">
-        <div class="sidebar-label">Navigation</div>
-        <div class="sidebar-item active" onclick="showScreen('intro')" id="nav-intro">
-          <div class="sidebar-num">⌂</div>
-          <div class="sidebar-text">Introduction</div>
+    <div class="sidebar">
+      <div class="sb-section">
+        <span class="sb-label">Navigation</span>
+        <div class="sb-item active" id="nav-intro" onclick="showIntro()">
+          <div class="sb-dot">⌂</div>
+          <div class="sb-text">Introduction</div>
         </div>
       </div>
-      <div class="sidebar-section">
-        <div class="sidebar-label">Les 9 Piliers</div>
-        <div id="nav-items"></div>
+      <div class="sb-section">
+        <span class="sb-label">Les 9 Piliers</span>
+        <div id="nav-list"></div>
       </div>
     </div>
-
-    <div class="main" id="main-content"></div>
+    <div class="main" id="main"></div>
   </div>
 </div>
 
 <script>
 const CODE = 'NEURO10';
 
-const PILLARS = [
+const P = [
   {
-    num:'01', tag:'Pilier 1 — Cerveau émotionnel',
+    tag:'Pilier 1 — Cerveau émotionnel',
     title:"L'amygdale décide en premier",
-    intro:"Imagine que ton cerveau est une maison à deux étages. Au rez-de-chaussée, il y a un gardien — rapide, instinctif, émotionnel. À l'étage, il y a un analyste — lent, logique, rationnel. Ce que la plupart des closers ne savent pas : le gardien du rez-de-chaussée décide si la porte s'ouvre ou se ferme. L'analyste du dessus arrive après — uniquement pour justifier ce que le gardien a déjà tranché.",
-    points:[
-      {b:"L'amygdale — le gardien", t:"C'est une petite structure au centre du cerveau, de la taille d'une amande. Son seul rôle : détecter en quelques millisecondes si une situation est une menace ou une opportunité. Elle ne réfléchit pas — elle réagit. Sur un appel, elle évalue ton prospect dès les premières secondes : 'Est-ce que cette personne est en position de force ou de besoin ?' La réponse ouvre ou ferme l'accès. Si elle ferme, aucun argument ne passe."},
-      {b:"Le cortex préfrontal — l'analyste", t:"C'est la partie avant du cerveau, juste derrière le front. C'est là que se passent la logique, l'analyse, la prise de recul. Mais voilà ce qui change tout : il entre en jeu APRÈS l'amygdale. Antonio Damasio l'a démontré cliniquement — des patients avec des lésions du cortex préfrontal pouvaient analyser parfaitement une situation, mais étaient incapables de décider. La conclusion : sans émotion, pas de décision. La logique ne convainc pas. Elle valide."},
-      {b:"Le cortisol — ce que ton corps trahit", t:"Le cortisol c'est l'hormone du stress. Quand tu es stressé — besoin de commission, peur du rejet — ton corps en libère massivement. Résultat concret : ta voix change légèrement de rythme, tes silences sont moins stables, ta posture se referme. Tu ne le vois pas. Ton prospect ne l'analyse pas consciemment. Mais l'amygdale de ton prospect le capte en temps réel. C'est pour ça qu'un closer en mode besoin perd avant d'avoir parlé."},
-      {b:"Système 1 et Système 2 — le modèle de Kahneman", t:"Daniel Kahneman, Prix Nobel d'économie, a formalisé ça : Système 1 = rapide, automatique, émotionnel (l'amygdale). Système 2 = lent, analytique, rationnel (le cortex préfrontal). Le Système 1 décide. Le Système 2 justifie. Quand tu argumentes longuement, tu t'adresses au mauvais système. La décision est déjà prise — tu l'as gagnée ou perdue bien avant."},
+    analogy:"Imagine que ton cerveau est une maison avec deux personnes dedans. Au rez-de-chaussée, il y a un gardien — ultra rapide, qui décide en une fraction de seconde si quelqu'un entre ou pas. À l'étage, il y a un analyste — brillant, logique, mais lent. Ce que personne ne te dit : le gardien prend sa décision <em>avant</em> que l'analyste ait même ouvert les yeux. Sur un appel de closing, ce gardien c'est l'amygdale de ton prospect.",
+    concepts:[
+      {t:"L'amygdale — le gardien",c:"C'est une toute petite zone du cerveau, de la taille d'une amande, enfouie au centre. Elle ne réfléchit pas. Elle scanne. En quelques millisecondes, elle pose une seule question : <strong>menace ou sécurité ?</strong> Si elle détecte de la nervosité, du besoin, de la pression chez toi — elle ferme la porte. Aucun argument ne passera après ça."},
+      {t:"Le cortex préfrontal — l'analyste",c:"C'est la partie avant de ton cerveau, juste derrière le front. C'est là que tu analyses, raisonnes, pèses le pour et le contre. <strong>Mais voilà le problème : il entre en jeu après l'amygdale.</strong> Le neurologue Antonio Damasio a soigné des patients avec des lésions dans cette zone — ils pouvaient analyser parfaitement une situation mais étaient incapables de décider. Conclusion : sans émotion, pas de décision."},
+      {t:"Le cortisol — ce que ton corps trahit",c:"Le cortisol, c'est l'hormone du stress. Quand tu arrives sur un appel avec une peur du rejet ou un besoin de commission, ton corps en libère. Résultat : ta voix devient légèrement moins stable, tes silences sont moins confortables, ta posture se ferme. <strong>Ton prospect ne l'analyse pas consciemment — mais l'amygdale le lit en temps réel.</strong> Un closer stressé perd avant d'avoir parlé."},
+      {t:"Système 1 et Système 2 — le modèle de Kahneman",c:"Daniel Kahneman, Prix Nobel d'économie, a formalisé ça en deux systèmes. <strong>Système 1</strong> = l'amygdale. Rapide, automatique, émotionnel. Décide en millisecondes. <strong>Système 2</strong> = le cortex préfrontal. Lent, logique, analytique. N'entre en jeu que pour <em>justifier</em> ce que le Système 1 a déjà décidé. Quand tu argumentes longuement, tu parles au mauvais système."},
     ],
-    ex:{l:"Application directe", t:"'Qu'est-ce que tu ne vivrais plus si dans 6 mois rien n'a changé ?' → Cette question active l'amygdale sur la perte, pas sur le gain. Kahneman l'a mesuré : perdre fait deux fois plus mal que gagner fait du bien. C'est 10x plus puissant qu'une promesse. La présentation de l'offre ne déclenche pas la décision — elle la confirme ou l'infirme."},
-    gold:{l:"Bannir absolument", t:"'Imagine ce que tu peux gagner avec notre programme.' → Remplace par : 'Qu'est-ce que ça te coûte de rester là où tu es ?' Le prospect décide avec ses émotions. Ton rôle n'est pas de convaincre son analyste — c'est de créer les conditions pour que son gardien dise oui."}
+    insight:"Le prospect n'achète pas avec sa logique. Il achète avec ses émotions — et il justifie avec sa logique. Si tu rates les premières secondes émotionnelles, aucun argument ne rattrapera ça.",
+    exercises:[
+      {
+        num:"01", title:"L'écoute du gardien", type:"Observation",
+        desc:"Cet exercice t'apprend à détecter, en temps réel, si l'amygdale de ton prospect est en mode menace ou sécurité.",
+        steps:[
+          "Avant ton prochain appel, note dans un carnet : 'Dans quel état est mon prospect à la minute 2 ?'",
+          "Pendant l'appel, observe : est-ce qu'il pose des questions ou il répond laconiquement ? Sa voix est ouverte ou fermée ? Il dit 'je vois' ou il dit 'ouais' ?",
+          "À la minute 3, décide : gardien ouvert ou fermé ? Et adapte ton rythme en conséquence.",
+          "Après l'appel, note ce que tu as observé. Avec le temps, tu vas développer un radar."
+        ],
+        goal:"<strong>Objectif :</strong> Faire 5 appels avec cette grille d'observation. Tu vas commencer à voir des patterns que tu ne voyais pas avant."
+      },
+      {
+        num:"02", title:"Le scan de ton propre état", type:"Préparation",
+        desc:"Ton amygdale influence l'amygdale de ton prospect. Cet exercice te permet de détecter ton propre niveau de cortisol avant de décrocher.",
+        steps:[
+          "2 minutes avant chaque appel, pose-toi ces 3 questions : 'Est-ce que j'ai besoin que cet appel se passe bien ?' · 'Est-ce que j'ai peur de quelque chose sur cet appel ?' · 'Est-ce que je suis là pour servir ou pour closer ?'",
+          "Note honnêtement ton niveau de stress de 1 à 10.",
+          "Si tu es au-dessus de 6 : fais 6 respirations lentes (5 secondes d'inspiration, 5 secondes d'expiration) avant de décrocher.",
+          "Après l'appel, corrèle ton niveau de stress avec le résultat."
+        ],
+        goal:"<strong>Objectif :</strong> Sur 10 appels, tu vas découvrir la corrélation exacte entre ton état interne et tes résultats. C'est souvent révélateur."
+      },
+      {
+        num:"03", title:"La question de la perte", type:"Application terrain",
+        desc:"Kahneman l'a mesuré : perdre fait deux fois plus mal que gagner fait du bien. Cet exercice t'apprend à activer l'amygdale sur la perte — pas sur le gain.",
+        steps:[
+          "Sur ton prochain appel, bannis cette phrase : 'Imagine ce que tu pourrais accomplir avec notre programme.'",
+          "Remplace-la par : 'Qu'est-ce que ça te coûte concrètement de rester là où tu es aujourd'hui — en temps, en argent, en opportunités ratées ?'",
+          "Laisse un silence de 3 secondes après cette question. Laisse l'amygdale travailler.",
+          "Note la différence de réaction entre les deux formulations."
+        ],
+        goal:"<strong>Objectif :</strong> Mesure le taux de réponses émotionnelles (soupirs, pauses, 'ouais t'as raison') avec cette question vs tes anciennes formulations."
+      }
+    ]
   },
   {
-    num:'02', tag:'Pilier 2 — Dettes émotionnelles',
-    title:"Les dettes émotionnelles du closer",
-    intro:"Le filtre le plus dangereux sur un appel c'est souvent le cerveau du closer lui-même. Les dettes émotionnelles — tout ce qui n'est pas encore réglé en soi — coûtent cher en performance.<br><br><strong>Ce qui se passe dans ton cerveau quand tu as 'besoin' de closer</strong><br>Quand tu arrives sur un appel avec une pression — besoin de commission, peur du rejet, attachement au résultat — ton amygdale s'active. Elle libère du cortisol (hormone du stress) et réduit l'activité du cortex préfrontal. Résultat concret : tu écoutes moins bien, tu remplis les silences par nervosité, tu sur-expliques face aux objections. Ton système nerveux sympathique est dominant — et ton prospect le capte via les 12 variables du Pilier 6.<br><br><strong>La neurochimie de la hiérarchie sociale</strong><br>Le rapport testostérone/cortisol détermine la posture perçue. Un ratio élevé (testostérone haute, cortisol bas) = posture haute, voix stable, tolérance au silence. Un ratio faible (cortisol dominant) = posture basse, voix qui monte, malaise face aux objections. Ce ratio est lisible — inconsciemment — par l'amygdale de ton prospect en quelques secondes. Quand tes dettes émotionnelles sont actives, ton cerveau gère sa propre douleur pendant que tu es censé gérer celle du prospect.",
-    points:[
-      {b:"Besoin d'être validé", t:"Cherche à être AIMÉ plutôt qu'UTILE — perd sa posture immédiatement."},
-      {b:"Peur de l'échec / du rejet", t:"Surexplique, évite les silences, cherche des signaux de validation constamment."},
-      {b:"Besoin de la commission", t:"Mode besoin activé — détecté immédiatement par l'amygdale du prospect. Neurochimie : cortisol élevé + testostérone basse = hiérarchie sociale inversée. Celui qui a besoin perd le pouvoir."},
+    tag:'Pilier 2 — Dettes émotionnelles',
+    title:"Les dettes du closer",
+    analogy:"Imagine que tu joues aux échecs avec quelqu'un — mais que dans ta tête, tu penses en même temps à une facture impayée, à une dispute de la veille, et à ce que tu vas manger ce soir. Tu peux encore jouer, mais tu joues avec la moitié de ton cerveau. C'est exactement ce qui se passe quand tu arrives sur un appel avec des 'dettes émotionnelles' non réglées.",
+    concepts:[
+      {t:"Qu'est-ce qu'une dette émotionnelle ?",c:"C'est tout ce qui occupe du 'espace mental' sans que tu t'en rendes compte : un besoin de validation, une peur du rejet, un attachement au résultat, une mauvaise expérience d'appel non digérée. <strong>Ton cerveau consacre de l'énergie à gérer ces dettes</strong> — et cette énergie est prise sur ta capacité d'écoute, d'adaptation et de présence."},
+      {t:"Le besoin de commission — la dette la plus courante",c:"Quand tu 'as besoin' de cet appel, quelque chose change dans ton système nerveux. Ton cortisol monte, ta testostérone descend. Neurochimiquement, tu passes en mode survie. <strong>Ton prospect le capte</strong> — pas forcément avec des mots, mais avec ses sens. La dynamique bascule : celui qui a besoin perd le pouvoir."},
+      {t:"La peur du rejet — la dette la plus silencieuse",c:"La peur du rejet active les mêmes zones du cerveau que la douleur physique. Des études d'imagerie cérébrale l'ont montré : se faire rejeter socialement et se faire blesser physiquement, c'est traité par les mêmes circuits neuronaux. <strong>Un closer qui a peur du 'non' va inconsciemment éviter de provoquer la décision</strong> — il tourne autour sans aller au fond."},
+      {t:"La bande passante cognitive",c:"Ton cerveau a une capacité limitée à traiter l'information en parallèle. Plus tu portes de dettes émotionnelles, moins tu as de 'bande passante' disponible pour vraiment écouter ton prospect. <strong>La paix intérieure n'est pas un luxe spirituel — c'est de la performance concrète.</strong>"},
     ],
-    ex:{l:"Ce que ça demande concrètement", t:"Identifier ses propres déclencheurs émotionnels avant chaque appel. Travailler ses blessures passées — la connaissance de soi est un outil de performance. Cohérence cardiaque entre les appels pour recharger sa batterie. Arriver sur chaque appel dans l'ordre : énergie → intention → adaptation."},
-    gold:null
+    insight:"Tu ne peux pas lire le cerveau de ton prospect si tu gères le tien en même temps. La préparation émotionnelle n'est pas optionnelle — c'est la base de tout le reste.",
+    exercises:[
+      {
+        num:"01", title:"L'inventaire des dettes", type:"Introspection",
+        desc:"Identifier tes dettes émotionnelles avant qu'elles sabotent tes appels.",
+        steps:[
+          "Prends 10 minutes et réponds honnêtement à ces questions : 'Qu'est-ce que j'ai besoin qu'il se passe sur cet appel pour me sentir bien ?' · 'Qu'est-ce que je crains qu'il dise ?' · 'Est-ce que j'ai une croyance sur ce profil de prospect ?'",
+          "Note chaque réponse sans la juger — elles sont toutes valables.",
+          "Pour chaque dette, demande-toi : 'Est-ce que ça appartient à cet appel ou à une expérience passée ?'",
+          "Mets de côté consciemment ce qui n'appartient pas à cet appel."
+        ],
+        goal:"<strong>Objectif :</strong> Faire cet inventaire avant tes 5 prochains appels importants. Tu vas découvrir des patterns sur tes dettes récurrentes."
+      },
+      {
+        num:"02", title:"Le protocole de détachement", type:"Préparation mentale",
+        desc:"Arriver sur chaque appel dans un état de détachement actif — pas de l'indifférence, mais de la sérénité.",
+        steps:[
+          "Juste avant l'appel, dis-toi à voix haute (ou mentalement) : 'Mon rôle est de diagnostiquer, pas de vendre. Le résultat ne m'appartient pas.'",
+          "Visualise deux scénarios : l'appel se passe bien → comment tu te sens ? L'appel finit par un non → comment tu te sens ? Est-ce que tu survives aux deux ?",
+          "Si la réponse au deuxième scénario te génère de l'anxiété, reprends l'inventaire des dettes.",
+          "Décroche uniquement quand tu es en paix avec les deux scénarios."
+        ],
+        goal:"<strong>Objectif :</strong> Mesure ta sérénité de 1 à 10 avant chaque appel. Avec la pratique, tu vas voir cette note monter — et tes résultats suivre."
+      },
+      {
+        num:"03", title:"Le débrief émotionnel post-appel", type:"Analyse",
+        desc:"Les dettes s'accumulent si on ne les traite pas. Ce débrief t'empêche de porter les appels ratés dans les suivants.",
+        steps:[
+          "Dans les 5 minutes après un appel difficile, réponds à ces questions : 'Qu'est-ce qui m'a déstabilisé ?' · 'Est-ce que j'ai sur-réagi à quelque chose ?' · 'Qu'est-ce que j'aurais fait différemment ?'",
+          "Note une seule chose à améliorer — pas cinq, une.",
+          "Ensuite, classe cet appel mentalement dans 'expérience intégrée' et passe à autre chose.",
+          "Ne commence jamais un nouvel appel dans les 10 minutes après un appel émotionnellement chargé."
+        ],
+        goal:"<strong>Objectif :</strong> Ce rituel empêche la contamination émotionnelle entre les appels — une des causes les plus sous-estimées de mauvaises séries."
+      }
+    ]
   },
   {
-    num:'03', tag:'Pilier 3 — Cadre cognitif',
-    title:"Le cadre cognitif du prospect",
-    intro:"Ton prospect n'arrive jamais vierge. Il arrive avec un historique complet : achats regrettés, promesses non tenues, closers déjà croisés. Tout ça s'est encodé sous forme de schémas cognitifs automatiques — son cadre cognitif. Ce cadre filtre tout ce que tu vas dire avant même que tu le dises. Quand tu attaques une croyance centrale, le cerveau réagit exactement comme s'il subissait une douleur physique.",
-    points:[
-      {b:"3 questions de diagnostic (dans cet ordre)", t:"1. 'Qu'est-ce que tu as déjà essayé pour résoudre ça ?' → révèle le schéma dominant. 2. 'Qu'est-ce qui fait que jusque-là tu n'as pas encore réglé ça ?' → révèle la croyance de résistance centrale. 3. 'Comment est-ce que tu saurais qu'une décision est la bonne pour toi ?' → révèle le critère de cohérence."},
-      {b:"Erreur 1 — Contredire", t:"'Notre programme est différent...' → active la vigilance neurologique, mode protection, la croyance se renforce."},
-      {b:"Erreur 2 — Surexpliquer", t:"Noyer sous les arguments → sature le cortex préfrontal, consolide le cadre que tu voulais déplacer."},
+    tag:'Pilier 3 — Cadre cognitif',
+    title:"Le filtre de ton prospect",
+    analogy:"Imagine que tu regardes le monde à travers des lunettes teintées — les tiennes sont bleues, celles de quelqu'un d'autre sont rouges. Quand tu lui montres quelque chose de blanc, toi tu vois bleu clair, lui voit rose. Vous regardez la même chose, mais vous ne voyez pas la même chose. Ton prospect arrive sur chaque appel avec ses propres lunettes — construites par ses expériences passées, ses croyances, ses peurs. C'est ça, son cadre cognitif.",
+    concepts:[
+      {t:"Qu'est-ce qu'un cadre cognitif ?",c:"C'est l'ensemble des filtres mentaux à travers lesquels une personne interprète toute nouvelle information. Ces filtres se sont construits sur des années d'expériences — des achats regrettés, des promesses non tenues, des déceptions. <strong>Ton prospect ne t'écoute pas avec un esprit vierge</strong> — il t'écoute avec tout son historique."},
+      {t:"Pourquoi attaquer une croyance est contre-productif",c:"Des études en neurosciences ont montré que remettre en question une croyance centrale active les mêmes zones du cerveau que la douleur physique. <strong>Quand tu contredis frontalement une croyance de ton prospect, son cerveau se défend</strong> — et la croyance se renforce plutôt que de s'affaiblir. C'est l'effet 'backfire'."},
+      {t:"Les 3 croyances derrière chaque objection",c:"<strong>'C'est trop cher'</strong> → croyance sur sa propre valeur ou sur la valeur perçue. <strong>'J'ai besoin d'y réfléchir'</strong> → peur de se tromper ou besoin de contrôle. <strong>'Ce n'est pas le bon moment'</strong> → croyance que les conditions extérieures doivent changer avant lui. Chaque objection est un signal — pas une réponse définitive."},
+      {t:"Entrer dans le cadre avant de le déplacer",c:"La seule façon de déplacer un cadre cognitif sans déclencher de résistance : <strong>le valider d'abord</strong>. Pas être d'accord — valider. Montrer que tu comprends pourquoi le filtre existe. Quand l'amygdale reçoit ce signal de compréhension, elle baisse la garde. Et c'est là que le déplacement devient possible."},
     ],
-    ex:{l:"Croyances fréquentes derrière les objections", t:"'Je n'ai pas le temps' = croyance sur ses priorités ou peur de l'échec. 'C'est trop cher' = rapport à la valeur de soi. 'J'ai besoin d'en parler à mon partenaire' = peur de la responsabilité personnelle. 'Je vais y réfléchir' = manque de confiance ou peur de l'engagement."},
-    gold:{l:"Question d'anomalie", t:"'Qu'est-ce qui t'a amené à accepter cet appel aujourd'hui, alors que tu aurais pu décliner ?' → Le prospect accède à la partie de lui qui contredit son propre filtre. La flamme subsiste toujours."}
+    insight:"Tu ne peux pas vendre à quelqu'un qui a ses défenses activées. Ton premier travail n'est pas de pitcher ton offre — c'est de baisser le niveau d'alerte de son amygdale.",
+    exercises:[
+      {
+        num:"01", title:"La cartographie du cadre", type:"Diagnostic",
+        desc:"Apprendre à lire le cadre cognitif d'un prospect dans les 5 premières minutes.",
+        steps:[
+          "Au début de ton prochain appel, pose ces 3 questions dans cet ordre : 'Qu'est-ce que tu as déjà essayé pour régler ça ?' → révèle son historique. 'Qu'est-ce qui fait que ça n'a pas marché jusque-là ?' → révèle sa croyance de résistance. 'Comment tu saurais qu'une solution est la bonne pour toi ?' → révèle son critère de décision.",
+          "Écoute les réponses sans les interrompre. Note mentalement les mots qu'il répète.",
+          "Résume ce que tu as entendu avec ses propres mots — pas les tiens.",
+          "Observe sa réaction à ce résumé : est-ce qu'il dit 'exactement' ou 'pas tout à fait' ?"
+        ],
+        goal:"<strong>Objectif :</strong> Faire cet exercice sur 5 appels. Tu vas commencer à voir des patterns récurrents dans les cadres de tes prospects."
+      },
+      {
+        num:"02", title:"Le jeu des 3 objections", type:"Préparation",
+        desc:"Anticiper les cadres avant l'appel pour ne pas être pris au dépourvu.",
+        steps:[
+          "Avant chaque appel, note les 3 objections les plus probables de ce profil de prospect.",
+          "Pour chaque objection, identifie la croyance derrière : 'Cette objection vient d'une peur de X ou d'une croyance sur Y ?'",
+          "Prépare une phrase de validation pour chacune — pas une réponse, une validation. Exemple : 'Je comprends — c'est une préoccupation que beaucoup de personnes dans ta situation ont.'",
+          "Sur l'appel, vérifie si tes prédictions étaient justes."
+        ],
+        goal:"<strong>Objectif :</strong> Avec le temps, tu vas développer une bibliothèque mentale des cadres types de tes prospects — et tu sauras comment entrer dans chacun."
+      },
+      {
+        num:"03", title:"La validation calibrée", type:"Application terrain",
+        desc:"Pratiquer l'entrée dans le cadre sans être d'accord avec lui.",
+        steps:[
+          "Sur ton prochain appel, quand une objection apparaît, résiste à l'impulsion de répondre immédiatement.",
+          "Dis d'abord : 'Je comprends que tu voies les choses comme ça — et c'est une position que je respecte. Est-ce que tu peux m'en dire un peu plus sur ce qui t'amène à penser ça ?'",
+          "Laisse le prospect développer. Plus il parle, plus le cadre se révèle — et souvent, il commence à voir les limites de son propre filtre.",
+          "Note ce qui change dans la dynamique quand tu valides avant de répondre."
+        ],
+        goal:"<strong>Objectif :</strong> Comparer le taux de résolution d'objections avec cette approche vs tes anciennes réponses directes."
+      }
+    ]
   },
   {
-    num:'04', tag:'Pilier 4 — Aversion à la perte',
-    title:"Aversion à la perte & urgence authentique",
-    intro:"Mise en lumière par Kahneman et Tversky (Prix Nobel 2002). L'aversion à la perte est l'un des mécanismes neurologiques les plus puissants. Perdre 50 000 fait deux fois plus mal que gagner 50 000 fait du bien. Ratio stable : perdre 1000 = douleur équivalente à ne pas gagner 2000 à 2500. C'est précisément l'aversion à la perte qui crée l'urgence authentique — pas les bonus, pas les deadlines artificielles.",
-    points:[
-      {b:"Coût de l'inaction", t:"'Si dans 6 mois tu n'as pas changé ça, que t'aura-t-il coûté en temps, argent, opportunités ?'"},
-      {b:"La fenêtre qui se ferme", t:"'Quand est-ce que le moment sera meilleur que maintenant ?'"},
-      {b:"Projection dans le regret", t:"'Dans 1 an, qu'est-ce que tu veux te dire sur ce que tu as décidé aujourd'hui ?'"},
+    tag:'Pilier 4 — Aversion à la perte',
+    title:"La douleur de perdre",
+    analogy:"Tu trouves 50€ dans une vieille veste. Tu es content — mais modérément. Maintenant imagine que tu perdes 50€ que tu avais dans ta poche. La douleur de cette perte est beaucoup plus forte que le plaisir du gain. Ce n'est pas dans ta tête — c'est dans ton cerveau. Daniel Kahneman et Amos Tversky l'ont mesuré : perdre fait deux fois plus mal que gagner fait du bien.",
+    concepts:[
+      {t:"L'aversion à la perte — le mécanisme",c:"Le cerveau est câblé pour donner plus de poids aux pertes qu'aux gains. C'est un mécanisme de survie ancestral — éviter une menace était plus crucial que saisir une opportunité. Aujourd'hui, ça signifie que <strong>la peur de perdre quelque chose est un levier bien plus puissant que la promesse d'en gagner.</strong>"},
+      {t:"Le coût de l'inaction",c:"Ton prospect n'est pas en train de choisir entre ton offre et rien. Il est en train de choisir entre <strong>agir maintenant et continuer à vivre avec son problème</strong>. Chaque jour qu'il attend a un coût — en temps, en argent, en opportunités ratées, en énergie mentale dépensée à vivre avec ce problème. Ton rôle est de rendre ce coût visible."},
+      {t:"La différence entre urgence artificielle et urgence authentique",c:"L'urgence artificielle c'est : 'On a une promotion qui se termine ce soir.' L'urgence authentique c'est : 'Chaque mois que tu attends, tu perds X.' <strong>L'une active la méfiance, l'autre active la vérité.</strong> L'amygdale de ton prospect fait la différence instantanément."},
     ],
-    ex:null,
-    gold:{l:"Principe fondamental", t:"Ne lui vends pas ce qu'il va gagner. Montre-lui ce qu'il perd chaque jour qu'il attend. Gain 1000 = ressenti +10. Perte 1000 = ressenti -20 à -25. Signer un programme à 3000 = excitation modérée. Rater l'opportunité à 3000 = regret intense."}
+    insight:"Ne vends pas ce que ton prospect va gagner. Montre-lui ce qu'il perd chaque jour qu'il attend. La douleur de la perte est deux fois plus motivante que l'espoir du gain.",
+    exercises:[
+      {
+        num:"01", title:"Le calcul du coût de l'inaction", type:"Application terrain",
+        desc:"Rendre le coût de l'inaction concret et chiffré.",
+        steps:[
+          "Sur ton prochain appel, après avoir compris le problème du prospect, pose cette question : 'Si dans 12 mois rien n'a changé, qu'est-ce que ça t'aura coûté — en argent, en temps, en énergie ?'",
+          "Laisse le prospect faire le calcul lui-même — ne le fais pas à sa place.",
+          "Si nécessaire, aide-le : 'Si tu perds X heures par semaine sur ce problème, sur 12 mois ça fait combien ?'",
+          "Note le chiffre qu'il donne. Ce chiffre devient le contexte de ton offre."
+        ],
+        goal:"<strong>Objectif :</strong> Quand le prospect calcule lui-même le coût de l'inaction, ton prix devient relatif à cette douleur — pas à une valeur abstraite."
+      },
+      {
+        num:"02", title:"La projection dans le regret", type:"Application terrain",
+        desc:"Utiliser l'aversion à la perte sur l'axe du temps — le regret futur.",
+        steps:[
+          "Quand tu sens un prospect hésiter, pose cette question : 'Dans 6 mois, si tu n'as pas réglé ça, qu'est-ce que tu te diras sur la décision que tu prends aujourd'hui ?'",
+          "Silence. Laisse la question faire son chemin.",
+          "Observe si le prospect commence à parler de regret potentiel — c'est un signal fort que l'amygdale est activée sur la perte.",
+          "Ne rebondis pas immédiatement. Laisse l'espace."
+        ],
+        goal:"<strong>Objectif :</strong> Cette question active le Système 1 sur le regret futur — l'une des émotions les plus puissantes dans la prise de décision."
+      },
+      {
+        num:"03", title:"La fenêtre qui se ferme", type:"Application terrain",
+        desc:"Créer une urgence authentique basée sur la réalité — pas sur une promo artificielle.",
+        steps:[
+          "Identifie ce qui est réellement vrai et limité dans ta situation : ton temps, ton nombre de clients, la période idéale pour agir.",
+          "Formule l'urgence de façon factuelle : 'Je travaille avec X personnes en parallèle maximum — au-delà, je ne peux pas garantir la qualité. Là j'ai une place.'",
+          "Ou sur l'axe temporel : 'Le meilleur moment pour démarrer c'est maintenant — pas parce que j'ai une promo, mais parce que chaque mois d'attente c'est X de perdu.'",
+          "Ne mens jamais sur l'urgence. L'amygdale détecte l'inauthenticité."
+        ],
+        goal:"<strong>Objectif :</strong> Développer 2 à 3 formulations d'urgence authentique propres à ta situation — et les tester sur tes prochains appels."
+      }
+    ]
   },
   {
-    num:'05', tag:'Pilier 5 — Travailler avec le cadre',
-    title:"Travailler avec le cadre — les 3 étapes",
-    intro:"Une fois le cadre cognitif lu, la règle est simple : ne jamais attaquer la croyance frontalement. Entrer dans le cadre d'abord — puis le déplacer. Méthode en 3 étapes, toujours dans cet ordre précis.",
-    points:[
-      {b:"1. Valider l'expérience", t:"Accueillir le filtre sans le combattre. Formules : 'Tu as potentiellement...' / 'J'imagine que...' / 'Qu'est-ce qui te fait dire ça ?' L'amygdale baisse la garde. Valider n'est pas être d'accord — c'est montrer que tu comprends."},
-      {b:"2. Introduire l'anomalie", t:"Introduire une information qui ne rentre pas dans le cadre. Créer un doute, une incohérence. Le cerveau va chercher comment intégrer cette incohérence : c'est le début du déplacement."},
-      {b:"3. Proposer un nouveau schéma par le comportement", t:"Ne pas dire 'je suis différent'. Le montrer — par ta posture, tes silences, tes questions précises, ton détachement du résultat. Posture de médecin : tu diagnostiques, tu ne supplies pas."},
+    tag:'Pilier 5 — Travailler avec le cadre',
+    title:"Déplacer sans attaquer",
+    analogy:"Tu veux déplacer un gros rocher. Si tu pousses frontalement, tu vas te blesser et le rocher ne bougera pas. Mais si tu creuses un peu sous lui, et que tu utilises un levier au bon endroit, il se déplace seul. Les croyances de ton prospect, c'est le rocher. L'argumentation frontale, c'est pousser directement. La méthode des 3 étapes, c'est le levier.",
+    concepts:[
+      {t:"Étape 1 — Valider l'expérience",c:"La première étape c'est de montrer que tu comprends d'où vient le filtre. Pas que tu es d'accord — que tu comprends. <strong>Formules : 'Je comprends que tu aies cette impression.' · 'C'est une préoccupation tout à fait légitime.' · 'Qu'est-ce qui t'amène à penser ça ?'</strong> Quand l'amygdale reçoit ce signal, elle baisse la garde. L'accès cognitif s'ouvre."},
+      {t:"Étape 2 — Introduire l'anomalie",c:"Une fois la garde baissée, tu introduis une information qui ne rentre pas dans le cadre. Pas pour contredire — pour créer un doute, une incohérence. <strong>'Et pourtant, il y a quelque chose d'intéressant...' · 'Ce que beaucoup de personnes découvrent, c'est que...' · 'Tu as mentionné X — et en même temps tu as dit Y...'</strong> Le cerveau va naturellement chercher à résoudre cette incohérence."},
+      {t:"Étape 3 — Proposer un nouveau schéma par le comportement",c:"Tu ne dis pas 'je suis différent'. Tu le montres — par ta posture, ta façon de poser des questions, ton détachement du résultat, tes silences. <strong>Le cerveau met à jour ses schémas à partir de ce qu'il observe, pas de ce qu'on lui dit.</strong> C'est pour ça qu'un closer qui promet d'être différent et qui se comporte pareil que les autres ne change rien dans le cadre."},
     ],
-    ex:{l:"Ce que ça donne en pratique", t:"Des questions spécifiques créent une micro-surprise qui ouvre le prospect plutôt que d'activer sa méfiance. Le cerveau met à jour son schéma basé sur ce qu'il voit, pas sur ce qu'on lui dit. L'état d'ouverture généré est obligatoire pour créer l'urgence."},
-    gold:null
+    insight:"Tu n'es pas là pour convaincre quelqu'un que tu as raison. Tu es là pour créer les conditions dans lesquelles il peut arriver lui-même à une nouvelle conclusion.",
+    exercises:[
+      {
+        num:"01", title:"La pratique de la validation", type:"Entraînement",
+        desc:"Développer le réflexe de valider avant de répondre — même quand l'objection semble injuste.",
+        steps:[
+          "Choisis une objection que tu entends souvent et qui te déstabilise.",
+          "Entraîne-toi à la valider sans la combattre. Écris 5 formulations différentes de validation pour cette objection.",
+          "Sur ton prochain appel où elle apparaît, utilise une de tes formulations — sans ajouter de 'mais' derrière.",
+          "Observe ce qui se passe dans les 30 secondes suivantes dans la dynamique de l'appel."
+        ],
+        goal:"<strong>Objectif :</strong> Le 'mais' annule la validation. 'Je comprends — et...' est différent de 'Je comprends — mais...'. Entraîne-toi à éliminer le 'mais'."
+      },
+      {
+        num:"02", title:"L'anomalie calibrée", type:"Application terrain",
+        desc:"Pratiquer l'introduction d'une anomalie sans déclencher de résistance.",
+        steps:[
+          "Sur ton prochain appel, quand un prospect exprime une croyance limitante, ne la contredis pas directement.",
+          "Dis : 'C'est une perspective que je respecte — et en même temps, est-ce que tu es ouvert à regarder un angle que tu n'as peut-être pas encore considéré ?'",
+          "Attendris l'accord avant d'introduire l'anomalie.",
+          "Note si la demande de permission change la façon dont il reçoit l'information."
+        ],
+        goal:"<strong>Objectif :</strong> Demander la permission avant d'introduire une perspective nouvelle réduit la résistance de 60 à 70%. C'est contre-intuitif mais documenté."
+      },
+      {
+        num:"03", title:"Le miroir comportemental", type:"Introspection",
+        desc:"Vérifier si ton comportement est cohérent avec le message que tu veux envoyer.",
+        steps:[
+          "Écoute un enregistrement d'un de tes appels récents (avec l'accord du prospect).",
+          "Note chaque moment où tu as dit être détaché — et chaque moment où ton comportement a trahi le contraire (vitesse de réponse, comblement de silences, justification d'une objection).",
+          "Identifie les 2 moments les plus incohérents.",
+          "Sur ton prochain appel, concentre-toi uniquement sur ces 2 points."
+        ],
+        goal:"<strong>Objectif :</strong> Ce n'est pas ce que tu dis qui crée le cadre — c'est ce que tu fais. Cet exercice révèle l'écart entre les deux."
+      }
+    ]
   },
   {
-    num:'06', tag:'Pilier 6 — 12 Variables',
-    title:"Les 12 variables que le prospect évalue",
-    intro:"Le cerveau du prospect recueille des données sur 12 variables (vocales, comportementales, structurelles) pour construire son jugement — et décider si tu es en position de force ou de besoin. Ces signaux sont traités par le Système 1 : inconsciemment et instantanément. Les 3 variables d'ancrage prioritaires : Silence · Cadence et tonalité · Détachement du résultat.",
-    points:[
-      {b:"1. Cadence vocale", t:"Voix lente et posée = système parasympathique activé, cortisol réduit chez le prospect. Voix rapide et tendue = signal d'alerte."},
-      {b:"2. Gestion du silence", t:"Le silence indique qui est le plus à l'aise. Combler le silence = signal de malaise. Après une question difficile : laisse la pression travailler."},
-      {b:"3. Intonation en fin de phrase", t:"Une affirmation qui sonne comme une question (intonation montante) = insécurité perçue. Une intonation descendante = marqueur de posture haute."},
-      {b:"4. Vitesse de réponse aux objections", t:"Répondre immédiatement = tu te défends. 2 à 3 secondes de pause avant de répondre = tu accueilles."},
-      {b:"5. Vocabulaire utilisé", t:"Trop de qualificatifs excessifs = sur-compensation. Vocabulaire neutre et factuel = confiance naturelle. Utilise ses mots à lui."},
-      {b:"6. Formulation des questions", t:"Questions ouvertes = curiosité sincère et posture haute. Questions fermées répétées = interrogatoire ou anxiété."},
-      {b:"7. Gestion des interruptions", t:"Couper le prospect = impatience ou anxiété. Laisser les silences sans intervenir = maîtrise."},
-      {b:"8. Réactivité aux signaux émotionnels", t:"Un closer en mode besoin ne détecte pas les signaux émotionnels. Un closer en puissance calme entend ce qui est dit ET ce qui n'est pas dit."},
-      {b:"9. Posture physique (appels vidéo)", t:"Dos droit, regard caméra = sérieux et présence. Penché en avant = anxiété. La posture physique impacte directement la neurochimie."},
-      {b:"10. Cohérence verbal et non-verbal", t:"Dire 'je suis détaché du résultat' avec une voix qui tremble = incohérence détectée immédiatement."},
-      {b:"11. Gestion des moments de pression", t:"Ta réaction dans les 3 premières secondes face à quelque chose d'inconfortable dit tout. Agitation = besoin. Calme = force."},
-      {b:"12. Congruence globale — la variable méta", t:"Le cerveau est spécialisé pour détecter l'incohérence. Un état interne instable annule les 11 autres variables."},
+    tag:'Pilier 6 — Les 12 variables',
+    title:"Ce que ton prospect lit en toi",
+    analogy:"Imagine que tu entres dans une pièce et tu rencontres quelqu'un pour la première fois. En moins de 10 secondes, tu as déjà une impression — sans qu'il ait dit quoi que ce soit de significatif. Comment ? Tu as lu des dizaines de signaux : sa posture, son regard, la façon dont il serre la main, le débit de sa voix. Ton prospect fait exactement la même chose sur un appel. Voilà les 12 variables qu'il lit.",
+    concepts:[
+      {t:"Les 3 variables d'ancrage — les plus importantes",c:"<strong>1. Le silence</strong> — Qui est le plus à l'aise dans le silence ? Celui qui comble le vide trahit son inconfort. Après une question difficile : laisse 3 secondes. <strong>2. La cadence vocale</strong> — Une voix lente et posée active le système parasympathique du prospect (calme). Une voix rapide et tendue active le sympathique (alerte). <strong>3. Le détachement du résultat</strong> — Est-ce que tu as besoin que cet appel se passe bien ? Ça se sent."},
+      {t:"Variables 4 à 8 — les signaux subtils",c:"<strong>4. Vitesse de réponse aux objections</strong> — Répondre immédiatement = tu te défends. 2-3 secondes de pause = tu accueilles. <strong>5. Intonation en fin de phrase</strong> — Une phrase qui monte à la fin sonne comme une question, une hésitation. Une phrase qui descend sonne comme une certitude. <strong>6. Vocabulaire</strong> — Utilise les mots de ton prospect, pas les tiens. <strong>7. Gestion des interruptions</strong> — Couper le prospect = impatience. Laisser le silence — maîtrise. <strong>8. Questions ouvertes vs fermées</strong> — Les questions ouvertes signalent la curiosité sincère."},
+      {t:"Variables 9 à 12 — la congruence globale",c:"<strong>9. Posture physique</strong> (en vidéo) — Dos droit = présence. Penché en avant = anxiété. <strong>10. Cohérence verbal/non-verbal</strong> — Dire 'je suis détendu' avec une voix qui tremble = signal détecté. <strong>11. Réaction aux moments de pression</strong> — Ta réaction dans les 3 premières secondes face à une objection difficile dit tout. <strong>12. La congruence globale</strong> — le cerveau détecte l'incohérence globale avant même les détails. Si quelque chose 'sonne faux', l'amygdale s'active."},
     ],
-    ex:{l:"Grille d'auto-confrontation à faire sur chaque appel", t:"Quel était mon état interne avant l'appel ? Quel schéma cognitif ai-je détecté dans les 3 premières minutes ? À quel moment ai-je involontairement contredit son cadre ? Sur quelle variable était ma plus grande lacune ?"},
-    gold:null
+    insight:"Tu ne contrôles pas ce que ton prospect ressent de toi. Mais tu contrôles les signaux que tu envoies. Ces 12 variables, tu peux les travailler une par une.",
+    exercises:[
+      {
+        num:"01", title:"L'audit des 12 variables", type:"Auto-analyse",
+        desc:"Identifier tes 3 variables les plus faibles pour te concentrer dessus.",
+        steps:[
+          "Écoute ou relis un appel récent en te notant de 1 à 5 sur chacune des 12 variables.",
+          "Identifie tes 3 scores les plus bas.",
+          "Pour chaque variable faible, définis une action concrète d'amélioration.",
+          "Ne travaille qu'une variable à la fois sur tes prochains appels — changer tout en même temps ne fonctionne pas."
+        ],
+        goal:"<strong>Objectif :</strong> En 30 appels, si tu travailles une variable par semaine, tu auras transformé tes 12 variables. C'est un travail progressif, pas une révélation instantanée."
+      },
+      {
+        num:"02", title:"L'entraînement au silence", type:"Entraînement",
+        desc:"Développer la tolérance au silence — une des compétences les plus différenciantes en closing.",
+        steps:[
+          "Sur ton prochain appel, après chaque question importante, compte mentalement jusqu'à 3 avant de parler.",
+          "Si le prospect ne répond pas dans ces 3 secondes, attends encore 2 secondes.",
+          "Observe ce qui se passe — souvent, le prospect va ajouter quelque chose d'important dans ce silence.",
+          "Note combien de fois tu as eu envie de remplir le silence et tu t'es retenu."
+        ],
+        goal:"<strong>Objectif :</strong> Après 10 appels avec cette pratique, tu vas développer une tolérance au silence qui changera ta dynamique d'appel."
+      },
+      {
+        num:"03", title:"Le travail vocal", type:"Entraînement",
+        desc:"Calibrer ta voix comme un instrument — cadence, intonation, débit.",
+        steps:[
+          "Enregistre-toi en train de lire 3 phrases à voix haute — une fois vite, une fois lent.",
+          "Écoute la différence. Quelle version inspire plus confiance ?",
+          "Pratique de lire des textes à voix haute en faisant descendre l'intonation en fin de phrase.",
+          "Sur ton prochain appel, concentre-toi uniquement sur ralentir ton débit de 20%."
+        ],
+        goal:"<strong>Objectif :</strong> La voix est un instrument. Comme tout instrument, elle se travaille — et les résultats sont mesurables dès les premiers appels."
+      }
+    ]
   },
   {
-    num:'07', tag:'Pilier 7 — Posture & état interne',
-    title:"Posture, leadership & état interne",
-    intro:"L'état interne représente 80% du travail du closer. C'est la première chose que le prospect va lire — et elle ne peut pas être cachée. La bonne nouvelle : la posture peut être travaillée. La mauvaise : elle n'est jamais acquise une fois pour toutes.",
-    points:[
-      {b:"Closer en mode besoin", t:"Focalisé commission, ressent la pression, surexplique face à la résistance, recherche des signaux de validation, remplit les silences par nervosité, se justifie quand attaqué."},
-      {b:"Closer en puissance calme", t:"Focalisé transformation, détaché du résultat — présence totale, accueille la résistance comme une donnée, arrive avec neutralité : 'Je viens pour toi, pas pour moi'."},
-      {b:"Protocole pré-appel (dans cet ordre)", t:"1. Énergie — cohérence cardiaque, respiration, mouvement. 2. Intention — 'Je viens pour diagnostiquer et servir, pas pour vendre'. 3. Adaptation — lire le profil, identifier les angles, lâcher le résultat."},
-      {b:"La cohérence cardiaque — le protocole scientifique", t:"Protocole 365 : 6 respirations par minute, 5 secondes d'inspiration par le nez + 5 secondes d'expiration par la bouche, 5 minutes, 3 fois par jour. Avant un appel : 2 à 5 minutes suffisent pour un effet mesurable. Source : HeartMath Institute — Rollin McCraty, 'Heart Rate Variability: New Perspectives on Physiological Mechanisms, Assessment of Self-regulatory Capacity, and Health Risk' (2015). La variabilité de la fréquence cardiaque (VFC) est l'indicateur clé : une VFC élevée = système nerveux autonome en équilibre = meilleure régulation émotionnelle, prise de décision plus fine, écoute plus précise."},
-      {b:"Ce que ça produit physiologiquement", t:"Activation du système nerveux parasympathique (nerf vague) → baisse immédiate du cortisol. Synchronisation cœur-cerveau → le cortex préfrontal reprend le contrôle sur l'amygdale. Libération d'ocytocine → connexion interpersonnelle renforcée. Augmentation de la DHEA (hormone de vitalité) → état d'alerte calme. Source complémentaire : David Servan-Schreiber, 'Guérir' (2003) — vulgarisation clinique des effets de la cohérence cardiaque sur le stress et la performance."},
-      {b:"Pourquoi c'est critique avant un appel", t:"Ton prospect capte ton état via les 12 variables du Pilier 06. Si ton système nerveux sympathique est dominant (cortisol élevé), tu parles plus vite, tu remplis les silences, tu te justifies. 2 minutes de cohérence cardiaque avant de décrocher peuvent faire la différence entre un appel où tu subis et un appel où tu diriges."},
-      {b:"Citation fondatrice", t:"'Aide le prospect avec l'intention et l'humilité que tu aurais envers ta propre famille.'"},
+    tag:'Pilier 7 — Posture & état interne',
+    title:"La puissance calme",
+    analogy:"Pense à un médecin urgentiste. Plus la situation est grave, plus il est calme — précis, méthodique, sans agitation. Ce calme n'est pas de l'indifférence : c'est de la compétence. Il sait ce qu'il fait, il n'a pas besoin que l'opération se passe bien pour lui — il est là pour le patient. Un closer en puissance calme, c'est ça.",
+    concepts:[
+      {t:"Closer en mode besoin vs closer en puissance calme",c:"<strong>Mode besoin :</strong> Focalisé sur la commission. Comble les silences. Surexplique face aux objections. Cherche des signaux de validation. Se justifie quand attaqué. <strong>Puissance calme :</strong> Focalisé sur la transformation. Accueille la résistance comme une donnée. Arrive avec une intention de service, pas de vente. Détaché du résultat — présent à la personne."},
+      {t:"La neurochimie du leadership",c:"La posture haute est neurochimique avant d'être comportementale. Testostérone haute + cortisol bas = voix stable, tolérance au silence, détachement. Testostérone basse + cortisol haut = voix qui monte, inconfort face aux objections. <strong>Tu ne 'joues' pas la posture haute — tu la crées par ton état interne.</strong>"},
+      {t:"Le protocole pré-appel en 3 étapes",c:"<strong>1. Énergie</strong> — Cohérence cardiaque (5s inspiration, 5s expiration, 6 cycles). Ça baisse le cortisol en 2 minutes. <strong>2. Intention</strong> — 'Je viens diagnostiquer et servir, pas vendre.' Dit à voix haute si possible. <strong>3. Adaptation</strong> — Lis la fiche du prospect, identifie son profil probable, lâche le résultat."},
+      {t:"La cohérence cardiaque — la science derrière",c:"Protocole validé par le HeartMath Institute (Rollin McCraty, 2015) : 6 respirations par minute, 5 secondes d'inspiration par le nez, 5 secondes d'expiration par la bouche. Effets mesurés en 2 minutes : baisse du cortisol, activation du nerf vague (système parasympathique), amélioration de la variabilité de la fréquence cardiaque. <strong>C'est le levier physiologique le plus rapide pour changer ton état interne.</strong>"},
     ],
-    ex:{l:"Synthèse — Cartographie d'un appel", t:"Pré-appel : énergie + intention. Ouverture 0-5 min : évaluation menace ou sécurité. Diagnostic 5-15 min : 3 questions de cartographie. Gestion du cadre 15-30 min : valider → anomalie → nouveau schéma. Amplification 25-35 min : quantifier le coût de l'inaction. Présentation offre 35-45 min. Closing 45-55 min : retour Système 1, la décision finale est toujours émotionnelle."},
-    gold:{l:"Citation du guide", t:"'Le meilleur closing ne se sent pas. Le prospect a l'impression d'avoir décidé tout seul. Parce que c'est exactement ce qui s'est passé.'"}
+    insight:"Le meilleur closing ne se sent pas. Le prospect a l'impression d'avoir décidé tout seul — parce que c'est exactement ce qui s'est passé. Ta posture a créé les conditions. La décision lui appartient.",
+    exercises:[
+      {
+        num:"01", title:"Le protocole 365", type:"Pratique quotidienne",
+        desc:"Intégrer la cohérence cardiaque comme rituel quotidien — pas juste avant les appels difficiles.",
+        steps:[
+          "3 fois par jour (matin, avant les appels, soir) : 5 minutes de cohérence cardiaque.",
+          "Inspiration par le nez : 5 secondes. Expiration par la bouche : 5 secondes. Répète 6 fois minimum.",
+          "Sur 21 jours consécutifs, note ton niveau de stress moyen de 1 à 10 chaque soir.",
+          "Compare tes résultats d'appels sur la première semaine vs la troisième."
+        ],
+        goal:"<strong>Objectif :</strong> Des études HeartMath montrent que 21 jours de pratique régulière modifient mesuralement la réponse au stress. Ce n'est pas une technique — c'est un entraînement."
+      },
+      {
+        num:"02", title:"Le jeu de rôle sous pression", type:"Entraînement",
+        desc:"Entraîner ta posture dans des conditions simulées de pression — pour qu'elle soit automatique en conditions réelles.",
+        steps:[
+          "Avec un partenaire ou un mentor, simule un appel où il joue un prospect très résistant.",
+          "Le partenaire utilise les objections les plus difficiles que tu as rencontrées.",
+          "Ton seul objectif : maintenir ta posture calme. Pas de closer l'appel — juste rester calme.",
+          "Après 10 minutes, débrief : à quels moments ta posture a vacillé ? Qu'est-ce qui l'a fait vaciller ?"
+        ],
+        goal:"<strong>Objectif :</strong> La posture se construit sous pression simulée, pas sur des appels faciles. Plus tu t'entraînes dans des conditions difficiles, plus tu seras solide en conditions réelles."
+      },
+      {
+        num:"03", title:"L'intention déclarée", type:"Rituel pré-appel",
+        desc:"Ancrer mentalement ton intention avant chaque appel — service vs vente.",
+        steps:[
+          "Juste avant chaque appel, dis à voix haute ou mentalement : 'Mon rôle est de diagnostiquer et d'aider. Le résultat ne m'appartient pas.'",
+          "Visualise la personne de l'autre côté — pas comme un prospect, comme quelqu'un qui a un vrai problème.",
+          "Demande-toi : 'Qu'est-ce que cette personne a besoin d'entendre — pas d'acheter ?'",
+          "Décroche avec ça dans la tête."
+        ],
+        goal:"<strong>Objectif :</strong> L'intention précède le comportement. Cette pratique aligne ton état interne sur le service — et le prospect le ressent dès les premières secondes."
+      }
+    ]
   },
   {
-    num:'08', tag:'Pilier 8 — Biochimie',
-    title:"La biochimie de la performance",
-    intro:"Les 12 variables (Pilier 06) sont toutes basées sur ton état interne. Et l'état interne, ce n'est pas du mindset abstrait — c'est de la biochimie : mesurable, prévisible, actionnable. Quatre molécules pilotent ta performance sur un appel.",
-    points:[
-      {b:"Cortisol — hormone du stress", t:"Niveau élevé = perte de précision, silences perçus comme des signaux négatifs. Tu deviens réactif plutôt que directif."},
-      {b:"Dopamine — la présence réelle", t:"Faible taux = appels en mode automatique, voix plate, curiosité éteinte. Générée par l'anticipation d'une récompense sincère."},
-      {b:"Ratio Testostérone / Cortisol", t:"Détermine si une objection te déstabilise ou non. Ratio favorable = voix stable, tolérance au silence. Ratio défavorable = voix qui monte, malaise face aux objections."},
-      {b:"Ocytocine — la connexion", t:"Régule la confiance interpersonnelle. Écoute plus réelle, moins simulée. Activée par des interactions positives avant l'appel."},
-      {b:"La respiration — ton seul levier d'entrée volontaire", t:"Cohérence cardiaque : inspire 4 temps, expire 6 temps — 2 minutes suffisent avant un appel."},
+    tag:'Pilier 8 — Biochimie',
+    title:"Les molécules de ta performance",
+    analogy:"Imagine que tu as une batterie interne. Certains comportements la rechargent — d'autres la vident. Le problème : la plupart des closers gèrent leurs appels comme si cette batterie était infinie. Elle ne l'est pas. Et quand elle est à plat, tu ne peux plus lire ton prospect, tu ne peux plus tenir ta posture, tu fais des erreurs que tu ne ferais pas autrement. La biochimie, c'est la science de cette batterie.",
+    concepts:[
+      {t:"Le cortisol — l'hormone qui sabote",c:"On en a déjà parlé — mais voilà la réalité terrain : des niveaux élevés de cortisol pendant plusieurs heures réduisent littéralement ta capacité à écouter, à détecter les signaux émotionnels, et à tolérer les silences. <strong>Enchaîner 5 appels sans pause active un niveau de cortisol qui dégrade la qualité de chaque appel suivant.</strong>"},
+      {t:"La dopamine — la présence réelle",c:"La dopamine est associée à la motivation et à la curiosité. Un niveau de dopamine sain se manifeste par une vraie curiosité envers ton prospect — pas simulée. <strong>Elle est générée par l'anticipation d'une récompense sincère.</strong> Si tu traites un appel comme une tâche à cocher plutôt qu'une conversation intéressante, ta dopamine baisse — et ton prospect le sent."},
+      {t:"L'ocytocine — le lien de confiance",c:"L'ocytocine régule la confiance interpersonnelle. Elle est libérée par les interactions positives, l'écoute sincère, la connexion humaine. <strong>Un closer qui écoute vraiment — pas pour répondre, mais pour comprendre — génère de l'ocytocine chez son prospect.</strong> Et l'ocytocine ouvre la porte à la décision."},
+      {t:"Les 3 profils neurochimiques — identifie le tien",c:"<strong>Cortisol dominant :</strong> performant en conditions normales, se dégrade sous pression. Levier : réduire les déclencheurs 30 min avant l'appel. <strong>Dopamine déficitaire :</strong> baisse après plusieurs appels difficiles. Levier : micro-victoires intentionnelles entre les appels. <strong>Suractivation sympathique :</strong> parle trop vite, n'accepte pas les silences. Levier : ancrage physique avant chaque appel."},
     ],
-    ex:{l:"Les 3 profils neurochimiques — identifie le tien", t:"Cortisol dominant : performant en conditions normales, perd en précision quand l'enjeu monte. Levier : réduire les déclencheurs 30 min avant l'appel. | Dominant déficitaire : baisse après plusieurs appels difficiles. Levier : micro-victoires intentionnelles. | Suractivation sympathique : parle trop vite, n'accepte pas les silences. Levier : ancrage physique avant l'appel."},
-    gold:{l:"Principe fondamental", t:"L'état interne se prépare bien avant l'appel — parfois dès la veille. La paix intérieure, c'est de la bande passante cognitive disponible pour le prospect."}
+    insight:"La performance en closing n'est pas juste psychologique — elle est physiologique. Tu peux avoir les meilleures techniques du monde ; si ta biochimie est en mode survie, elles ne fonctionneront pas.",
+    exercises:[
+      {
+        num:"01", title:"L'identification de ton profil", type:"Introspection",
+        desc:"Identifier ton profil neurochimique dominant pour personnaliser ta préparation.",
+        steps:[
+          "Réponds honnêtement : Est-ce que tes performances se dégradent principalement sous la pression (cortisol) ? Après plusieurs appels difficiles (dopamine) ? Ou tu parles trop vite et tu ne tolères pas les silences (sympathique) ?",
+          "Ton profil principal détermine ton levier prioritaire.",
+          "Pour cortisol : intègre 5 minutes de cohérence cardiaque avant les appels à enjeux. Pour dopamine : commence chaque journée d'appels par un appel facile pour générer une victoire. Pour sympathique : ancrage physique — 30 secondes debout, dos droit, respiration profonde avant de décrocher.",
+          "Teste ton levier sur 2 semaines et mesure la différence."
+        ],
+        goal:"<strong>Objectif :</strong> Connaître son profil neurochimique permet de personnaliser sa préparation plutôt que d'appliquer des routines génériques qui ne correspondent pas à son câblage."
+      },
+      {
+        num:"02", title:"La gestion de la batterie entre les appels", type:"Pratique",
+        desc:"Préserver ton niveau d'énergie cognitive sur une journée d'appels.",
+        steps:[
+          "Entre chaque appel : 5 minutes minimum de décompression. Pas d'emails, pas de téléphone.",
+          "Après un appel difficile : note une seule chose positive qui s'est passée — même petite.",
+          "Après 3 appels consécutifs : pause de 10 minutes. Marche, hydrate-toi, bouge.",
+          "En fin de journée : note ton niveau d'énergie de 1 à 10. Corrèle avec la qualité de tes appels."
+        ],
+        goal:"<strong>Objectif :</strong> Identifier ton seuil de fatigue cognitive — le nombre d'appels après lequel ta qualité baisse. Et ne jamais le dépasser sans recharge."
+      },
+      {
+        num:"03", title:"Le générateur de dopamine", type:"Rituel",
+        desc:"Générer de la vraie curiosité avant chaque appel — pas simulée.",
+        steps:[
+          "Avant chaque appel, lis la fiche du prospect et note 2 questions dont tu n'as vraiment pas la réponse — des choses qui t'intéressent sincèrement.",
+          "Sur l'appel, pose au moins une de ces questions. Écoute la réponse avec une vraie curiosité.",
+          "Note si tes appels se passent différemment quand tu arrives avec une vraie curiosité vs quand tu arrives en mode automatique.",
+          "Avec le temps, développe l'habitude de trouver quelque chose de genuinement intéressant chez chaque prospect."
+        ],
+        goal:"<strong>Objectif :</strong> La curiosité sincère génère de la dopamine — et la dopamine se transmet. Un closer genuinement curieux crée une énergie différente dans l'appel."
+      }
+    ]
   },
   {
-    num:'09', tag:'Pilier 9 — Cerveau prédictif',
-    title:"Le cerveau prédictif & la décision sécure",
-    intro:"Toutes les séances précédentes répondent à une seule question fondamentale : comment réduire neurologiquement la menace liée à la décision ? Le closing est l'art de rendre une décision neurologiquement sûre. Le cerveau humain anticipe constamment ce qui va arriver et réagit à ses propres prédictions.",
-    points:[
-      {b:"La réactance psychologique", t:"Quand le prospect se sent contraint, son cerveau perçoit une menace sur sa liberté de décision. Il cesse de traiter l'offre pour reprendre le contrôle. Laisse toujours au prospect l'impression qu'il garde le contrôle."},
-      {b:"La charge cognitive", t:"La mémoire de travail ne peut traiter que 4 à 7 éléments sous le stress. Trop d'informations = le prospect choisit l'option la moins coûteuse cognitivement : ne pas décider. Règle des 3 : ne présenter que 3 éléments majeurs."},
-      {b:"Douleur certaine vs amélioration incertaine", t:"Le cerveau préfère souvent rester dans une douleur connue plutôt que choisir une amélioration incertaine. Décris les premières 48h après le oui."},
-      {b:"La permission inversée", t:"'Je veux juste que tu sois clair avec moi — si tu sens que ce n'est pas pour toi, dis-le maintenant.' Cette technique désactive la réactance et calme l'alarme neurologique."},
+    tag:'Pilier 9 — Cerveau prédictif',
+    title:"Rendre la décision sécure",
+    analogy:"Imagine que tu doives sauter d'un rocher dans l'eau — tu ne sais pas à quelle profondeur elle est. Plus tu attends, plus ton cerveau imagine des scénarios catastrophes. Mais si quelqu'un qui est déjà descendu te dit 'j'ai fait ça hier, l'eau est à 3 mètres, c'est parfait' — ton cerveau a une prédiction sécurisée. Il peut sauter. Ton prospect fonctionne exactement pareil face à une décision.",
+    concepts:[
+      {t:"Le cerveau prédictif — la vraie nature de la décision",c:"Ton cerveau ne traite pas la réalité telle qu'elle est — il anticipe constamment ce qui va arriver et réagit à ses propres prédictions. Quand ton prospect hésite, ce n'est pas qu'il ne veut pas — <strong>c'est que son cerveau n'a pas encore une prédiction sécurisée de ce qui va se passer s'il dit oui.</strong> Ton rôle est de créer cette sécurité."},
+      {t:"La charge cognitive — l'ennemi silencieux",c:"La mémoire de travail ne peut traiter que 4 à 7 éléments sous le stress. Quand tu présentes 10 bénéfices, 3 formules, et 2 bonus, tu satures le cerveau de ton prospect. <strong>Un cerveau surchargé choisit l'option la moins coûteuse cognitivement : ne pas décider.</strong> Règle des 3 : ne présente jamais plus de 3 éléments majeurs."},
+      {t:"La réactance psychologique",c:"Quand ton prospect se sent poussé vers une décision, son cerveau perçoit une menace sur sa liberté de choix — et il résiste. C'est la réactance. <strong>Plus tu pousses, plus il recule.</strong> La solution : lui donner le contrôle. 'Si tu sens que ce n'est pas pour toi, dis-le moi maintenant — c'est ta décision, pas la mienne.'"},
+      {t:"Les conditions d'une décision sécure",c:"<strong>Zone de sécurité :</strong> prospect en contrôle de la décision, 3 éléments clairs maximum, visualisation précise des premières 48h après le oui, cohérence entre ce que tu promets et ce que tu es. <strong>Zone de menace :</strong> pression sur la liberté de choix, trop d'informations, parcours post-achat flou, discours générique et prévisible."},
     ],
-    ex:{l:"Zone de sécurité vs zone de menace", t:"MENACE : pression sur la liberté de choix, trop d'informations, parcours post-achat flou, discours prévisible. SÉCURITÉ : prospect en contrôle, 3 éléments clairs, visualisation précise du parcours client, permission inversée."},
-    gold:{l:"Principe final", t:"Le closing est l'art de rendre une décision neurologiquement sûre. Ton rôle n'est pas de convaincre — c'est d'éliminer les raisons de ne pas décider."}
+    insight:"Le closing est l'art de rendre une décision neurologiquement sécure. Ton rôle n'est pas de convaincre — c'est d'éliminer les raisons de ne pas décider.",
+    exercises:[
+      {
+        num:"01", title:"La règle des 3", type:"Application terrain",
+        desc:"Simplifier radicalement ta présentation pour réduire la charge cognitive.",
+        steps:[
+          "Sur ton prochain appel, limite ta présentation à exactement 3 éléments — les 3 plus importants pour ce prospect spécifique.",
+          "Avant l'appel, prépare ces 3 éléments en fonction de ce que tu as entendu pendant la découverte.",
+          "Si ton prospect te demande plus d'informations, donne-en une — pas cinq.",
+          "Note si la simplification change la dynamique de la décision."
+        ],
+        goal:"<strong>Objectif :</strong> Moins d'informations, présentées au bon moment, pour le bon prospect — c'est plus efficace que l'exhaustivité. La clarté est un avantage compétitif."
+      },
+      {
+        num:"02", title:"La visualisation du lendemain", type:"Application terrain",
+        desc:"Aider le cerveau prédictif de ton prospect à voir ce qui se passe après le oui.",
+        steps:[
+          "Après la présentation de ton offre, dis : 'Laisse-moi te décrire à quoi ressemblent tes 48 premières heures après avoir démarré.'",
+          "Décris concrètement et simplement les premières actions, le premier contact, ce qu'il va ressentir.",
+          "Plus c'est concret, plus le cerveau peut créer une prédiction sécurisée.",
+          "Note si cette visualisation réduit les questions de type 'et si ça ne marche pas ?'"
+        ],
+        goal:"<strong>Objectif :</strong> Un prospect qui peut visualiser le lendemain du oui a un cerveau prédictif sécurisé — et les décisions sécures se prennent plus facilement."
+      },
+      {
+        num:"03", title:"La permission inversée", type:"Application terrain",
+        desc:"Désactiver la réactance psychologique en donnant le contrôle à ton prospect.",
+        steps:[
+          "Quand tu sens qu'un prospect hésite ou se ferme, au lieu de pousser, recule.",
+          "Dis : 'Je veux être honnête avec toi — si tu sens que ce n'est pas le bon moment ou la bonne solution pour toi, dis-le moi maintenant. Je préfère qu'on soit clairs tous les deux.'",
+          "Laisse un silence après ça.",
+          "Observe ce qui se passe : souvent, en retirant la pression, le prospect s'ouvre plutôt que de se fermer."
+        ],
+        goal:"<strong>Objectif :</strong> La permission inversée crée un paradoxe neurologique : en disant que tu n'as pas besoin de son oui, tu désactives sa résistance. C'est contre-intuitif — et c'est pour ça que ça fonctionne."
+      }
+    ]
   }
 ];
 
-function checkCode(){
-  const val = document.getElementById('code-input').value.trim().toUpperCase();
-  if(val === CODE){
-    document.getElementById('login-screen').style.display='none';
+// PROGRESS
+function getP(){try{return JSON.parse(localStorage.getItem('np2')||'{}')}catch(e){return{}}}
+function saveP(d){try{localStorage.setItem('np2',JSON.stringify(d))}catch(e){}}
+function isDone(i){return!!getP()['p'+i]}
+function toggleDone(i){var d=getP();d['p'+i]=!d['p'+i];saveP(d);renderSidebar();updateProgress();renderPillar(i)}
+
+// LOGIN
+function login(){
+  var v=document.getElementById('code-inp').value.trim().toUpperCase();
+  if(v===CODE){
+    document.getElementById('login').style.display='none';
     document.getElementById('app').style.display='block';
-    initApp();
+    init();
   } else {
-    document.getElementById('login-error').style.display='block';
+    document.getElementById('login-err').style.display='block';
   }
 }
-document.getElementById('code-input').addEventListener('keydown',function(e){if(e.key==='Enter')checkCode();});
 
-function getProgress(){
-  try{return JSON.parse(localStorage.getItem('neuro_progress')||'{}');}catch(e){return {};}
-}
-function saveProgress(p){
-  try{localStorage.setItem('neuro_progress',JSON.stringify(p));}catch(e){}
-}
-
-function updateProgressBar(){
-  const p=getProgress();
-  const done=Object.keys(p).filter(k=>p[k]).length;
-  document.getElementById('progress-text').textContent=done+' / 9 piliers';
-  document.getElementById('progress-bar').style.width=(done/9*100)+'%';
+// INIT
+function init(){
+  renderSidebar();
+  updateProgress();
+  showIntro();
 }
 
-function initApp(){
-  const nav=document.getElementById('nav-items');
-  PILLARS.forEach((pl,i)=>{
-    const d=document.createElement('div');
-    d.className='sidebar-item';d.id='nav-p'+(i+1);
-    d.innerHTML='<div class="sidebar-num">'+pl.num+'</div><div class="sidebar-text">'+pl.tag.replace('Pilier '+pl.num+' — ','')+'</div><div class="sidebar-check">✓</div>';
-    d.onclick=()=>showPillar(i+1);
-    nav.appendChild(d);
+// SIDEBAR
+function renderSidebar(){
+  var html='';
+  P.forEach(function(p,i){
+    var done=isDone(i);
+    html+='<div class="sb-item'+(done?' done':'')+'" id="sb-'+i+'" onclick="renderPillar('+i+')">';
+    html+='<div class="sb-dot">'+(done?'✓':(i+1))+'</div>';
+    html+='<div class="sb-text">'+p.tag.replace(/Pilier \d+ — /,'')+'</div>';
+    html+='<div class="sb-check">✓</div>';
+    html+='</div>';
   });
-  updateProgressBar();
-  showScreen('intro');
+  document.getElementById('nav-list').innerHTML=html;
 }
 
-function showScreen(s){
-  document.querySelectorAll('.sidebar-item').forEach(el=>el.classList.remove('active'));
+function setActive(id){
+  document.querySelectorAll('.sb-item').forEach(function(el){el.classList.remove('active')});
+  document.getElementById('nav-intro').classList.remove('active');
+  var el=document.getElementById(id);
+  if(el)el.classList.add('active');
+}
+
+// PROGRESS
+function updateProgress(){
+  var done=Object.values(getP()).filter(Boolean).length;
+  var pct=Math.round(done/P.length*100);
+  document.getElementById('prog-label').textContent=done+' / '+P.length;
+  document.getElementById('prog-fill').style.width=pct+'%';
+}
+
+// INTRO
+function showIntro(){
+  document.querySelectorAll('.sb-item').forEach(function(el){el.classList.remove('active')});
   document.getElementById('nav-intro').classList.add('active');
-  if(s==='intro') renderIntro();
+  var html='<span class="intro-eyebrow">Module Neurosciences · 9 Piliers</span>';
+  html+='<h1 class="intro-h1">Avant de comprendre<br>ton prospect —<br><em>comprends ce qui se passe<br>dans ta tête.</em></h1>';
+  html+='<p class="intro-p">Les appels se gagnent ou se perdent sur deux cerveaux, pas un. Ce module t\'explique comment les deux fonctionnent — et pourquoi l\'un sabote l\'autre sans que tu t\'en rendes compte.</p>';
+  html+='<div class="pillars-grid">';
+  P.forEach(function(p,i){
+    html+='<div class="pillar-preview" onclick="renderPillar('+i+')">';
+    html+='<div class="pp-num">'+p.tag+'</div>';
+    html+='<div class="pp-title">'+p.title+'</div>';
+    html+='</div>';
+  });
+  html+='</div>';
+  html+='<button class="start-btn" onclick="renderPillar(0)">Commencer le Pilier 1 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>';
+  document.getElementById('main').innerHTML=html;
 }
 
-function renderIntro(){
-  const el=document.getElementById('main-content');
-  el.innerHTML=`
-  <div class="intro-screen">
-    <div class="intro-hero">
-      <div class="intro-eyebrow">Module Neurosciences · 9 Piliers</div>
-      <div class="intro-h1">Avant de comprendre ton prospect —<br><em>comprends ce qui se passe dans ta tête.</em></div>
-      <div class="intro-desc">Les appels se gagnent ou se perdent sur deux cerveaux, pas un. Ce module t'explique comment les deux fonctionnent — et pourquoi l'un sabote l'autre sans que tu t'en rendes compte.</div>
-    </div>
-    <div class="intro-pillars">
-      ${PILLARS.map(p=>`<div class="intro-pillar"><div class="intro-pillar-num">PILIER ${p.num}</div><div class="intro-pillar-title">${p.title}</div></div>`).join('')}
-    </div>
-    <button class="start-btn" onclick="showPillar(1)">Commencer par le Pilier 1 →</button>
-  </div>`;
-}
-
-function showPillar(n){
-  document.querySelectorAll('.sidebar-item').forEach(el=>el.classList.remove('active'));
-  const navEl=document.getElementById('nav-p'+n);
-  if(navEl) navEl.classList.add('active');
-
-  const pl=PILLARS[n-1];
-  const p=getProgress();
-  const isDone=!!p['p'+n];
-
-  const el=document.getElementById('main-content');
-  el.innerHTML=`
-  <div class="pillar-header">
-    <div class="pillar-tag">${pl.tag}</div>
-    <div class="pillar-title">${pl.title}</div>
-    <div class="pillar-intro">${pl.intro}</div>
-  </div>
-  <div class="points">
-    ${pl.points.map(pt=>`<div class="point"><div class="point-bold">${pt.b}</div><div class="point-text">${pt.t}</div></div>`).join('')}
-  </div>
-  ${pl.ex?`<div class="block block-ex"><div class="block-label">${pl.ex.l}</div><div class="block-text">${pl.ex.t}</div></div>`:''}
-  ${pl.gold?`<div class="block block-gold"><div class="block-label">${pl.gold.l}</div><div class="block-text">${pl.gold.t}</div></div>`:''}
-  <div class="exercise-section">
-    <div class="exercise-title">Exercice d'application</div>
-    <div class="exercise-text">Sur ton prochain appel, applique le principe de ce pilier consciemment. Note ce que tu observes — chez toi et chez ton prospect. Reviens cocher cet exercice une fois fait.</div>
-    <div class="exercise-check-wrap" onclick="toggleDone(${n})">
-      <div class="exercise-check ${isDone?'checked':''}" id="ex-check-${n}">${isDone?'✓':''}</div>
-      <div class="exercise-check-label">${isDone?"Exercice complété ✓":"Marquer comme complété"}</div>
-    </div>
-  </div>
-  <div class="pillar-nav">
-    ${n>1?`<button class="nav-btn nav-prev" onclick="showPillar(${n-1})">← Pilier ${String(n-1).padStart(2,'0')}</button>`:''}
-    ${n<9?`<button class="nav-btn nav-next" onclick="showPillar(${n+1})">Pilier ${String(n+1).padStart(2,'0')} →</button>`:`<button class="nav-btn nav-next" onclick="showCompletion()">Terminer le module ✓</button>`}
-  </div>
-  <div class="completion" id="completion-block">
-    <h3>Module terminé. 🎯</h3>
-    <p>Tu as couvert les 9 piliers neurobiologiques du closing. Ce n'est pas la fin — c'est le début. Chaque appel est maintenant une occasion d'observer ces mécanismes en action.</p>
-    <div class="completion-upsell">
-      <p>Tu veux aller plus loin ? La formation complète couvre 7 modules supplémentaires — DISC/PCM, structure d'appel, phase de découverte, objections, flow et performance.</p>
-      <a href="https://bizdevthomas.gumroad.com/l/megwli" class="upsell-btn">Accéder à la formation complète — 297€</a>
-    </div>
-  </div>`;
-
-  updateSidebarDone();
-  el.scrollTop=0;
+// PILLAR
+function renderPillar(i){
+  setActive('sb-'+i);
+  var p=P[i];
+  var done=isDone(i);
+  var html='';
+  html+='<span class="pillar-eyebrow">'+p.tag+'</span>';
+  html+='<h1 class="pillar-title">'+p.title+'</h1>';
+  
+  // Analogy
+  html+='<div class="analogy"><div class="analogy-label">Pour commencer — l\'analogie</div><div class="analogy-text">'+p.analogy+'</div></div>';
+  
+  // Concepts
+  html+='<div class="concepts">';
+  p.concepts.forEach(function(c){
+    html+='<div class="concept"><div class="concept-title">'+c.t+'</div><div class="concept-text">'+c.c+'</div></div>';
+  });
+  html+='</div>';
+  
+  // Insight
+  html+='<div class="insight"><div class="insight-label">À retenir</div><div class="insight-text">'+p.insight+'</div></div>';
+  
+  // Exercises
+  html+='<div class="exercises"><div class="exercises-title">Banque d\'exercices</div>';
+  p.exercises.forEach(function(ex,ei){
+    html+='<div class="exercise" id="ex-'+i+'-'+ei+'">';
+    html+='<div class="ex-header" onclick="toggleEx('+i+','+ei+')">';
+    html+='<div class="ex-num">'+ex.num+'</div>';
+    html+='<div class="ex-title">'+ex.title+'</div>';
+    html+='<div class="ex-type">'+ex.type+'</div>';
+    html+='<div class="ex-arrow" id="ar-'+i+'-'+ei+'">▼</div>';
+    html+='</div>';
+    html+='<div class="ex-body" id="eb-'+i+'-'+ei+'">';
+    html+='<div class="ex-desc">'+ex.desc+'</div>';
+    html+='<ol class="ex-steps">';
+    ex.steps.forEach(function(s){html+='<li>'+s+'</li>'});
+    html+='</ol>';
+    html+='<div class="ex-goal">'+ex.goal+'</div>';
+    html+='</div></div>';
+  });
+  html+='</div>';
+  
+  // Done button
+  html+='<div class="done-wrap">';
+  html+='<button class="done-btn'+(done?' checked':'')+'" onclick="toggleDone('+i+')" id="done-btn-'+i+'">'+(done?'✓ Pilier complété':'Marquer ce pilier comme complété')+'</button>';
+  if(!done) html+='<span class="done-hint">Reviens cocher une fois les exercices faits</span>';
+  html+='</div>';
+  
+  // Nav
+  html+='<div class="pillar-nav">';
+  if(i>0) html+='<button class="nav-btn nav-prev" onclick="renderPillar('+(i-1)+')">← Pilier '+(i)+'</button>';
+  if(i<P.length-1) html+='<button class="nav-btn nav-next" onclick="renderPillar('+(i+1)+')">Pilier '+(i+2)+' →</button>';
+  else html+='<button class="nav-btn nav-next" onclick="showCompletion()">Terminer le module →</button>';
+  html+='</div>';
+  
+  // Completion (hidden)
+  html+='<div class="completion" id="completion">';
+  html+='<h3>Module terminé.</h3>';
+  html+='<p>Tu as parcouru les 9 piliers neurobiologiques du closing. Ce n\'est pas une fin — c\'est un point de départ. Chaque appel est maintenant une occasion d\'observer ces mécanismes en action.</p>';
+  html+='<div class="upsell-box"><p>Tu veux aller plus loin ? La formation complète couvre 7 modules supplémentaires — DISC/PCM, structure d\'appel, phase de découverte, objections, flow et performance.</p><a href="https://bizdevthomas.gumroad.com/l/megwli" class="upsell-btn">Accéder à la formation complète — 297€</a></div>';
+  html+='</div>';
+  
+  document.getElementById('main').innerHTML=html;
   window.scrollTo(0,0);
 }
 
-function toggleDone(n){
-  const p=getProgress();
-  p['p'+n]=!p['p'+n];
-  saveProgress(p);
-  const check=document.getElementById('ex-check-'+n);
-  if(p['p'+n]){check.classList.add('checked');check.textContent='✓';}
-  else{check.classList.remove('checked');check.textContent='';}
-  updateProgressBar();
-  updateSidebarDone();
+function toggleEx(i,ei){
+  var body=document.getElementById('eb-'+i+'-'+ei);
+  var arrow=document.getElementById('ar-'+i+'-'+ei);
+  var open=body.classList.toggle('open');
+  arrow.textContent=open?'▲':'▼';
 }
 
 function showCompletion(){
-  const block=document.getElementById('completion-block');
-  if(block){block.style.display='block';block.scrollIntoView({behavior:'smooth'});}
-}
-
-function updateSidebarDone(){
-  const p=getProgress();
-  PILLARS.forEach((_,i)=>{
-    const el=document.getElementById('nav-p'+(i+1));
-    if(!el) return;
-    if(p['p'+(i+1)]){el.classList.add('done');}
-    else{el.classList.remove('done');}
-  });
+  var c=document.getElementById('completion');
+  if(c){c.style.display='block';c.scrollIntoView({behavior:'smooth'})}
 }
 </script>
 </body>
