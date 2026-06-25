@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Le Cerveau du Prospect — Thomas</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #B8922A;
+    --gold-light: #E8D59A;
+    --gold-bg: #FBF5E8;
+    --navy: #1A2A3A;
+    --navy-mid: #2C3E50;
+    --slate: #475569;
+    --slate-light: #94A3B8;
+    --border: #E2E8F0;
+    --white: #ffffff;
+    --red-soft: #C0472A;
+    --red-bg: #FBF0ED;
+    --green: #0F7A62;
+    --green-bg: #E8F6F2;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--white);
+    color: var(--navy);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--navy);
+    padding: 80px 24px 72px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: 50%;
+    transform: translateX(-50%);
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(184,146,42,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid rgba(184,146,42,0.35);
+    border-radius: 20px;
+    padding: 5px 14px;
+    margin-bottom: 28px;
+  }
+  .hero h1 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(36px, 6vw, 64px);
+    line-height: 1.1;
+    color: var(--white);
+    max-width: 760px;
+    margin: 0 auto 20px;
+  }
+  .hero h1 em {
+    font-style: italic;
+    color: var(--gold);
+  }
+  .hero-sub {
+    font-size: clamp(15px, 2.2vw, 18px);
+    color: rgba(255,255,255,0.65);
+    max-width: 560px;
+    margin: 0 auto 44px;
+    line-height: 1.7;
+  }
+  .hero-cta-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  .btn-primary {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--white);
+    font-size: 16px;
+    font-weight: 600;
+    padding: 16px 40px;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: #A07820; transform: translateY(-1px); }
+  .hero-price-note {
+    font-size: 13px;
+    color: rgba(255,255,255,0.4);
+  }
+  .hero-price-note strong { color: rgba(255,255,255,0.7); }
+
+  /* ── PROBLEM STRIP ── */
+  .problem-strip {
+    background: var(--red-bg);
+    border-top: 1px solid #E8B5A8;
+    border-bottom: 1px solid #E8B5A8;
+    padding: 48px 24px;
+  }
+  .container { max-width: 720px; margin: 0 auto; }
+  .section-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--red-soft);
+    margin-bottom: 18px;
+  }
+  .problem-strip h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(22px, 3.5vw, 30px);
+    color: var(--navy);
+    margin-bottom: 28px;
+    line-height: 1.25;
+  }
+  .problem-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .problem-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 15px;
+    color: var(--slate);
+    line-height: 1.6;
+  }
+  .problem-list li::before {
+    content: '✗';
+    color: var(--red-soft);
+    font-weight: 700;
+    font-size: 14px;
+    margin-top: 2px;
+    flex-shrink: 0;
+  }
+  .problem-list li strong { color: var(--navy); }
+
+  /* ── REFRAME ── */
+  .reframe {
+    padding: 64px 24px;
+    background: var(--white);
+  }
+  .reframe-inner {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+  .reframe h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(24px, 4vw, 34px);
+    color: var(--navy);
+    line-height: 1.2;
+    margin-bottom: 20px;
+  }
+  .reframe h2 span { color: var(--gold); }
+  .reframe p {
+    font-size: 15px;
+    color: var(--slate);
+    line-height: 1.8;
+    margin-bottom: 16px;
+  }
+  .reframe p strong { color: var(--navy); }
+  .pull-quote {
+    border-left: 3px solid var(--gold);
+    padding: 14px 20px;
+    background: var(--gold-bg);
+    border-radius: 0 8px 8px 0;
+    margin: 28px 0;
+    font-size: 15px;
+    color: var(--navy-mid);
+    font-style: italic;
+    line-height: 1.7;
+  }
+
+  /* ── WHAT YOU LEARN ── */
+  .modules {
+    background: var(--navy);
+    padding: 72px 24px;
+  }
+  .modules-inner { max-width: 720px; margin: 0 auto; }
+  .modules .section-label { color: var(--gold); margin-bottom: 10px; }
+  .modules h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(24px, 4vw, 34px);
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+  .modules-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 40px;
+  }
+  .pillar-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .pillar {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 10px;
+    padding: 18px 20px;
+  }
+  .pillar-num {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+  .pillar-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--white);
+    margin-bottom: 6px;
+    line-height: 1.35;
+  }
+  .pillar-desc {
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.6;
+  }
+  .pillar-featured {
+    grid-column: 1 / -1;
+    background: rgba(184,146,42,0.12);
+    border-color: rgba(184,146,42,0.3);
+  }
+  .pillar-featured .pillar-title { font-size: 14px; }
+
+  /* ── FOR WHO ── */
+  .forwho {
+    padding: 64px 24px;
+    background: #F8FAFC;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .forwho-inner { max-width: 680px; margin: 0 auto; }
+  .forwho h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(22px, 3.5vw, 30px);
+    margin-bottom: 28px;
+  }
+  .check-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  .check-list li {
+    display: flex;
+    gap: 12px;
+    font-size: 15px;
+    color: var(--slate);
+    line-height: 1.6;
+  }
+  .check-list li::before {
+    content: '→';
+    color: var(--gold);
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .check-list li strong { color: var(--navy); }
+  .not-for {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px 20px;
+    font-size: 13px;
+    color: var(--slate-light);
+    line-height: 1.7;
+  }
+  .not-for strong { color: var(--slate); }
+
+  /* ── ABOUT ── */
+  .about {
+    padding: 64px 24px;
+    background: var(--white);
+  }
+  .about-inner {
+    max-width: 680px;
+    margin: 0 auto;
+    display: flex;
+    gap: 32px;
+    align-items: flex-start;
+  }
+  .about-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: var(--gold-bg);
+    border: 2px solid var(--gold-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--gold);
+    flex-shrink: 0;
+  }
+  .about-text h3 {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    margin-bottom: 4px;
+  }
+  .about-role {
+    font-size: 12px;
+    color: var(--gold);
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .about-text p {
+    font-size: 14px;
+    color: var(--slate);
+    line-height: 1.8;
+    margin-bottom: 12px;
+  }
+  .about-text p strong { color: var(--navy); }
+
+  /* ── OBJECTIONS ── */
+  .objections {
+    background: var(--gold-bg);
+    border-top: 1px solid var(--gold-light);
+    padding: 64px 24px;
+  }
+  .objections-inner { max-width: 680px; margin: 0 auto; }
+  .objections h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(22px, 3.5vw, 28px);
+    margin-bottom: 32px;
+  }
+  .faq { display: flex; flex-direction: column; gap: 16px; }
+  .faq-item {
+    background: var(--white);
+    border: 1px solid var(--gold-light);
+    border-radius: 10px;
+    padding: 18px 20px;
+  }
+  .faq-q {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 8px;
+  }
+  .faq-a {
+    font-size: 13px;
+    color: var(--slate);
+    line-height: 1.75;
+  }
+  .faq-a strong { color: var(--navy); }
+
+  /* ── CTA FINAL ── */
+  .cta-final {
+    background: var(--navy);
+    padding: 80px 24px;
+    text-align: center;
+  }
+  .cta-final-inner { max-width: 560px; margin: 0 auto; }
+  .cta-final h2 {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(28px, 5vw, 44px);
+    color: var(--white);
+    line-height: 1.15;
+    margin-bottom: 16px;
+  }
+  .cta-final h2 em { font-style: italic; color: var(--gold); }
+  .cta-final p {
+    font-size: 15px;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 36px;
+    line-height: 1.7;
+  }
+  .price-block {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+  .price-amount {
+    font-family: 'DM Serif Display', serif;
+    font-size: 56px;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .price-label {
+    font-size: 12px;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+  .cta-final .btn-primary {
+    font-size: 17px;
+    padding: 18px 52px;
+  }
+  .cta-guarantee {
+    margin-top: 18px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+    line-height: 1.7;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 28px 24px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--slate-light);
+    border-top: 1px solid var(--border);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .pillar-grid { grid-template-columns: 1fr; }
+    .pillar-featured { grid-column: auto; }
+    .about-inner { flex-direction: column; gap: 20px; }
+    .about-avatar { width: 56px; height: 56px; font-size: 18px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">Module standalone · 37€</div>
+  <h1>Avant de comprendre ton prospect —<br><em>comprends ce qui se passe dans ta tête.</em></h1>
+  <p class="hero-sub">Les appels se gagnent ou se perdent sur deux cerveaux, pas un. Le tien et celui de ton prospect. Ce module t'explique comment les deux fonctionnent — et pourquoi l'un sabote l'autre sans que tu t'en rendes compte.</p>
+  <div class="hero-cta-wrap">
+    <a href="https://bizdevthomas.gumroad.com/l/ltrnnf" class="btn-primary">Accéder au module — 37€</a>
+    <span class="hero-price-note">Accès immédiat · <strong>Paiement sécurisé</strong></span>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="problem-strip">
+  <div class="container">
+    <div class="section-label">Le vrai problème</div>
+    <h2>Si tu perds des appels, c'est rarement<br>un problème de script.</h2>
+    <ul class="problem-list">
+      <li><span>Tu réponds aux objections — mais elles reviennent toujours. <strong>Parce que tu traites le symptôme, pas la cause.</strong></span></li>
+      <li><span>Tu pitches bien, le prospect semble intéressé — puis il te dit qu'il doit "réfléchir". <strong>Tu n'avais pas accès à son vrai frein.</strong></span></li>
+      <li><span>Plus tu argumentes, plus il se ferme. <strong>Parce que l'argumentation active exactement le mécanisme neurologique qui bloque la décision.</strong></span></li>
+      <li><span>Et pendant ce temps, ton propre cerveau gère son anxiété, son besoin de commission, sa peur du rejet — <strong>sans que tu t'en rendes compte. Le prospect, lui, le sent.</strong></span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- REFRAME -->
+<section class="reframe">
+  <div class="reframe-inner">
+    <div class="section-label">Ce que personne ne t'a expliqué</div>
+    <h2>Il y a <span>deux cerveaux</span> dans chaque appel. La plupart des closers n'en travaillent qu'un.</h2>
+    <p>Le premier, c'est celui de ton prospect. Antonio Damasio l'a prouvé cliniquement : sans émotion, pas de décision. Le Système 1 — l'amygdale — évalue la situation en millisecondes et tranche avant que ton prospect ait consciemment entendu quoi que ce soit. <strong>Plus tu argues, moins tu convaincs.</strong></p>
+    <div class="pull-quote">
+      "Le Système 2 — la logique — n'entre en jeu qu'après. Il ne décide pas. Il justifie une décision déjà prise émotionnellement."
+    </div>
+    <p>Le deuxième cerveau, c'est le tien. Et c'est là où la plupart ne regardent jamais. <strong>Quand tu arrives sur un appel avec un besoin de commission, une peur du rejet, ou un attachement au résultat</strong> — ton système nerveux envoie des signaux que ton prospect capte avant que tu aies dit un mot. Pas consciemment. Neurologiquement.</p>
+    <p>Ce module travaille les deux. Parce que <strong>tu ne peux pas lire le cerveau de l'autre si tu gères le tien en même temps.</strong></p>
+  </div>
+</section>
+
+<!-- MODULES -->
+<section class="modules">
+  <div class="modules-inner">
+    <div class="section-label">Ce que contient le module</div>
+    <h2>Le Cerveau du Prospect</h2>
+    <p class="modules-sub">9 piliers. Chaque pilier = un mécanisme neurologique concret + son application directe sur tes appels.</p>
+    <div class="pillar-grid">
+      <div class="pillar pillar-featured">
+        <div class="pillar-num">PILIER 01</div>
+        <div class="pillar-title">L'amygdale décide en premier — toujours</div>
+        <div class="pillar-desc">Pourquoi la logique ne convainc pas, et ce que ton prospect évalue réellement dans les premières secondes d'un appel. Système 1 vs Système 2 — ce que Damasio a prouvé cliniquement.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">PILIER 02</div>
+        <div class="pillar-title">Les dettes émotionnelles du closer</div>
+        <div class="pillar-desc">Comment ton état interne sabote ta posture sans que tu t'en rendes compte — et le protocole pour arriver sur chaque appel dans le bon état.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">PILIER 03</div>
+        <div class="pillar-title">Le cadre cognitif du prospect</div>
+        <div class="pillar-desc">Chaque prospect arrive avec un filtre construit sur ses expériences passées. Les 3 questions exactes pour le lire — et ne jamais attaquer une croyance frontalement.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">PILIER 04</div>
+        <div class="pillar-title">Aversion à la perte & urgence authentique</div>
+        <div class="pillar-desc">Perdre 1000€ fait 2× plus mal que gagner 1000€ fait du bien. Kahneman et Tversky l'ont prouvé. Comment utiliser ça éthiquement sur tes appels.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">PILIER 05</div>
+        <div class="pillar-title">Travailler avec le cadre — pas contre</div>
+        <div class="pillar-desc">La méthode en 3 étapes pour déplacer une croyance sans déclencher la résistance neurologique. Attaquer une croyance centrale = douleur physique pour le cerveau.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">PILIER 06</div>
+        <div class="pillar-title">Les 12 variables que le prospect évalue</div>
+        <div class="pillar-desc">Silences, cadence vocale, vitesse de réponse — chaque signal envoie un message à son Système 1 avant même que tu aies dit quoi que ce soit.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">PILIER 07</div>
+        <div class="pillar-title">Posture, leadership & état interne</div>
+        <div class="pillar-desc">La différence concrète entre un closer en mode besoin et un closer en puissance calme — neurochimie : cortisol élevé vs testostérone stable.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">PILIER 08</div>
+        <div class="pillar-title">La biochimie de la performance</div>
+        <div class="pillar-desc">Les 5 neurochimiques qui définissent ton état sur un appel — dopamine, noradrénaline, sérotonine, anandamide, endorphines — et comment les activer avant de décrocher.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-num">PILIER 09</div>
+        <div class="pillar-title">Le cerveau prédictif & la décision sécure</div>
+        <div class="pillar-desc">Ton prospect ne décide pas rationnellement — il valide une prédiction que son cerveau a déjà faite. Comment créer les conditions d'une décision sécure plutôt que de forcer un oui.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOR WHO -->
+<section class="forwho">
+  <div class="forwho-inner">
+    <div class="section-label">Pour qui</div>
+    <h2>Ce module est fait pour toi si...</h2>
+    <ul class="check-list">
+      <li><span>Tu démarres en closing et tu veux <strong>comprendre pourquoi les appels se gagnent ou se perdent</strong> — pas juste appliquer un script.</span></li>
+      <li><span>Tu fais des appels depuis quelques mois mais tu as l'impression de <strong>répéter les mêmes erreurs sans vraiment savoir lesquelles.</strong></span></li>
+      <li><span>Tu veux comprendre <strong>la vraie mécanique de décision</strong> pour adapter ton approche à chaque prospect — pas utiliser une méthode générique.</span></li>
+      <li><span>Tu veux <strong>gagner du temps</strong> sur une compréhension que la plupart des closers mettent 6 à 12 mois à construire en tâtonnant.</span></li>
+    </ul>
+    <div class="not-for">
+      <strong>Ce module n'est pas fait pour toi si</strong> tu cherches un script clé en main à réciter mot pour mot. Ce que tu vas apprendre ici demande de la réflexion et de l'application — pas de la récitation.
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about">
+  <div class="about-inner">
+    <div class="about-avatar">T</div>
+    <div class="about-text">
+      <h3>Thomas</h3>
+      <div class="about-role">Closer · Amazon FBA & Formation en ligne</div>
+      <p>Je ne vais pas te vendre un parcours que je n'ai pas. Je suis closer — j'ai quelques mois de terrain, je travaille pour plusieurs infopreneurs dans l'espace Amazon FBA et formation en ligne, et j'accompagne un autre closer qui démarre.</p>
+      <p>Ce que j'ai compris assez tôt — et qui a changé mes appels — c'est que le problème n'est presque jamais technique. <strong>C'est neurologique.</strong> Comprendre ça m'a fait gagner des mois de tâtonnement.</p>
+      <p>Ce module, c'est la synthèse de ce travail. Je le partage parce que j'aurais voulu l'avoir au début — pas après 200 appels ratés pour les mauvaises raisons.</p>
+    </div>
+  </div>
+</section>
+
+<!-- OBJECTIONS -->
+<section class="objections">
+  <div class="objections-inner">
+    <div class="section-label">Questions fréquentes</div>
+    <h2>Ce que tu te demandes peut-être</h2>
+    <div class="faq">
+      <div class="faq-item">
+        <div class="faq-q">"37€ pour un seul module — c'est suffisant ?"</div>
+        <div class="faq-a">Ce module couvre la fondation que la plupart des closers n'ont jamais vraiment travaillée. <strong>Un seul changement de posture sur tes appels peut changer tes résultats dès cette semaine.</strong> Si tu veux aller plus loin après, la formation complète existe — mais commence par ça.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">"Est-ce que c'est de la théorie ou du concret ?"</div>
+        <div class="faq-a">Les deux, dans le bon ordre. Chaque mécanisme neurologique est expliqué simplement — puis immédiatement traduit en application terrain : quoi dire, quoi faire, quoi éviter. <strong>Tu repars avec des choses à tester dès ton prochain appel.</strong></div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">"Je débute à peine — c'est trop avancé pour moi ?"</div>
+        <div class="faq-a">Non. C'est exactement le contraire. <strong>Comprendre ça en début de parcours te fait gagner des mois.</strong> Tu évites les erreurs que la plupart mettent 6 à 12 mois à identifier. Ce module a été conçu pour quelqu'un qui démarre — pas pour quelqu'un qui a 500 appels derrière lui.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final" id="cta">
+  <div class="cta-final-inner">
+    <h2>Comprends le cerveau<br>de ton prospect.<br><em>Maintenant.</em></h2>
+    <p>Accès immédiat au module complet. 9 piliers. Les mécanismes neurobiologiques de la décision — appliqués à tes appels de closing.</p>
+    <div class="price-block">
+      <div class="price-amount">37€</div>
+      <div class="price-label">accès à vie · module complet</div>
+    </div>
+    <br>
+    <a href="https://bizdevthomas.gumroad.com/l/ltrnnf" class="btn-primary">Accéder au module maintenant</a>
+    <p class="cta-guarantee">Paiement sécurisé · Accès immédiat après paiement</p>
+  </div>
+</section>
+
+<footer>
+  © 2025 Thomas — Formation Closing · <a href="#" style="color:inherit">Mentions légales</a>
+</footer>
+
+</body>
+</html>
