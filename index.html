@@ -161,8 +161,8 @@ function tickCk(k){
 }
 function toggleCh(m,c){
   var b=document.getElementById('bd-'+m+'-'+c),h=document.getElementById('hd-'+m+'-'+c),a=document.getElementById('ar-'+m+'-'+c);
-  if(!b)return;var o=b.classList.contains('op');
-  b.classList.toggle('op',!o);if(h)h.classList.toggle('op',!o);if(a)a.classList.toggle('op',!o);
+  if(!b)return;var o=b.classList.contains('open');
+  b.classList.toggle('open',!o);if(h)h.classList.toggle('open',!o);if(a)a.classList.toggle('open',!o);
 }
 function toggleA(i){
   var b=document.getElementById('ab-'+i),a=document.getElementById('aa-'+i);
@@ -328,9 +328,9 @@ function buildChapters(mi){
     h+='</div></div>';
   });
   if(MOD_PDFS[mi]){
-    h+='<div class="pdf-section"><div class="pdf-title">&#128196; Ressources PDF a telecharger</div>';
+    h+='<div class="pdfs"><div style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gris-light);margin-bottom:12px;font-weight:600">Ressources PDF</div>';
     MOD_PDFS[mi].forEach(function(pdf){
-      h+='<a class="pdf-btn" href="./'+pdf.file+'" download="'+pdf.file+'" target="_blank"><span class="pdf-icon">&#11015;</span><div><div style="font-size:12px;font-weight:600;color:#92690E">'+pdf.name+'</div><div style="font-size:10px;color:#B8922A;margin-top:1px">'+pdf.desc+'</div></div></a>';
+      h+='<a class="pdf-card" href="./'+pdf.file+'" download="'+pdf.file+'" target="_blank"><div class="pdn">&#11015; PDF</div><div class="pdt">'+pdf.name+'</div><div class="pdd">'+pdf.desc+'</div></a>';
     });
     h+='</div>';
   }
@@ -383,14 +383,16 @@ return'<div class="exc"><div class="ext">'+ex.t+'</div><div class="exs">'+ex.s+'
 }
 function buildDashboard(){
   var td=0,ta=0,rows=[];
-  var nm={1:'Fondations',2:'Neurosciences',3:'Profils DISC+PCM',4:'Structure appel',5:'Decouverte',6:'Fausses croyances',7:'Ferocite & Flow',8:'Performer'};
-  for(var i=1;i<=8;i++){var m=MODS[i];if(!m)continue;var t=m.chs.length,d=0;m.chs.forEach(function(_,ci){if(PROG[key(i,ci)])d++;});td+=d;ta+=t;rows.push({n:nm[i],pct:Math.round(d/t*100),tp:'g'});}
-  var at=ANC.length,ad=0;ANC.forEach(function(_,ci){if(PROG[key(9,ci)])ad++;});td+=ad;ta+=at;rows.push({n:"Bonus — L'Ancrage",pct:Math.round(ad/at*100),tp:'p'});
-  var alt=ANAL.length,ald=0;ANAL.forEach(function(_,ci){if(PROG[key(10,ci)])ald++;});td+=ald;ta+=alt;rows.push({n:"Bonus — Analogies",pct:Math.round(ald/alt*100),tp:'t'});
+  var nm={1:'Fondations',2:'Neurosciences',3:'Profils DISC+PCM',4:'Structure appel',5:'Découverte',6:'Fausses croyances',8:'Performer',11:'Avant-Appel'};
+  var modKeys=[1,2,3,11,4,5,6,8];
+  modKeys.forEach(function(i){var m=MODS[i];if(!m)return;var t=m.chs.length,d=0;m.chs.forEach(function(_,ci){if(PROG[key(i,ci)])d++;});td+=d;ta+=t;rows.push({n:nm[i]||'Module '+i,pct:Math.round(d/t*100),tp:'g'});});
+  if(MODS[11]){var m11=MODS[11],t11=m11.chs.length,d11=0;m11.chs.forEach(function(_,ci){if(PROG[key(11,ci)])d11++;});}
+  var at=ANC.length,ad=0;ANC.forEach(function(_,ci){if(PROG[key(9,ci)])ad++;});td+=ad;ta+=at;rows.push({n:"Bonus — L\'Ancrage",pct:Math.round(ad/at*100),tp:'p'});
+  var alt=ANAL.length,ald=0;ANAL.forEach(function(_,ci){if(PROG[key(10,ci)])ald++;});td+=ald;ta+=alt;rows.push({n:'Bonus — Analogies',pct:Math.round(ald/alt*100),tp:'t'});
   var g=Math.round(td/ta*100);
-  var nx=g===0?"Commence par le Module 0 — Fondations & Mindset.":g<30?"Continue dans l'ordre. Chaque module s'appuie sur le précédent.":g<60?"Integre les bonus quand les fondations sont solides.":"Formation complete. Forme a ton tour.";
-  var rh=rows.map(function(r){return'<div class="pr"><div class="prn">'+r.n+'</div><div class="prt"><div class="prb '+r.tp+'" style="width:'+r.pct+'%"></div></div><div class="prp">'+r.pct+'%</div></div>';}).join('');
-  return'<div class="dg"><div class="dk"><div class="dkl">Chapitres faits</div><div class="dkv">'+td+'</div><div class="dks">sur '+ta+' au total</div></div><div class="dk"><div class="dkl">Progression</div><div class="dkv">'+g+'%</div><div class="dks">de la formation</div></div><div class="dk"><div class="dkl">Modules</div><div class="dkv">8+2</div><div class="dks">+ 2 bonus</div></div></div><div class="ps"><div class="pst">Progression par module</div>'+rh+'</div><div class="ps" style="margin-bottom:0"><div class="pst">Prochaine étape</div><div style="font-size:12px;color:#64748B;line-height:1.6">'+nx+'</div></div>';
+  var nx=g===0?'Commence par le Module 0 — Fondations & Mindset.':g<30?'Continue dans l\'ordre. Chaque module s\'appuie sur le précédent.':g<60?'Intègre les bonus quand les fondations sont solides.':'Formation complète. Forme à ton tour.';
+  var rh=rows.map(function(r){return'<div class="pr"><div class="prn">'+r.n+'</div><div class="prt"><div class="prtb"><div class="prtf '+r.tp+'" style="width:'+r.pct+'%"></div></div></div><div class="prp">'+r.pct+'%</div></div>';}).join('');
+  return'<div class="dash-grid"><div class="dash-card"><div class="dash-card-title">Chapitres complétés</div><div style="font-family:var(--serif,serif);font-size:40px;color:var(--or);line-height:1">'+td+'</div><div style="font-size:12px;color:var(--gris-light);margin-top:6px">sur '+ta+' au total</div></div><div class="dash-card"><div class="dash-card-title">Progression globale</div><div style="font-size:40px;color:var(--or);line-height:1;font-weight:600">'+g+'%</div><div style="height:3px;background:#222;border-radius:2px;margin-top:10px"><div style="height:100%;width:'+g+'%;background:var(--or);border-radius:2px"></div></div></div></div><div class="dash-card" style="margin-bottom:16px"><div class="dash-card-title">Progression par module</div>'+rh+'</div><div class="next-box"><div class="next-label">Prochaine étape</div><div class="next-text">'+nx+'</div></div>';
 }
 function buildBody(){
   if(CM===0)return buildDashboard();
