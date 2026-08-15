@@ -215,6 +215,47 @@ body{font-family:'Inter',sans-serif;background:var(--noir);color:var(--ivoire);-
 .aex{background:var(--or-bg);border:1px solid var(--or-border);border-radius:6px;padding:12px 16px;margin-top:12px}
 .aexl{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--or);margin-bottom:6px;font-weight:600}
 .aext{font-size:13px;color:var(--ivoire);line-height:1.75;font-style:italic}
+
+/* --- Parcours d'appel (schema visuel interactif) --- */
+.cj-wrap{margin-bottom:28px;padding:20px;background:var(--noir-card);border:1px solid #1f1f1f;border-radius:10px}
+.cj-title{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gris-light);margin-bottom:16px;font-weight:600}
+.cj-track{display:flex;align-items:flex-start;overflow-x:auto;padding-bottom:4px;gap:0}
+.cj-step{display:flex;flex-direction:column;align-items:center;cursor:pointer;flex-shrink:0;width:78px;transition:transform 0.15s}
+.cj-step:hover{transform:translateY(-2px)}
+.cj-step:hover .cj-dot{border-color:var(--or);background:var(--or-bg)}
+.cj-step:hover .cj-lbl{color:var(--or-pale)}
+.cj-dot{width:38px;height:38px;border-radius:50%;border:1.5px solid #2a2a2a;background:var(--noir-mid);display:flex;align-items:center;justify-content:center;font-size:15px;margin-bottom:8px;transition:all 0.15s}
+.cj-lbl{font-size:10.5px;color:var(--ivoire-mid);font-weight:600;text-align:center;line-height:1.3;transition:color 0.15s}
+.cj-sub{font-size:9px;color:var(--gris);text-align:center;margin-top:2px}
+.cj-line{width:20px;height:1.5px;background:#2a2a2a;margin-top:19px;flex-shrink:0}
+@media(max-width:768px){
+  .cj-track{overflow-x:auto}
+  .cj-step{width:64px}
+  .cj-dot{width:32px;height:32px;font-size:13px}
+  .cj-lbl{font-size:9.5px}
+  .cj-sub{font-size:8px}
+  .cj-line{width:12px}
+}
+
+/* --- Quiz d'auto-evaluation --- */
+.qz-wrap{margin-top:32px;padding:24px;background:var(--noir-card);border:1px solid var(--or-border);border-radius:10px}
+.qz-header{margin-bottom:18px}
+.qz-title{font-family:var(--serif,'Playfair Display',serif);font-size:19px;color:var(--ivoire);margin-bottom:6px}
+.qz-desc{font-size:12.5px;color:var(--gris);line-height:1.6}
+.qz-score-bar{background:var(--or-bg);border:1px solid var(--or-border);border-radius:6px;padding:10px 14px;margin-bottom:16px;font-size:13px;color:var(--or-pale);font-weight:600;text-align:center}
+.qz-q{padding:16px 0;border-top:1px solid #1f1f1f}
+.qz-q:first-child{border-top:none;padding-top:4px}
+.qz-qnum{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--gris-light);margin-bottom:6px;font-weight:600}
+.qz-qtext{font-size:14.5px;color:var(--ivoire);line-height:1.5;margin-bottom:12px;font-weight:600}
+.qz-opts{display:flex;flex-direction:column;gap:8px}
+.qz-opt{padding:11px 14px;background:var(--noir-mid);border:1px solid #252525;border-radius:6px;font-size:13px;color:var(--ivoire-mid);cursor:pointer;transition:all 0.15s;line-height:1.5}
+.qz-opt:hover{border-color:var(--or-border);background:var(--or-bg)}
+.qz-opt.qz-correct{border-color:var(--vert);background:var(--vert-bg);color:var(--ivoire)}
+.qz-opt.qz-wrong{border-color:#8B3A3A;background:rgba(139,58,58,0.12);color:var(--ivoire)}
+.qz-opt.qz-disabled{cursor:default;pointer-events:none;opacity:0.55}
+.qz-opt.qz-disabled.qz-correct,.qz-opt.qz-disabled.qz-wrong{opacity:1}
+.qz-explain{display:none;margin-top:10px;padding:12px 14px;background:rgba(201,168,76,0.04);border-left:2px solid var(--or);border-radius:4px;font-size:12.5px;color:rgba(245,240,232,0.7);line-height:1.65}
+.qz-explain.show{display:block}
 </style>
 </head>
 <body>
@@ -473,8 +514,47 @@ function goToChapter(mi,ci,isA){
   var box=document.getElementById('searchResults');if(box){box.style.display='none';box.innerHTML='';}
 }
 
+
+var MOD4_JOURNEY_HTML='<div class="cj-wrap"><div class="cj-title">Le parcours de l\'appel — clique sur une etape pour y aller directement</div><div class="cj-track"><div class="cj-step" onclick="goToChapter(4,0)"><div class="cj-dot"><span>&#8635;</span></div><div class="cj-lbl">Fondation</div><div class="cj-sub">Mirroring</div></div><div class="cj-line"></div><div class="cj-step" onclick="goToChapter(4,1)"><div class="cj-dot"><span>&#9881;</span></div><div class="cj-lbl">Phase 0</div><div class="cj-sub">Avant l\'appel</div></div><div class="cj-line"></div><div class="cj-step" onclick="goToChapter(4,2)"><div class="cj-dot"><span>&#128075;</span></div><div class="cj-lbl">Phase 1</div><div class="cj-sub">0-5 min</div></div><div class="cj-line"></div><div class="cj-step" onclick="goToChapter(4,3)"><div class="cj-dot"><span>&#128269;</span></div><div class="cj-lbl">Phase 2</div><div class="cj-sub">5-15 min</div></div><div class="cj-line"></div><div class="cj-step" onclick="goToChapter(4,4)"><div class="cj-dot"><span>&#128293;</span></div><div class="cj-lbl">Phase 3</div><div class="cj-sub">15-25 min</div></div><div class="cj-line"></div><div class="cj-step" onclick="goToChapter(4,5)"><div class="cj-dot"><span>&#9889;</span></div><div class="cj-lbl">Phase 4</div><div class="cj-sub">25-30 min</div></div><div class="cj-line"></div><div class="cj-step" onclick="goToChapter(4,6)"><div class="cj-dot"><span>&#127919;</span></div><div class="cj-lbl">Phase 5a</div><div class="cj-sub">30-40 min</div></div><div class="cj-line"></div><div class="cj-step" onclick="goToChapter(4,7)"><div class="cj-dot"><span>&#128176;</span></div><div class="cj-lbl">Phase 5b</div><div class="cj-sub">40-55 min</div></div><div class="cj-line"></div><div class="cj-step" onclick="goToChapter(4,8)"><div class="cj-dot"><span>&#9888;</span></div><div class="cj-lbl">Phase 6</div><div class="cj-sub">Disqualif.</div></div><div class="cj-line"></div><div class="cj-step" onclick="goToChapter(4,9)"><div class="cj-dot"><span>&#10003;</span></div><div class="cj-lbl">Phase 7</div><div class="cj-sub">Paiement</div></div></div></div>';
+var MOD4_QUIZ_HTML='<div class="qz-wrap"><div class="qz-header"><div class="qz-title">Auto-evaluation — Structure de l\'appel</div><div class="qz-desc">8 questions pour verifier ce que tu retiens du module. Ceci ne modifie pas ta progression — c\'est uniquement pour toi.</div></div><div class="qz-score-bar" id="qz-score-bar" style="display:none"><span id="qz-score-text"></span></div><div id="qz-questions"><div class="qz-q" id="qz-q-0"><div class="qz-qnum">Question 1 / 8</div><div class="qz-qtext">Le mirroring consiste a :</div><div class="qz-opts"><div class="qz-opt" data-correct="1" onclick="qzAnswer(this,0)">Repeter les 2-3 derniers mots importants du prospect sur un ton legerement interrogatif</div><div class="qz-opt" data-correct="0" onclick="qzAnswer(this,0)">Repeter mot pour mot tout ce que dit le prospect</div><div class="qz-opt" data-correct="0" onclick="qzAnswer(this,0)">Reformuler completement la phrase du prospect avec tes propres mots</div><div class="qz-opt" data-correct="0" onclick="qzAnswer(this,0)">Terminer les phrases du prospect a sa place</div></div><div class="qz-explain" id="qz-explain-0">Le mirroring reprend seulement les derniers mots cles, sur un ton interrogatif — ça enclenche un reflexe naturel de clarification chez le prospect, sans jamais paraphraser.</div></div><div class="qz-q" id="qz-q-1"><div class="qz-qnum">Question 2 / 8</div><div class="qz-qtext">Pendant la Phase 2 (decouverte, 5-15 min), l\'objectif principal est de :</div><div class="qz-opts"><div class="qz-opt" data-correct="0" onclick="qzAnswer(this,1)">Presenter rapidement l\'offre pour ne pas perdre de temps</div><div class="qz-opt" data-correct="1" onclick="qzAnswer(this,1)">Cerner la situation actuelle et les fausses croyances du prospect</div><div class="qz-opt" data-correct="0" onclick="qzAnswer(this,1)">Annoncer le prix pour tester sa reaction</div><div class="qz-opt" data-correct="0" onclick="qzAnswer(this,1)">Convaincre le prospect qu\'il a besoin d\'aide</div></div><div class="qz-explain" id="qz-explain-1">La Phase 2 sert a comprendre ou en est reellement le prospect et quelles croyances erronees freinent sa progression — pas encore a vendre quoi que ce soit.</div></div><div class="qz-q" id="qz-q-2"><div class="qz-qnum">Question 3 / 8</div><div class="qz-qtext">Le "cout de l\'inaction" (Phase 4) sert principalement a :</div><div class="qz-opts"><div class="qz-opt" data-correct="0" onclick="qzAnswer(this,2)">Faire peur au prospect pour le forcer a signer</div><div class="qz-opt" data-correct="1" onclick="qzAnswer(this,2)">Faire verbaliser par le prospect lui-meme ce que lui coute de ne rien changer</div><div class="qz-opt" data-correct="0" onclick="qzAnswer(this,2)">Justifier le prix de l\'offre</div><div class="qz-opt" data-correct="0" onclick="qzAnswer(this,2)">Remplacer la phase de decouverte</div></div><div class="qz-explain" id="qz-explain-2">Le cout de l\'inaction n\'est puissant que si c\'est le prospect qui le formule lui-meme — ce n\'est jamais toi qui dois lister ce qu\'il perd a ne rien faire.</div></div><div class="qz-q" id="qz-q-3"><div class="qz-qnum">Question 4 / 8</div><div class="qz-qtext">Dans la Phase 5a, la "prescription" (le pitch) doit avant tout :</div><div class="qz-opts"><div class="qz-opt" data-correct="0" onclick="qzAnswer(this,3)">Presenter un maximum de fonctionnalites de l\'offre</div><div class="qz-opt" data-correct="1" onclick="qzAnswer(this,3)">Appartenir au prospect — reprendre ses mots, ses objectifs, sa situation</div><div class="qz-opt" data-correct="0" onclick="qzAnswer(this,3)">Etre identique a chaque appel pour rester efficace</div><div class="qz-opt" data-correct="0" onclick="qzAnswer(this,3)">Se concentrer sur le prix le plus vite possible</div></div><div class="qz-explain" id="qz-explain-3">Un pitch qui "appartient" au prospect reprend exactement ce qu\'il a dit pendant la decouverte — c\'est ce qui fait qu\'il se reconnait dans la solution plutot que de se sentir vendu.</div></div><div class="qz-q" id="qz-q-4"><div class="qz-qnum">Question 5 / 8</div><div class="qz-qtext">Face a une objection prix qui resiste apres la premiere revalidation, la premiere etape consiste a :</div><div class="qz-opts"><div class="qz-opt" data-correct="0" onclick="qzAnswer(this,4)">Proposer immediatement un paiement echelonne</div><div class="qz-opt" data-correct="0" onclick="qzAnswer(this,4)">Baisser le prix pour debloquer la vente</div><div class="qz-opt" data-correct="1" onclick="qzAnswer(this,4)">Separer le prix de la peur en reancrant sur son objectif precis</div><div class="qz-opt" data-correct="0" onclick="qzAnswer(this,4)">Changer de sujet et revenir au prix plus tard</div></div><div class="qz-explain" id="qz-explain-4">Avant de parler chiffres, il faut identifier si le blocage est reellement financier ou s\'il s\'agit d\'une peur non exprimee — traiter la peur d\'abord change completement la suite de la conversation.</div></div><div class="qz-q" id="qz-q-5"><div class="qz-qnum">Question 6 / 8</div><div class="qz-qtext">La disqualification (Phase 6) sert a :</div><div class="qz-opts"><div class="qz-opt" data-correct="0" onclick="qzAnswer(this,5)">Rejeter le plus de prospects possible pour paraitre selectif</div><div class="qz-opt" data-correct="1" onclick="qzAnswer(this,5)">Reconnaitre honnetement quand un prospect n\'est pas encore pret, plutot que de forcer une vente</div><div class="qz-opt" data-correct="0" onclick="qzAnswer(this,5)">Uniquement pour les prospects qui n\'ont pas de budget</div><div class="qz-opt" data-correct="0" onclick="qzAnswer(this,5)">Remplacer l\'annonce du prix</div></div><div class="qz-explain" id="qz-explain-5">Vendre a quelqu\'un qui n\'est objectivement pas pret cree un client qui echoue ou demande un remboursement. La disqualification protege autant le prospect que ta reputation.</div></div><div class="qz-q" id="qz-q-6"><div class="qz-qnum">Question 7 / 8</div><div class="qz-qtext">Concernant le paiement (Phase 7), la bonne pratique est de :</div><div class="qz-opts"><div class="qz-opt" data-correct="0" onclick="qzAnswer(this,6)">Toujours proposer le paiement en plusieurs fois en premier</div><div class="qz-opt" data-correct="1" onclick="qzAnswer(this,6)">Laisser le prospect verbaliser lui-meme ses conditions avant de reveler les options de paiement</div><div class="qz-opt" data-correct="0" onclick="qzAnswer(this,6)">Eviter d\'en parler pour ne pas casser l\'ambiance de l\'appel</div><div class="qz-opt" data-correct="0" onclick="qzAnswer(this,6)">Toujours exiger le paiement integral immediat</div></div><div class="qz-explain" id="qz-explain-6">Faire dire au prospect son propre nombre de fois ideal avant de reveler le paiement echelonne le met en position de negocier avec lui-meme, pas avec toi.</div></div><div class="qz-q" id="qz-q-7"><div class="qz-qnum">Question 8 / 8</div><div class="qz-qtext">Le mirroring est decrit comme un outil :</div><div class="qz-opts"><div class="qz-opt" data-correct="0" onclick="qzAnswer(this,7)">Utilise uniquement en debut d\'appel pour creer la connexion</div><div class="qz-opt" data-correct="0" onclick="qzAnswer(this,7)">Reserve aux prospects difficiles</div><div class="qz-opt" data-correct="1" onclick="qzAnswer(this,7)">Transversal, utilisable a n\'importe quelle phase de l\'appel</div><div class="qz-opt" data-correct="0" onclick="qzAnswer(this,7)">A eviter avec les profils de type D (dominant)</div></div><div class="qz-explain" id="qz-explain-7">Le mirroring traverse tout l\'appel : connexion initiale, decouverte, traitement d\'objection — c\'est un des rares outils utilisable a chaque etape sans exception.</div></div></div></div>';
+var QZ_ANSWERED={};
+function qzAnswer(el,qi){
+  if(QZ_ANSWERED[qi])return;
+  QZ_ANSWERED[qi]=true;
+  var isCorrect=el.dataset.correct==='1';
+  var opts=el.parentElement.querySelectorAll('.qz-opt');
+  opts.forEach(function(o){
+    o.classList.add('qz-disabled');
+    if(o.dataset.correct==='1')o.classList.add('qz-correct');
+  });
+  if(!isCorrect)el.classList.add('qz-wrong');
+  var explain=document.getElementById('qz-explain-'+qi);
+  if(explain)explain.classList.add('show');
+  qzUpdateScore();
+}
+function qzUpdateScore(){
+  var total=Object.keys(QZ_ANSWERED).length;
+  var allQ=document.querySelectorAll('.qz-q').length;
+  if(total<allQ)return;
+  var correct=0;
+  document.querySelectorAll('.qz-q').forEach(function(qEl){
+    var correctOpt=qEl.querySelector('.qz-opt.qz-correct');
+    var wrongClicked=qEl.querySelector('.qz-opt.qz-wrong');
+    if(correctOpt && !wrongClicked)correct++;
+  });
+  var bar=document.getElementById('qz-score-bar'),txt=document.getElementById('qz-score-text');
+  if(bar&&txt){
+    bar.style.display='block';
+    var pct=Math.round(correct/allQ*100);
+    var msg=pct>=80?'Excellent — tu maitrises bien cette phase.':pct>=50?'Pas mal — relis les chapitres ou tu as hesite.':'Cette phase merite une relecture complete avant de passer a la suite.';
+    txt.textContent='Score : '+correct+' / '+allQ+' ('+pct+'%) — '+msg;
+    bar.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+}
+
 function buildChapters(mi){
   var m=MODS[mi];if(!m)return'';var h='';
+  if(mi===4)h+=MOD4_JOURNEY_HTML;
   m.chs.forEach(function(ch,ci){
     var dk=!!PROG[key(mi,ci)];
     h+='<div class="ch"><div class="chh" onclick="toggleCh('+mi+','+ci+')" id="hd-'+mi+'-'+ci+'"><span class="chn '+ch.tc+'">'+ch.n+'</span><span class="chl">'+ch.t+'</span><div class="ck '+(dk?'done':'')+ '" id="tk-'+mi+'-'+ci+'" onclick="tick('+mi+','+ci+',event)">'+(dk?'&#10003;':'')+'</div><span class="ça" id="ar-'+mi+'-'+ci+'">&#9662;</span></div>';
@@ -494,6 +574,7 @@ function buildChapters(mi){
     });
     h+='</div>';
   }
+  if(mi===4)h+=MOD4_QUIZ_HTML;
   return h;
 }
 function buildAnchor(){
