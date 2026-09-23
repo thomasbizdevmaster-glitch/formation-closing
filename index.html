@@ -201,6 +201,61 @@ body{font-family:'Inter',sans-serif;background:var(--noir);color:var(--ivoire);-
 @media(max-width:600px){.fgrid{grid-template-columns:1fr}.anl-grid{grid-template-columns:1fr}}
 
 /* BONUS ANALOGIES */
+/* --- Lecteur par ecrans (module Objections) --- */
+.pgw{padding:0}
+.pgess{background:var(--or-bg);border:1px solid var(--or-border);border-radius:6px;padding:12px 16px;margin-bottom:14px}
+.pgess .pel{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--or);font-weight:600;margin-bottom:5px}
+.pgess .pet{font-size:13px;color:var(--ivoire);line-height:1.7}
+.pgmeta{display:flex;gap:14px;align-items:center;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--gris-light);margin-bottom:14px}
+.pgsc{min-height:150px}
+.pgsc .ci{margin-bottom:0}
+.pgdots{display:flex;gap:5px;margin:18px 0 12px;flex-wrap:wrap}
+.pgd{width:22px;height:3px;border-radius:2px;background:#26261F;cursor:pointer;transition:background .2s}
+.pgd.on{background:var(--or)}
+.pgd.seen{background:#4A4232}
+.pgnav{display:flex;gap:8px;align-items:center}
+.pgb{background:var(--noir-mid);border:1px solid #2A2A2A;color:var(--ivoire);font-family:'Inter',sans-serif;font-size:12px;font-weight:500;padding:9px 16px;border-radius:5px;cursor:pointer}
+.pgb:hover:not(:disabled){border-color:var(--or)}
+.pgb:disabled{opacity:.35;cursor:default}
+.pgb.pri{background:var(--or);color:var(--noir);border-color:var(--or);font-weight:600}
+.pgstep{margin-left:auto;font-size:10px;letter-spacing:1.5px;color:var(--gris-light)}
+.nt2{margin-top:14px}
+.nt2 .ntl{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--or);font-weight:600;margin-bottom:6px}
+.nt2 textarea{width:100%;background:var(--noir-mid);border:1px solid #2A2A2A;border-radius:6px;color:var(--ivoire);font-family:'Inter',sans-serif;font-size:13px;line-height:1.7;padding:12px 14px;min-height:88px;outline:none;resize:vertical}
+.nt2 textarea:focus{border-color:var(--or-border)}
+.nt2 .nts{font-size:10px;color:var(--gris-light);margin-top:6px;height:12px}
+/* --- Carnet --- */
+.cnt{background:var(--noir-card);border:1px solid #1A1A1A;border-radius:8px;margin-bottom:10px;overflow:hidden}
+.cnth{padding:14px 18px;display:flex;align-items:center;gap:10px;cursor:pointer}
+.cnth .cn1{font-size:13px;font-weight:600;color:var(--ivoire)}
+.cnth .cn2{font-size:11px;color:var(--gris-light);margin-left:auto}
+.cntb{display:none;padding:0 18px 16px}
+.cntb.op{display:block}
+.cnote{border-left:2px solid var(--or-border);padding:8px 0 8px 14px;margin-bottom:10px}
+.cnote .cnt1{font-size:11px;color:var(--or);margin-bottom:4px}
+.cnote .cnt2{font-size:13px;color:rgba(245,240,232,0.75);line-height:1.7;white-space:pre-wrap}
+/* --- Quiz --- */
+.qz{background:var(--noir-card);border:1px solid var(--or-border);border-radius:8px;padding:22px 24px;margin:10px 0}
+.qzh{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--or);font-weight:600;margin-bottom:10px}
+.qzq{font-size:15px;color:var(--ivoire);line-height:1.6;margin-bottom:14px;font-weight:500}
+.qzo{display:block;width:100%;text-align:left;background:var(--noir-mid);border:1px solid #2A2A2A;border-radius:6px;color:var(--ivoire);font-family:'Inter',sans-serif;font-size:13px;line-height:1.6;padding:11px 14px;margin-bottom:8px;cursor:pointer}
+.qzo:hover:not(:disabled){border-color:var(--or)}
+.qzo:disabled{cursor:default}
+.qzo.ok{border-color:#3E8E6A;background:rgba(62,142,106,0.10)}
+.qzo.ko{border-color:#A8341F;background:rgba(168,52,31,0.10)}
+.qzfb{border-left:2px solid var(--or);padding:10px 14px;background:rgba(201,168,76,0.05);font-size:13px;color:rgba(245,240,232,0.8);line-height:1.7;margin:12px 0}
+.qzfb b{color:var(--or)}
+.qzsc{font-size:44px;font-weight:700;color:var(--or);line-height:1;margin-bottom:8px}
+/* --- Simulateur --- */
+.sim{background:var(--noir-card);border:1px solid #1A1A1A;border-radius:8px;padding:22px 24px;margin:10px 0}
+.simsay{background:var(--noir-mid);border-left:2px solid #4A4A44;border-radius:0 6px 6px 0;padding:12px 16px;margin-bottom:14px}
+.simsay .sw{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--gris-light);margin-bottom:5px}
+.simsay .sx{font-size:14px;color:var(--ivoire);line-height:1.65;font-style:italic}
+.simpath{display:flex;gap:4px;margin-bottom:14px}
+.simpath i{width:26px;height:3px;border-radius:2px;background:#26261F;font-style:normal}
+.simpath i.g{background:#3E8E6A}.simpath i.b{background:#A8341F}
+.anx{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--or);font-weight:600;margin:26px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--or-border)}
+.anx:first-of-type{margin-top:18px}
 .ana-warn{background:var(--or-bg);border:1px solid var(--or-border);border-radius:8px;padding:16px 20px;margin-bottom:20px}
 .awh{font-size:13px;font-weight:600;color:var(--or);margin-bottom:6px}
 .awb{font-size:13px;color:rgba(245,240,232,0.7);line-height:1.75}
@@ -364,6 +419,38 @@ s3:[
 {cl:'s3',lb:"Script — Anticiper objections arnaque & risque",tx:"Je vais te dire quelque chose — quand j'ai commence a regarder des accompagnements comme ça, ma premiere reaction c'était de me dire 'c'est peut-être une arnaque'. Et la question que je me posais c'était : est-ce que la douleur de rester la ou j'etais était plus grande que la peur d'investir ? Et a un moment, ça a bascule.",no:"Ce script anticipe les croyances 1 et 3 avant qu'elles soient exprimees."}
 ]
 };
+var ANAM=[
+{n:'M1',tc:'t',tag:'Fondation',t:"Ce qu'est vraiment une analogie",i:"Pense a un adaptateur de prise en voyage. Ton chargeur ne change pas, la prise murale ne change pas : l'adaptateur permet juste a l'un de se brancher sur l'autre. Une analogie, c'est exactement ca. Elle branche une idee nouvelle sur une prise que le prospect a deja dans la tete.\n\nLe mot cle, c'est transfert. Une analogie prend une situation que le prospect comprend deja parfaitement — un feu rouge, un GPS, une pasteque au supermarche — et en transporte la logique vers la situation qu'il n'arrive pas a voir clairement : la sienne.",pts:[
+  {c:'r',b:'Metaphore',t:" : elle colle une image sur une chose pour la decorer. 'Ta situation, c'est un sable mouvant.' Le prospect ressent quelque chose, mais ne comprend rien de nouveau."},
+  {c:'r',b:'Histoire',t:" : elle raconte ce qui est arrive a quelqu'un d'autre. Utile, mais longue, et il s'identifie ou pas."},
+  {c:'t',b:'Analogie',t:" : elle transfere une loi d'une situation connue vers la sienne. La conclusion vient de lui — et on ne resiste pas a une conclusion qu'on a tiree soi-meme."}
+],ex:{l:'A retenir',t:"Une bonne analogie ne dit pas au prospect quoi penser. Elle lui montre une situation ou il connait deja la bonne reponse, et le laisse faire le rapprochement tout seul."},gold:{l:'Mecanique plutot que memorisation',t:"Une analogie apprise par coeur est souvent plaquee sur un contexte qui n'est pas le bon, et le prospect le sent : ton debit change, ton ton devient celui de quelqu'un qui recite. Un musicien qui ne connait que des morceaux par coeur est perdu des qu'on change la tonalite. Celui qui connait les gammes improvise."}},
+{n:'M2',tc:'t',tag:'Mecanique',t:"Pourquoi le cerveau du prospect l'accepte",i:"Le cerveau cherche en permanence a minimiser l'effort cognitif. Face a une idee nouvelle, il a deux options : construire un schema de comprehension de zero — couteux, fatigant, inconfortable — ou recycler un schema qu'il possede deja : rapide, fluide, rassurant. Il choisit la deuxieme des qu'on la lui propose.\n\nTon prospect, en appel, est deja en surcharge : il decouvre une offre, un prix, une decision a prendre, et en plus il est face a un inconnu. Si tu lui demandes en plus de suivre un raisonnement abstrait, tu lui demandes de sortir de sa zone de confort mentale. Il decroche, ou il se defend.",pts:[
+  {c:'r',b:'Argument logique',t:" : le prospect evalue une affirmation exterieure, cherche la faille, se met en defense — 'oui mais moi c'est different'."},
+  {c:'t',b:'Analogie',t:" : il utilise un schema qu'il maitrise, la conclusion est evidente, il la tire lui-meme sans se sentir contredit."},
+  {c:'p',b:'Elle deplace le debat',t:" : on ne parle plus de lui, de son argent, de sa peur. On parle d'un feu rouge. Sa defense n'a rien a proteger."},
+  {c:'p',b:"Elle s'imprime",t:" : le soir, quand il repense a l'appel, c'est l'image qui revient — pas ton argument."}
+],ex:{l:'Le lien avec ta posture',t:"L'analogie est l'outil naturel du closer qui pratique la posture du medecin : il ne convainc pas, il fait constater. Une analogie sans question derriere reste un discours. Une analogie suivie d'une question devient une prise de conscience."},gold:null},
+{n:'M3',tc:'r',tag:'Positionnement',t:"Sa place exacte dans le traitement d'objection",i:"Un chirurgien a un bistouri tres precis. Mais il ne commence pas par la : il examine, il fait des radios, il pose un diagnostic. L'analogie, c'est ton bistouri.\n\nL'analogie n'est pas ta strategie de traitement d'objection. C'est un outil qui intervient a une etape precise du protocole — accueillir, clarifier, eliminer, demander — et seulement la : l'etape ELIMINER.",pts:[
+  {c:'g',b:'1. Accueillir',t:" : valider, sans contredire. Le prospect doit se sentir entendu."},
+  {c:'g',b:'2. Clarifier',t:" : creuser. Quelle est la vraie croyance derriere la phrase ?"},
+  {c:'t',b:'3. Eliminer',t:" : c'est ici, et seulement ici, que l'analogie intervient."},
+  {c:'g',b:'4. Demander',t:" : reposer la question de la decision, sans detour."}
+],ex:{l:'Pourquoi jamais avant la clarification',t:"La meme phrase peut cacher des croyances totalement differentes. 'Je veux reflechir' peut vouloir dire : j'ai peur de me tromper, je n'ai pas l'argent, je dois en parler a ma femme, je ne te fais pas confiance. Si tu sors l'analogie du feu rouge a quelqu'un qui a en realite un probleme de confiance, tu as l'air de ne pas l'avoir ecoute."},gold:{l:'Pourquoi elle ne suffit pas seule',t:"Beaucoup de closers font un tres beau travail d'elimination, voient le prospect acquiescer... et laissent le silence s'installer. L'elan retombe. Apres l'analogie et la question, tu reviens a la demande : 'Du coup, qu'est-ce qu'on fait ?'"}},
+{n:'M4',tc:'p',tag:'Methode',t:"Creer ta propre analogie en 3 etapes",i:"Un serrurier ne commence pas par tailler une cle au hasard. Il regarde la serrure, comprend le mecanisme, puis taille. Si tu commences par chercher une image jolie, tu tailles des cles au hasard.\n\nL'ordre ne change jamais : la croyance d'abord, la loi ensuite, l'image en dernier.",pts:[
+  {c:'p',b:'Etape 1 — La croyance',t:" : qu'est-ce que le prospect croit, precisement, qui l'empeche de decider ? Pas la phrase qu'il dit : la croyance dessous. 'Je veux attendre' devient 'attendre ne me coute rien, ma situation restera la meme'."},
+  {c:'p',b:'Etape 2 — La loi universelle',t:" : quelle verite, valable partout, contredit cette croyance ? C'est l'etape la plus importante — c'est la loi qui convainc, pas l'image. Ici : tout ce qu'on n'entretient pas se degrade tout seul."},
+  {c:'p',b:"Etape 3 — L'image familiere",t:" : une situation du quotidien ou cette loi est evidente, proche de l'univers du prospect. Ici : un jardin laisse six mois sans entretien. Puis une formulation courte, terminee par une question."},
+  {c:'t',b:'La banque de lois',t:" : entropie (jardin, maison) · ajustement en mouvement (feux, GPS, pilote) · l'immobilite ne corrige rien (quai de gare, menu au restaurant) · l'echec est un apprentissage (enfant qui marche, pasteque) · le probleme appelle la solution (dentiste) · processus vs resultat (recette, coiffeur) · se securiser d'abord (masque a oxygene) · effet cumule (goutte d'eau, salle de sport) · constance (brossage de dents) · semer avant de recolter."}
+],ex:{l:'Le test des trois questions',t:"1. Le prospect connait-il la situation de l'image sans explication ? 2. La loi y est-elle evidente, sans discussion possible ? 3. Le rapprochement avec sa situation se fait-il tout seul ? Si une seule reponse est non, change d'image — pas de loi."},gold:{l:'Entrainement quotidien',t:"Chaque jour, pose-toi la question : 'Qu'est-ce qui, dans ce que je viens de vivre, est vrai partout ?' Tu viens de trouver une loi. Puis : 'Quelle objection cette loi pourrait-elle dissoudre ?' Tu viens de creer une analogie."}},
+{n:'M5',tc:'r',tag:'Polarite & garde-fous',t:"Affirmative ou inversee, et les erreurs a eviter",i:"Pour faire comprendre a quelqu'un qu'il doit mettre sa ceinture, tu peux lui dire 'c'est ce qui te protege' ou lui demander 'tu roulerais a 130 sans ceinture ?'. Meme message, deux angles. Le bon depend de la personne en face.",pts:[
+  {c:'t',b:'Polarite affirmative',t:" : agir est la suite logique. 'Quand tu decides de sauter en parachute, tu ne te demandes pas si tu vas prendre un parachute.' Pour le prospect prudent, emotif, ou quand le lien est encore fragile."},
+  {c:'r',b:'Polarite inversee',t:" : ne pas agir est incoherent. 'Ce serait comme monter dans l'avion, decider de sauter, et laisser le parachute au sol.' Pour celui qui minimise, rationalise ou se contredit ouvertement."},
+  {c:'p',b:'Ton vecu avant les citations',t:" : une anecdote que tu as vecue vaut dix citations de personnalites connues. C'est ce qui rend l'analogie authentique et connecte aux emotions du prospect."},
+  {c:'p',b:"Pas d'images trop sombres",t:" : evite les maladies graves, les deces, les accidents. Prefere l'urgent et le banal — une rage de dents, un pneu creve. Tu ne sais jamais ce que vit la personne en face."},
+  {c:'p',b:'Court, et une seule',t:" : trois ou quatre phrases. En enchainer plusieurs donne l'impression que tu veux gagner, et chaque image affaiblit la precedente."}
+],ex:{l:"Attention avec l'inversee",t:"Mal dosee, elle fait passer le prospect pour un idiot — et quelqu'un qui se sent idiot ne signe pas, il se defend. Utilise-la avec un sourire dans la voix, sur la situation et jamais sur la personne. 'Ce serait un peu absurde, non ?' passe. 'C'est absurde ce que tu fais' ne passe pas."},gold:{l:"Les erreurs qui reviennent le plus",t:"Reciter une analogie apprise · la sortir avant d'avoir clarifie · en enchainer trois · oublier la question qui suit · prendre un ton de donneur de lecon · utiliser l'inversee avant que la confiance soit installee · oublier de revenir a la demande."}}
+];
 var ANAL=[
 {cat:"Croyance — Risque",catcl:'r',t:"L'autoroute et l'avion",scene:"Quelqu'un refuse de prendre l'avion 'a cause du risque'. Mais il conduit sur l'autoroute chaque matin sans y penser. Le risque n'est pas calcule — il est ressenti.",link:"Ce que ça dit : le prospect n'analyse pas vraiment le risque. Son amygdale ne fait pas de statistiques.",profils:["Tous profils","Efficace sur Analytique"],quand:"Quand le prospect dit 'c'est risque' sans quantifier.",comment:"Lance-la avec curiosite. 'Est-ce que c'est objectif ou c'est plus une sensation ?' Lance l'image, puis laisse le silence travailler."},
 {cat:"Croyance — Garantie",catcl:'t',t:"Le professeur de natation",scene:"Un professeur de natation peut t'apprendre les mouvements, corriger ta technique. Mais la piscine ne nage pas a ta place.",link:"Ce que ça dit : le prospect veut externaliser le résultat. L'analogie rend visible cette dynamique sans l'accuser.",profils:["Tous profils","Puissant sur Empathique et Stable"],quand:"Quand le prospect demande 'est-ce que tu me garantis que je vais réussir ?'",comment:"'Moi-même je ne peux pas me garantir que je serai la demain matin.' Puis : 'La vraie question c'est est-ce que toi tu t'engages vraiment ?'"},
@@ -374,13 +461,23 @@ var ANAL=[
 {cat:"Croyance — Opportunites",catcl:'r',t:"La piscine a 10 minutes",scene:"Quelqu'un dit qu'il n'a jamais appris a nager parce qu'il n'a jamais habite pres d'une piscine. Alors qu'il y en avait une a 10 minutes — mais il n'y est jamais alle.",link:"Ce que ça dit : les opportunités arrivent a tout le monde. La question n'est pas 'est-ce qu'elles arrivent' — c'est 'est-ce qu'on les prend'.",profils:["Fuyant","Stable"],quand:"Quand le prospect dit 'j'ai jamais eu les bonnes opportunités'.",comment:"'Est-ce que les opportunités n'étaient vraiment pas la, ou est-ce qu'il y avait quelque chose d'autre ?'"},
 {cat:"Momentum — Curiosite vs Engagement",catcl:'t',t:"Le spectateur et le joueur",scene:"Un spectateur regarde un match depuis les tribunes. Il connait les regles, voit les erreurs, sait ce qu'il faudrait faire. Un joueur est sur le terrain. Ce n'est pas la connaissance qui les separe — c'est la décision d'entrer dans le jeu.",link:"Ce que ça dit : beaucoup de gens veulent lancer un business en ligne. Ils regardent, s'informent. Mais il y a un fosse entre la curiosite et l'engagement. Ce fosse a un nom : la décision.",profils:["Tous profils","Puissant en fin de découverte"],quand:"Quand le prospect est interesse mais pas encore décidé. Quand il dit 'ça m'attire mais j'hesite'.",comment:"'Est-ce que tu es la en spectateur — ou tu es pret a entrer sur le terrain ?' Simple, direct, sans pression. Silence après."},
 {cat:"Solo — Se lancer seul",catcl:'r',t:"Le bricoleur et l'architecte",scene:"Tu peux regarder des videos YouTube pour renover ta maison. Des tutoriels, des plans gratuits. Mais il y a un moment ou ce que tu construis ne tient pas — parce qu'il te manque la logique d'ensemble. Pas les briques. La structure.",link:"Ce que ça dit : l'information gratuite existe. Le problème n'est jamais l'accès a l'information — c'est la structure, la progression, et quelqu'un qui te dit stop quand tu te trompes.",profils:["Analytique","Fuyant","Tous tentes par l'autodidacte"],quand:"Quand le prospect dit 'je vais d'abord essayer seul'.",comment:"'L'information pour renover ta maison existe gratuitement. La difference entre quelqu'un qui regarde les videos et quelqu'un qui a une belle maison renovee — c'est quoi selon toi ?'"}
+,{cat:"Objection — Inertie",catcl:'r',t:"Le jardin — 'je prefere attendre'",scene:"Tu as deja vu un jardin qu'on laisse six mois sans s'en occuper ? Il ne reste pas comme il etait. Les mauvaises herbes, elles n'attendent pas que tu sois disponible.",link:"Croyance : attendre est neutre, ma situation restera la meme. Loi : entropie — ce qu'on n'entretient pas se degrade tout seul. Variante affirmative : quelqu'un qui dort sur un mauvais matelas depuis des annees et qui s'est habitue a la douleur.",profils:["Objection inertie","Tous profils"],quand:"Clarifie d'abord : 'Si on se reparle dans six mois et que rien n'a bouge entre-temps, tu seras dans quelle situation ?'",comment:"Polarite inversee. Enchaine avec 'Et ta situation, si tu n'y touches pas pendant six mois, tu penses qu'elle reste comme elle est ?' puis tais-toi. Ne confonds pas avec le perfectionnisme : s'il attend quelque chose de precis, ce n'est pas de l'inertie."},
+{cat:"Objection — Perfectionnisme",catcl:'t',t:"Les feux de circulation — 'j'attends d'etre pret'",scene:"C'est comme en voiture. Si tu attends que tous les feux de ton trajet soient au vert avant de sortir de chez toi, tu ne pars jamais. On demarre, on s'arrete au rouge, on repart.",link:"Croyance : il existe un moment ou toutes les conditions seront reunies. Loi : les conditions parfaites n'existent pas, on avance en ajustant en cours de route. Variante : un avion Paris-New York est hors trajectoire presque tout le temps, le pilote corrige et arrive quand meme.",profils:["Analytique","Stable","Perfectionniste"],quand:"Clarifie d'abord : 'Qu'est-ce qui doit etre reuni, concretement, pour que tu te sentes pret ? Et ca arrive quand ?'",comment:"Polarite affirmative uniquement. Le perfectionniste a peur d'etre juge s'il echoue : une polarite inversee confirmerait sa peur. Termine par 'Tu crois qu'il y aura vraiment un moment ou tout sera vert en meme temps ?'"},
+{cat:"Objection — Peur de se tromper",catcl:'p',t:"La gare — 'et si je fais le mauvais choix ?'",scene:"Tu es a la gare. Tu as tellement peur de prendre le mauvais train que tu restes sur le quai. Tu es sur d'une chose : tu n'arriveras nulle part. Celui qui monte, meme s'il doit changer a la station suivante, il avance.",link:"Croyance : ne pas choisir me protege de l'erreur. Loi : l'immobilite ne corrige rien — on change de direction en marchant, jamais a l'arret. La vraie question n'est pas 'est-ce le bon train' mais 'ou je veux aller'.",profils:["Stable","Analytique","Fuyant"],quand:"Clarifie d'abord : 'Qu'est-ce qui serait, pour toi, le mauvais choix ? Qu'est-ce que tu crains concretement ?'",comment:"Polarite affirmative. Termine par 'C'est quoi ta destination a toi, dans un an ?'. Cette analogie ne fonctionne que si tu as fait parler le prospect de sa situation desiree en decouverte — sinon la destination reste floue et la question tombe a plat."},
+{cat:"Objection — Echecs passes",catcl:'r',t:"La pasteque — 'j'ai deja essaye'",scene:"Tu es deja tombe sur une pasteque pas bonne au supermarche ? Tu as arrete d'acheter des pasteques pour autant ? Non. Tu as appris a mieux la choisir : tu tapes dessus, tu regardes la tache en dessous.",link:"Croyance : mon echec passe prouve que ca ne marche pas, ou que ce n'est pas pour moi. Loi : l'echec fait partie de l'apprentissage, un mauvais choix ne condamne pas le domaine. Variantes : l'enfant qui apprend a marcher (rassurer) et le buffet a volonte (confronter — le probleme n'etait pas de manger, c'etait le repas).",profils:["Mefiant","Deja forme ailleurs","Blessure passee"],quand:"Clarifie d'abord : 'Qu'est-ce qui s'est passe exactement ? Qu'est-ce qui t'a manque, a l'epoque ?' — c'est souvent la que tu trouves ce qui differencie ton offre.",comment:"Commence toujours par rassurer avec quelqu'un qui a ete blesse par son experience : pasteque d'abord, buffet ensuite. Ne critique jamais la formation ou la personne qui l'a decu — tu passerais pour un concurrent qui denigre. Termine par 'Le probleme la derniere fois, c'etait le domaine, ou la maniere dont tu as ete accompagne ?'"},
+{cat:"Objection — Stabiliser d'abord",catcl:'t',t:"Le dentiste — 'je veux d'abord stabiliser'",scene:"Si tu as une rage de dents, tu ne te dis pas 'j'irai chez le dentiste quand j'aurai moins mal'. C'est justement parce que tu as mal que tu y vas.",link:"Croyance : il faut regler le probleme avant de s'occuper de la solution. Loi : c'est le probleme qui appelle la solution — attendre qu'il disparaisse seul, c'est le laisser grossir.",profils:["Stable","Fuyant","Contrainte reelle a verifier"],quand:"Clarifie d'abord : 'Stabiliser, pour toi, ca ressemble a quoi ? Et comment tu comptes y arriver si rien ne change ?'",comment:"Polarite inversee, en douceur. Termine par 'Ce que tu veux stabiliser, ce n'est pas justement ce que tu es venu regler en prenant cet appel ?'. Choisis des images medicales du quotidien — dent, fracture, entorse — jamais de maladie grave."},
+{cat:"Objection — Indecision",catcl:'p',t:"Le GPS — 'j'ai besoin de reflechir'",scene:"Un GPS ne peut rien faire tant que tu ne lui as pas donne de destination. Et une fois qu'il en a une, s'il se trompe de route, il recalcule. Il ne te demande pas de connaitre tout le trajet avant de partir.",link:"Croyance : avec plus de temps, la decision deviendra evidente. Loi : une decision ne demande pas plus de temps, elle demande une destination claire et l'information qui manque. Variante inversee : celui qui relit le menu au restaurant pendant vingt minutes — le probleme n'est plus le plat, c'est qu'il n'arrive pas a decider.",profils:["Tous profils","Fuyant"],quand:"Clarifie d'abord, toujours : 'Bien sur. Pour que ta reflexion soit utile : qu'est-ce qui te manque precisement pour decider ?'",comment:"'J'ai besoin de reflechir' est rarement la vraie objection. Sans clarification, tu traites un symptome. N'utilise ces images que si la clarification confirme une indecision pure."},
+{cat:"Objection — Garantie",catcl:'t',t:"La recette — 'vous me garantissez des resultats ?'",scene:"Une recette te donne les ingredients et les etapes. Deux personnes avec la meme recette n'auront pas exactement le meme gateau : ca depend de comment elles suivent les etapes. Ce qu'on te garantit, c'est la recette, et quelqu'un a cote de toi en cuisine.",link:"Croyance : le resultat depend de l'offre. Loi : on garantit un processus, jamais un resultat qui depend de celui qui l'applique. Variante : le coiffeur peut garantir la technique, pas que tu ressembles a la photo.",profils:["Analytique","Mefiant","Tous profils"],quand:"Clarifie d'abord : 'Qu'est-ce qui te ferait dire, dans six mois, que ca a marche ? Et qu'est-ce qui te fait douter que tu y arrives ?'",comment:"Polarite affirmative. Termine par 'Toi, tu te sens capable de suivre les etapes si on te les donne ?'. Ne promets jamais de resultat pour rassurer : tu gagnes le closing, tu perds le client."},
+{cat:"Objection — Culpabilite",catcl:'p',t:"Le masque a oxygene — 'c'est egoiste d'investir sur moi'",scene:"Dans l'avion, on te dit de mettre ton masque avant d'aider ton enfant. Ce n'est pas egoiste : si tu manques d'air, tu ne peux aider personne.",link:"Croyance : investir sur soi, c'est retirer quelque chose aux autres. Loi : on ne peut pas aider durablement les autres si on ne se securise pas d'abord soi-meme.",profils:["Empathique","Stable","Parent"],quand:"Clarifie d'abord : 'Si tu avances sur ce projet, qu'est-ce que ca change pour ta famille, concretement ?'",comment:"Termine par 'Si toi tu avances, qu'est-ce que ca change pour eux ?'. Cette analogie touche l'intime : elle est bien plus forte adossee a un vecu personnel sincere, et jamais sur un ton moralisateur."},
+{cat:"Decouverte — Faire emerger",catcl:'t',t:"Les deux extremes — 'est-ce que ca marche vraiment ?'",scene:"Imagine deux extremes. D'un cote, quelqu'un comme un poisson dans l'eau, qui se dit 'c'est bon, j'y vais, je sais que je vais y arriver'. De l'autre, quelqu'un rempli de doutes et de peurs.",link:"Ce n'est presque jamais un doute sur la methode : c'est une peur sur soi. Ici l'analogie ne sert pas a eliminer une croyance mais a faire emerger la vraie peur, pour pouvoir la traiter ensuite.",profils:["Tous profils","Debutants"],quand:"Des que le prospect demande si ca marche, ou si ca marche 'pour quelqu'un comme lui'.",comment:"Polarite exploratoire. Pose la jauge : 'Toi, entre les deux, tu te places ou ?' puis 'Pourquoi la et pas plus pres du poisson ?'. Sa reponse te donne la vraie objection. Ne reponds jamais a cette question par des preuves en rafale."},
+{cat:"Cas particuliers",catcl:'r',t:"Argent et legitimite — quand l'analogie vient apres l'enquete",scene:"L'argent : c'est comme a la salle de sport. Si tu attends que ca ne tire plus pour commencer, tu ne commences jamais. La legitimite : pour aider quelqu'un a traverser une riviere, tu n'as pas besoin d'avoir traverse l'ocean — il suffit d'avoir quelques pas d'avance sur le meme chemin.",link:"L'objection financiere se traite comme une contrainte logistique, pas comme un manque de valeur : explore d'abord les ressources disponibles. Le sentiment de non-legitimite se verifie avant d'etre traite — parfois le doute est fonde et merite une reponse concrete, pas une image.",profils:["Objection prix","Croyance de legitimite"],quand:"Jamais en premier. L'analogie n'arrive qu'une fois l'enquete faite : ressources reelles pour l'argent, origine du sentiment pour la legitimite.",comment:"Sur l'argent, l'image ne sert que si la vraie croyance est 'le changement ne devrait pas etre inconfortable'. Sur la legitimite, enquete d'abord : certains experts manquent de confiance pendant que des personnes moins competentes sont plus visibles."}
 ];
 function refreshBars(){
   var td=0,ta=0;
   for(var i=1;i<=8;i++){var m=MODS[i];if(!m)continue;var t=m.chs.length,d=0;m.chs.forEach(function(_,ci){if(PROG[key(i,ci)])d++;});td+=d;ta+=t;var el=document.getElementById('bar'+i);if(el)el.style.width=Math.round(d/t*100)+'%';}if(MODS[11]){var m11=MODS[11],t11=m11.chs.length,d11=0;m11.chs.forEach(function(_,ci){if(PROG[key(11,ci)])d11++;});td+=d11;ta+=t11;var e11=document.getElementById('bar11');if(e11)e11.style.width=Math.round(d11/t11*100)+'%';}
   [12,13].forEach(function(i){var m=MODS[i];if(!m)return;var t=m.chs.length,d=0;m.chs.forEach(function(_,ci){if(PROG[key(i,ci)])d++;});td+=d;ta+=t;var el=document.getElementById('bar'+i);if(el)el.style.width=Math.round(d/t*100)+'%';});
   var at=ANC.length,ad=0;ANC.forEach(function(_,ci){if(PROG[key(9,ci)])ad++;});td+=ad;ta+=at;var ab=document.getElementById('bar9');if(ab)ab.style.width=Math.round(ad/at*100)+'%';
-  var alt=ANAL.length,ald=0;ANAL.forEach(function(_,ci){if(PROG[key(10,ci)])ald++;});td+=ald;ta+=alt;var alb=document.getElementById('bar10');if(alb)alb.style.width=Math.round(ald/alt*100)+'%';
+  var alt=ANAL.length+ANAM.length,ald=0;ANAL.forEach(function(_,ci){if(PROG[key(10,ci)])ald++;});ANAM.forEach(function(_,ci){if(PROG[key(10,100+ci)])ald++;});td+=ald;ta+=alt;var alb=document.getElementById('bar10');if(alb)alb.style.width=Math.round(ald/alt*100)+'%';
   var e1=document.getElementById('kDone'),e2=document.getElementById('kPct');
   if(e1)e1.textContent=td;if(e2)e2.textContent=Math.round(td/ta*100)+'%';
 }
@@ -400,6 +497,7 @@ var MOD_PDFS={
     {name:'Decouverte Closing v4 — Questions ouvertes',file:'decouverte_questions.pdf',desc:'5 categories, exemples complets'},
     {name:'Ne coupez jamais la poire en deux — Chris Voss',file:'ne_coupez_jamais_la_poire_en_deux.pdf',desc:'Negociation, mirroring, empathie tactique'}
   ],
+  10:[{name:'Module Les Analogies — Support eleve',file:'module_analogies.pdf',desc:'35 pages · methode, bibliotheque, exercices, quiz'}],
   7:[
     {name:'Le Flow — Comprendre l\'état de performance optimale',file:'le_flow.pdf',desc:'Module 4 — Neurosciences du Flow'},
     {name:'La Passion — Commencer par la curiosite',file:'la_passion.pdf',desc:'Module sur la motivation profonde'},
@@ -468,6 +566,7 @@ var SEARCH_IDX=[];
 });
 ANC.forEach(function(ch,ci){SEARCH_IDX.push({mi:9,ci:ci,tag:ch.tag,t:ch.t,mtitle:"L'Ancrage",isA:false});});
 ANAL.forEach(function(a,ci){SEARCH_IDX.push({mi:10,ci:ci,tag:a.cat,t:a.t,mtitle:'Les Analogies',isA:true});});
+ANAM.forEach(function(a,ci){SEARCH_IDX.push({mi:10,ci:100+ci,tag:a.tag,t:a.t,mtitle:'Les Analogies',isA:true});});
 
 function normSearch(s){return (s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();}
 function doSearch(){
@@ -538,14 +637,211 @@ function buildAnchor(){
   });
   return h;
 }
+/* ====================== MODULE OBJECTIONS — expérience enrichie ====================== */
+var OBJ_ESS=[
+"Une objection n'est presque jamais ce qu'elle dit etre. Ton premier travail n'est pas de repondre : c'est de savoir si tu as affaire a un ecran de fumee ou a une contrainte reelle. Quatre reflexes tiennent tout le module : le silence, la question plutot que l'argument, le debit constant, la qualification systematique.",
+"L'objection arnaque n'est pas rationnelle : c'est une armure construite sur une deception, souvent pas la sienne. Tu ne la combats pas, tu la valides — puis tu entres dans sa definition de l'arnaque pour la faire travailler pour toi.",
+"Risque et opportunites semblent rationnelles et sont emotionnelles. Qualifie d'abord : un risque financier reel se respecte, un risque ressenti se recadre. Sur les opportunites, le miroir fait le travail a ta place.",
+"Demander une garantie, c'est transferer la responsabilite. Reponse honnete : tu garantis un processus, jamais un resultat qui depend de lui. Puis tu lui rends la responsabilite avec une question, pas avec une promesse.",
+"Le cadre universel, dans cet ordre, sans jamais sauter d'etape : accueillir, creuser, recadrer, demander la vente. L'erreur la plus frequente est de sauter directement au recadrage — et c'est exactement ce qui fait echouer le traitement.",
+"Le prix qui resiste apres la revalidation, c'est presque toujours une peur, pas une tresorerie. Separe les deux avant tout : la suite du protocole n'est pas la meme. La revelation du paiement echelonne n'arrive qu'a la fin, jamais en reflexe.",
+"Ce chapitre se joue AVANT de reveler le paiement echelonne. Le confort ne pousse jamais a l'action, l'inconfort oui. Tu ne pieges personne : tu lui demandes franchement si tu lui rends service en lui rendant les choses trop confortables.",
+"'Je vais reflechir' est un symptome, jamais une raison. L'entonnoir : retour a l'intention initiale, ancrage dans le temps, projection du futur, puis close sans demander la permission. Si ca revient une deuxieme fois, le reverse negatif ouvre la derniere porte.",
+"La tierce personne est quasi toujours un ecran : le prospect n'a pas encore decide pour lui-meme. Regle absolue — ne critique jamais le tiers ni la relation. Tu qualifies, tu fais monter l'emotion, tu projettes le non, tu responsabilises.",
+"Le manque de confiance arrive apres le prix, jamais avant. Ton atout : il vient de te parler de sa situation pendant quarante minutes, la confiance est deja la. Ton travail est de la lui faire constater, pas de la reconstruire.",
+"Deja engage ailleurs : ce qu'il a paye est perdu quoi qu'il arrive, sa decision d'aujourd'hui n'y change rien. Tu valides sans juger, tu recadres le cout reel — celui qu'il continue de perdre — et tu proposes une issue claire.",
+"Technique bonus, apres l'etape isoler/casser seulement. Le faux abandon fait retomber la pression, la question d'identite projetee dans le futur cree la dissonance. Tout le monde ne fuit pas : garde la nuance."
+];
+var Q6=[
+{q:"Un prospect dit 'c'est trop cher'. Quelle est la premiere chose a faire ?",o:["Proposer le paiement en plusieurs fois","Rappeler la valeur de l'accompagnement","Savoir si c'est une contrainte de tresorerie ou une peur","Redonner le prix avec assurance"],c:2,e:"Tant que tu n'as pas separe la tresorerie de la peur, tu ne sais pas quel protocole appliquer. Les deux chemins sont differents — et proposer l'echelonne en reflexe brule ton meilleur levier."},
+{q:"Dans le cadre universel, quelle etape saute-t-on le plus souvent ?",o:["Accueillir","Creuser","Recadrer","Demander la vente"],c:1,e:"L'erreur la plus commune est de sauter de l'accueil directement au recadrage. Sans creuser, tu recadres une objection que le prospect n'a pas vraiment."},
+{q:"'Je vais reflechir'. Quelle reaction ouvre l'entonnoir ?",o:["'Reflechir a quoi exactement ?'","'Je te relance vendredi, ca te va ?'","'C'est le budget qui bloque ?'","'Prends ton temps, je t'envoie un recap'"],c:0,e:"Tu ouvres en revenant a l'intention initiale. Proposer une objection a sa place lui en offre une, et accepter le report le sort de l'etat emotionnel ou la decision etait possible."},
+{q:"Le prospect dit 'j'en parle a ma femme'. Quelle est l'erreur a ne jamais commettre ?",o:["Qualifier si c'est un ecran","Projeter le non","Critiquer le tiers ou la relation","Responsabiliser le prospect"],c:2,e:"Critiquer le tiers cree une resistance immediate et te met en position d'adversaire. Tu qualifies, tu projettes, tu responsabilises — sans jamais toucher a la relation."},
+{q:"'Tu me garantis que je vais reussir ?' Que reponds-tu ?",o:["Oui, avec des resultats prouves","Tu garantis le processus, pas le resultat","Tu proposes une garantie de remboursement","Tu montres des temoignages"],c:1,e:"C'est un transfert de responsabilite : il veut que quelqu'un porte le risque a sa place. Le professeur de natation apprend les mouvements — la piscine ne nage pas a sa place."},
+{q:"Quand se joue le chapitre sur le paiement en une fois ?",o:["Apres avoir revele l'echelonne","Avant de reveler l'echelonne","Au moment de l'annonce du prix","A la toute fin de l'appel"],c:1,e:"Il se joue AVANT. Une fois l'echelonne sur la table, le confort est installe et l'inconfort positif ne peut plus faire son travail."},
+{q:"'Je ne vous connais pas' arrive typiquement :",o:["Des le debut de l'appel","Pendant la decouverte","Apres l'annonce du prix","Au moment de la prise de rendez-vous"],c:2,e:"Presque toujours apres le prix. Ce qui veut dire que la confiance existait avant — ton travail est de la lui faire constater, pas de la reconstruire."},
+{q:"Le prospect est deja engage dans un autre programme. Quel est le vrai levier ?",o:["Comparer ton offre a la sienne","Attendre la fin de son engagement","Ce qu'il a deja paye est perdu quoi qu'il arrive","Proposer une remise pour compenser"],c:2,e:"L'argent deja verse n'est plus recuperable par sa decision d'aujourd'hui. Le vrai cout, c'est ce qu'il continue de perdre — pas ce qu'il a deja paye."}
+];
+var SIM6={
+start:{say:"Ecoute, c'est vraiment interessant ce que tu me proposes... Je vais y reflechir et je te redis rapidement.",
+o:[{t:"Pas de souci, je te relance vendredi alors ?",v:'b',fb:"Tu viens d'accepter l'ecran de fumee. Le prospect quitte l'etat emotionnel dans lequel la decision etait possible, et vendredi il ne repond pas. Rien n'a ete explore."},
+   {t:"Je comprends. Reflechir a quoi exactement ?",v:'g',fb:"C'est l'ouverture de l'entonnoir : tu accueilles, puis tu creuses immediatement. Tu ne proposes aucune objection a sa place.",n:'n2'},
+   {t:"C'est le budget qui te bloque, c'est ca ?",v:'b',fb:"Tu viens de lui offrir une objection toute faite. Il va la prendre, parce que c'est la sortie la plus confortable — et tu traiteras un probleme qui n'est peut-etre pas le sien."}]},
+n2:{say:"Bah... je sais pas trop. C'est un gros investissement quand meme, je veux prendre le temps d'y penser.",
+o:[{t:"Donc si je comprends bien, c'est le prix.",v:'b',fb:"Tu reduis. Il n'a pas dit que c'etait le prix, il a dit que c'etait un gros investissement — ce n'est pas la meme chose, et tu fermes l'exploration trop tot."},
+   {t:"Qu'est-ce qui t'a pousse a prendre ce rendez-vous aujourd'hui ?",v:'g',fb:"Retour a l'intention initiale. Tu le ramenes a sa propre motivation, celle qui existait avant que la peur de decider ne prenne le dessus.",n:'n3'},
+   {t:"Tu sais, c'est comme un GPS : il ne peut rien faire tant que tu ne lui as pas donne de destination.",v:'b',fb:"L'analogie est juste, le timing est faux. Tu elimines une croyance que tu n'as pas encore identifiee — il va te repondre 'oui mais la c'est different'."}]},
+n3:{say:"J'en ai marre de stagner. Ca fait huit mois que je tourne en rond, je vois les autres avancer et moi je fais du surplace.",
+o:[{t:"Donc tu es d'accord qu'il faut que ca change, non ?",v:'b',fb:"Tu cherches un oui facile. Il va le donner, et ce oui ne vaut rien : c'est toi qui as fait le constat, pas lui."},
+   {t:"Huit mois. Et si rien ne change, dans six mois tu es ou ?",v:'g',fb:"Ancrage dans le temps puis projection du futur. C'est lui qui formule le cout de l'inaction — tu n'as rien affirme.",n:'n4'},
+   {t:"Je comprends totalement. Je t'envoie un recap par mail et tu me dis.",v:'b',fb:"Tu avais la vraie douleur devant toi et tu es sorti de l'appel. C'est le moment exact ou la majorite des closes se perdent."}]},
+n4:{say:"Dans six mois... franchement, probablement au meme endroit. Ou pire.",
+o:[{t:"Du coup, qu'est-ce qu'on fait ?",v:'g',fb:"Tu closes sans demander la permission. Court, direct, apres qu'il a formule lui-meme le cout de l'inaction.",n:'end'},
+   {t:"Tu veux qu'on regarde ensemble comment je pourrais t'aider ?",v:'b',fb:"Trop mou. Tu redemandes la permission alors qu'il vient de te donner sa raison d'avancer — et l'elan retombe."},
+   {t:"C'est comme un jardin qu'on laisse six mois sans s'en occuper...",v:'b',fb:"L'analogie arrive trop tard : il vient deja de faire le constat lui-meme. Tu lui reprends la conclusion des mains."}]},
+end:{say:"Ok. Je pense que j'ai besoin d'arreter de repousser. On fait comment concretement ?",fin:true}
+};
+var PG={},QS={i:0,sc:0,done:false},SM={cur:'start',hist:[],tries:0};
+function lNotes(c){try{var s=localStorage.getItem('n_'+c);return s?JSON.parse(s):{}}catch(e){return{}}}
+function sNotes(c,d){try{localStorage.setItem('n_'+c,JSON.stringify(d))}catch(e){}}
+var NOTES={};
+function noteSave(ci,el){
+  NOTES[ci]=el.value;sNotes(CU.code,NOTES);
+  var st=document.getElementById('nts-'+ci);if(st){st.textContent='Enregistre';setTimeout(function(){if(st)st.textContent='';},1600);}
+}
+function screensFor(ch){
+  var sc=[],paras=(ch.i||'').split('\n\n').filter(function(p){return p.trim();}),buf='';
+  paras.forEach(function(p){if(buf&&(buf+p).length>760){sc.push({ty:'t',v:buf});buf=p;}else{buf=buf?buf+'\n\n'+p:p;}});
+  if(buf)sc.push({ty:'t',v:buf});
+  var pts=ch.pts||[];
+  for(var i=0;i<pts.length;i+=2)sc.push({ty:'p',v:pts.slice(i,i+2)});
+  if(ch.ex)sc.push({ty:'b',cls:'ibox',l:ch.ex.l,v:ch.ex.t,il:'il',it:'it'});
+  if(ch.gold)sc.push({ty:'b',cls:'gbox',l:ch.gold.l,v:ch.gold.t,il:'gl',it:'gt'});
+  sc.push({ty:'e'});
+  return sc;
+}
+function pgBody(ci){
+  var ch=MODS[6].chs[ci],sc=screensFor(ch),i=PG[ci]||0;if(i>=sc.length)i=sc.length-1;
+  var cur=sc[i],inner='';
+  if(cur.ty==='t')inner='<div class="ci">'+hlQ(cur.v)+'</div>';
+  else if(cur.ty==='p'){inner='';cur.v.forEach(function(p){inner+='<div class="pt"><div class="pd '+p.c+'"></div><div class="ptx"><b>'+p.b+'</b> '+hlQ(p.t)+'</div></div>';});}
+  else if(cur.ty==='b')inner='<div class="'+cur.cls+'"><div class="'+cur.il+'">'+cur.l+'</div><div class="'+cur.it+'">'+hlQ(cur.v)+'</div></div>';
+  else{
+    var dk=!!PROG[key(6,ci)],nv=(NOTES[ci]||'');
+    inner='<div class="nt2"><div class="ntl">Ton carnet — ce que tu retiens, ou une phrase a tester en appel</div>'+
+      '<textarea id="nta-'+ci+'" placeholder="Ex : sur mon appel de mardi, il a dit ... et je n\'ai pas creuse." oninput="noteSave('+ci+',this)">'+nv.replace(/</g,'&lt;')+'</textarea>'+
+      '<div class="nts" id="nts-'+ci+'"></div></div>'+
+      '<div class="pgnav" style="margin-top:14px"><button class="pgb pri" onclick="pgDone('+ci+')">'+(dk?'Chapitre termine &#10003;':'Marquer ce chapitre comme termine')+'</button></div>';
+  }
+  var dots='<div class="pgdots">';
+  sc.forEach(function(_,j){dots+='<span class="pgd '+(j===i?'on':(j<i?'seen':''))+'" onclick="pgGo('+ci+','+j+')"></span>';});
+  dots+='</div>';
+  var mins=Math.max(1,Math.round(((ch.i||'').length+(ch.pts||[]).reduce(function(a,p){return a+p.t.length;},0))/1200));
+  return '<div class="pgw">'+
+    '<span class="tag '+ch.tc+'">'+ch.tag+'</span>'+
+    '<div class="pgmeta"><span>'+mins+' min</span><span>'+sc.length+' ecrans</span></div>'+
+    '<div class="pgess"><div class="pel">L\'essentiel</div><div class="pet">'+hlQ(OBJ_ESS[ci]||'')+'</div></div>'+
+    '<div class="pgsc">'+inner+'</div>'+dots+
+    '<div class="pgnav"><button class="pgb" onclick="pgGo('+ci+','+(i-1)+')" '+(i===0?'disabled':'')+'>&#8592; Precedent</button>'+
+    (i<sc.length-1?'<button class="pgb pri" onclick="pgGo('+ci+','+(i+1)+')">Suivant &#8594;</button>':'')+
+    '<span class="pgstep">Ecran '+(i+1)+' / '+sc.length+'</span></div></div>';
+}
+function pgGo(ci,i){
+  if(i<0)return;PG[ci]=i;
+  var el=document.getElementById('pg-6-'+ci);if(el)el.innerHTML=pgBody(ci);
+}
+function pgDone(ci){
+  if(!PROG[key(6,ci)])tick(6,ci,null);
+  pgGo(ci,PG[ci]||0);
+}
+function carnetToggle(){
+  var b=document.getElementById('cntb');if(b)b.classList.toggle('op');
+}
+function carnetExport(){
+  var h='<html><head><meta charset="utf-8"><title>Mon carnet — Objections</title><style>body{font-family:Georgia,serif;max-width:720px;margin:40px auto;line-height:1.7;color:#111}h1{font-size:22px}h2{font-size:14px;margin:26px 0 6px;color:#8A6D1E}p{white-space:pre-wrap;margin:0}</style></head><body><h1>Mon carnet — Module Objections</h1>';
+  var n=0;
+  MODS[6].chs.forEach(function(ch,ci){if((NOTES[ci]||'').trim()){n++;h+='<h2>'+ch.n+' · '+ch.t+'</h2><p>'+NOTES[ci].replace(/</g,'&lt;')+'</p>';}});
+  if(!n)h+='<p>Aucune note pour le moment.</p>';
+  h+='</body></html>';
+  var w2=window.open('','_blank');if(!w2)return;w2.document.write(h);w2.document.close();w2.focus();setTimeout(function(){try{w2.print();}catch(e){}},400);
+}
+function buildCarnet(){
+  var n=0,rows='';
+  MODS[6].chs.forEach(function(ch,ci){if((NOTES[ci]||'').trim()){n++;rows+='<div class="cnote"><div class="cnt1">'+ch.n+' · '+ch.t+'</div><div class="cnt2">'+NOTES[ci].replace(/</g,'&lt;')+'</div></div>';}});
+  if(!n)rows='<div class="cnt2" style="color:var(--gris-light)">Tes notes apparaitront ici. Chaque chapitre se termine par un espace pour ecrire ce que tu retiens ou une phrase a tester sur ton prochain appel.</div>';
+  return '<div class="cnt"><div class="cnth" onclick="carnetToggle()"><span class="cn1">Mon carnet</span><span class="cn2">'+n+' note'+(n>1?'s':'')+' &#9662;</span></div>'+
+    '<div class="cntb" id="cntb">'+rows+'<div class="pgnav" style="margin-top:12px"><button class="pgb" onclick="carnetExport()">Exporter en PDF</button></div></div></div>';
+}
+function buildQuiz6(){
+  if(QS.done){
+    var v=QS.sc>=7?"Tu maitrises le module. Passe au simulateur, puis a tes vrais appels.":(QS.sc>=5?"La base est la. Reprends le cadre universel et l'entonnoir 'je vais reflechir' avant de pratiquer.":"Reprends le module depuis le chapitre 01 : c'est la mecanique qui manque, pas les scripts.");
+    return '<div class="qz" style="text-align:center"><div class="qzh">Auto-evaluation</div><div class="qzsc">'+QS.sc+'/'+Q6.length+'</div><div class="qzfb" style="text-align:left">'+v+'</div><button class="pgb" onclick="qzRestart()">Refaire le quiz</button></div>';
+  }
+  var it=Q6[QS.i],h='<div class="qz"><div class="qzh">Auto-evaluation · question '+(QS.i+1)+' / '+Q6.length+'</div><div class="qzq">'+it.q+'</div>';
+  it.o.forEach(function(t,j){
+    var cls='qzo',dis='';
+    if(QS.ans!=null){dis='disabled';if(j===it.c)cls+=' ok';else if(j===QS.ans)cls+=' ko';}
+    h+='<button class="'+cls+'" '+dis+' onclick="qzAns('+j+')">'+t+'</button>';
+  });
+  if(QS.ans!=null){
+    h+='<div class="qzfb"><b>'+(QS.ans===it.c?'Exact.':'Pas tout a fait.')+'</b> '+it.e+'</div>';
+    h+='<button class="pgb pri" onclick="qzNext()">'+(QS.i===Q6.length-1?'Voir mon resultat':'Question suivante')+'</button>';
+  }
+  return h+'</div>';
+}
+function qzAns(j){if(QS.ans!=null)return;QS.ans=j;if(j===Q6[QS.i].c)QS.sc++;qzR();}
+function qzNext(){if(QS.i===Q6.length-1){QS.done=true;PROG['q6']=QS.sc;sProg(CU.code,PROG);}else{QS.i++;QS.ans=null;}qzR();}
+function qzRestart(){QS={i:0,sc:0,done:false,ans:null};qzR();}
+function qzR(){var el=document.getElementById('qzbox');if(el)el.innerHTML=buildQuiz6();}
+function buildSim6(){
+  var nd=SIM6[SM.cur],h='<div class="sim">';
+  h+='<div class="simpath">';SM.hist.forEach(function(v){h+='<i class="'+v+'"></i>';});h+='</div>';
+  h+='<div class="simsay"><div class="sw">Le prospect</div><div class="sx">'+nd.say+'</div></div>';
+  if(nd.fin){
+    var good=SM.hist.filter(function(v){return v==='g';}).length,bad=SM.hist.length-good;
+    h+='<div class="qzfb"><b>Appel repris.</b> Tu as trouve la bonne reponse du premier coup '+good+' fois sur 4'+(bad?', avec '+bad+' detour'+(bad>1?'s':'')+'.':'.')+' Le chemin qui marche est toujours le meme : accueillir, creuser, ancrer dans le temps, projeter, closer sans demander la permission.</div>';
+    h+='<button class="pgb" onclick="simRestart()">Refaire le simulateur</button></div>';
+    return h;
+  }
+  if(SM.fb)h+='<div class="qzfb"><b>'+(SM.fbv==='g'?'Bien vu.':'Ca coince.')+'</b> '+SM.fb+'</div>';
+  nd.o.forEach(function(o,j){h+='<button class="qzo" onclick="simPick('+j+')">'+o.t+'</button>';});
+  return h+'</div>';
+}
+function simPick(j){
+  var o=SIM6[SM.cur].o[j];SM.fb=o.fb;SM.fbv=o.v;
+  if(o.v==='g'){SM.hist.push(SM.tries?'b':'g');SM.tries=0;SM.cur=o.n;SM.fb=o.fb;}
+  else SM.tries++;
+  simR();
+}
+function simRestart(){SM={cur:'start',hist:[],tries:0,fb:null};simR();}
+function simR(){var el=document.getElementById('simbox');if(el)el.innerHTML=buildSim6();}
+function buildObjections(){
+  NOTES=lNotes(CU.code);
+  var h=buildCarnet();
+  h+='<div class="anx">Les chapitres</div>';
+  MODS[6].chs.forEach(function(ch,ci){
+    var dk=!!PROG[key(6,ci)];
+    h+='<div class="ch"><div class="chh" onclick="toggleCh(6,'+ci+')" id="hd-6-'+ci+'"><span class="chn '+ch.tc+'">'+ch.n+'</span><span class="chl">'+ch.t+'</span><div class="ck '+(dk?'done':'')+'" id="tk-6-'+ci+'" onclick="tick(6,'+ci+',event)">'+(dk?'&#10003;':'')+'</div><span class="ça" id="ar-6-'+ci+'">&#9662;</span></div>';
+    h+='<div class="cbd" id="bd-6-'+ci+'"><div id="pg-6-'+ci+'">'+pgBody(ci)+'</div></div></div>';
+  });
+  h+='<div class="anx">Simulateur d\'appel — "je vais reflechir"</div>';
+  h+='<div class="awb" style="margin-bottom:10px">Tu choisis ta reponse a chaque prise de parole du prospect. Une mauvaise reponse ne te fait pas perdre : elle t\'explique pourquoi ca coince, et tu rejoues le meme moment.</div>';
+  h+='<div id="simbox">'+buildSim6()+'</div>';
+  h+='<div class="anx">Valide le module</div>';
+  h+='<div id="qzbox">'+buildQuiz6()+'</div>';
+  if(MOD_PDFS[6]){
+    h+='<div class="pdfs"><div style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gris-light);margin-bottom:12px;font-weight:600">Ressources PDF</div>';
+    MOD_PDFS[6].forEach(function(pdf){h+='<a class="pdf-card" href="./'+pdf.file+'" download="'+pdf.file+'" target="_blank"><div class="pdn">&#11015; PDF</div><div class="pdt">'+pdf.name+'</div><div class="pdd">'+pdf.desc+'</div></a>';});
+    h+='</div>';
+  }
+  return h;
+}
 function buildAnalogies(){
   var h='<div class="ana-warn"><div class="awh">Ce qui fait la difference — avant tout</div><div class="awb">Une analogie apprise par coeur ne vaut rien si elle n\'est pas incarnee. Ce n\'est pas <b>ce que tu vas dire</b> qui compte — c\'est <b>comment tu le dis</b>, <b>a qui</b>, et <b>au moment exact ou c\'est juste</b>.</div></div>';
+  h+='<div class="anx">Methode</div>';
+  ANAM.forEach(function(ch,ci){
+    var mk=100+ci,dk=!!PROG[key(10,mk)];
+    h+='<div class="ch"><div class="chh" onclick="toggleCh(10,'+mk+')" id="hd-10-'+mk+'"><span class="chn '+ch.tc+'">'+ch.n+'</span><span class="chl">'+ch.t+'</span><div class="ck '+(dk?'done':'')+'" id="tk-10-'+mk+'" onclick="tick(10,'+mk+',event)">'+(dk?'&#10003;':'')+'</div><span class="ça" id="ar-10-'+mk+'">&#9662;</span></div>';
+    h+='<div class="cbd" id="bd-10-'+mk+'"><span class="tag '+ch.tc+'">'+ch.tag+'</span><div class="ci">'+hlQ(ch.i)+'</div>';
+    ch.pts.forEach(function(p){h+='<div class="pt"><div class="pd '+p.c+'"></div><div class="ptx"><b>'+p.b+'</b> '+hlQ(p.t)+'</div></div>';});
+    if(ch.ex)h+='<div class="ibox"><div class="il">'+ch.ex.l+'</div><div class="it">'+hlQ(ch.ex.t)+'</div></div>';
+    if(ch.gold)h+='<div class="gbox"><div class="gl">'+ch.gold.l+'</div><div class="gt">'+hlQ(ch.gold.t)+'</div></div>';
+    h+='</div></div>';
+  });
+  h+='<div class="anx">Bibliotheque — '+ANAL.length+' analogies</div>';
   ANAL.forEach(function(a,i){
     var dk=!!PROG[key(10,i)];
     var profs=a.profils.map(function(p){return'<span class="pchip">'+p+'</span>';}).join('');
     h+='<div class="ac"><div class="ach" onclick="toggleA('+i+')"><span class="tag '+a.catcl+'" style="flex-shrink:0">'+a.cat+'</span><span class="atitle">'+a.t+'</span><div class="ck '+(dk?'done':'')+'" id="tk-10-'+i+'" onclick="event.stopPropagation();tick(10,'+i+',event)">'+(dk?'&#10003;':'')+'</div><span class="aarr" id="aa-'+i+'">&#9662;</span></div>';
     h+='<div class="abd" id="ab-'+i+'"><div class="scene">'+hlQ(a.scene)+'</div><div class="lnk">'+hlQ(a.link)+'</div><div class="prow">'+profs+'</div><div class="wb"><div class="wl">Quand la poser</div><div class="wt">'+hlQ(a.quand)+'</div></div><div class="hb"><div class="hl">Comment l\'incarner</div><div class="ht">'+hlQ(a.comment)+'</div></div></div></div>';
   });
+  if(MOD_PDFS[10]){
+    h+='<div class="pdfs"><div style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gris-light);margin-bottom:12px;font-weight:600">Ressources PDF</div>';
+    MOD_PDFS[10].forEach(function(pdf){
+      h+='<a class="pdf-card" href="./'+pdf.file+'" download="'+pdf.file+'" target="_blank"><div class="pdn">&#11015; PDF</div><div class="pdt">'+pdf.name+'</div><div class="pdd">'+pdf.desc+'</div></a>';
+    });
+    h+='</div>';
+  }
   return h;
 }
 function buildExercise(mi){
@@ -559,7 +855,7 @@ exs[6]={t:"Exercice — Fausses croyances & Objections",s:"Les objections se tra
 exs[7]={t:"Exercice — Ferocite & Flow",s:"La performance ne s'improvise pas. Elle se construit par des habitudes precises qui tiennent dans le temps.",steps:[{t:"Construire ta liste toujours / jamais",d:"Prends 20 minutes. Ecris ta liste de ce que tu feras TOUJOURS (ritual pre-appel, débrief post-appel, etc.) et ta liste de ce que tu ne feras JAMAIS (checker les reseaux avant un appel, faire un appel sans préparation, etc.). Affiche ces listes. Evalue-toi chaque semaine sur les deux colonnes."},{t:"Le défi des 10 jours consecutifs",d:"Choisis une habitude de performance que tu veux ancrer : coherence cardiaque, meditation, débrief post-appel. Fais-la 10 jours de suite sans exception. Une seule. Pas plusieurs a la fois. La régularité sur une habitude vaut mieux que l'irregularite sur dix."},{t:"Tracker ton état de Flow",d:"Sur tes 10 prochains appels, note après chacun ton niveau de Flow sur 10 : etais-tu vraiment present ? As-tu eu des moments d'acuite ou tu sentais le prospect ? Note ce qui precedait les appels a Flow élève vs les appels a Flow bas."}],checks:["Ma liste toujours / jamais est ecrite et affichee","J'ai tenu une habitude 10 jours consecutifs sans exception","J'ai tracker mon état de Flow sur 10 appels","J'ai identifié ce qui crée mes etats de Flow les plus élèves","J'ai mange le crapaud en premier pendant 5 jours consecutifs","J'ai fait un débrief écrit après chaque appel pendant 2 semaines"],rp:{sc:"Scenario de maintien sous pression. Ton mentor te fait faire 3 roleplays en sequence rapide (15 min chacun), sans pause. L'objectif : observer comment ta posture et ton énergie evoluent entre le 1er et le 3e. Sur le 3e, ton mentor joue un prospect difficile et agressif.",cr:["Ton état interne sur le 3e appel était-il comparable au 1er ?","Quels signaux indiquaient une baisse d'énergie ou de présence ?","As-tu maintenu ton rituel entre les appels ?","Comment tà voix et ton rythme ont-ils évolue ?","Qu'est-ce que tu ferais differemment pour maintenir ton état ?"]}};
 exs[8]={t:"Exercice — Performer & Grandir",s:"La professionnalisation, ça se construit. Ces exercices sont operationnels — pas theoriques.",steps:[{t:"Construire ton CRM en 1h",d:"Ouvre un Google Sheets. Cree ces colonnes : Prenom | Source | Profil DISC | Statut | Date prochain contact | Objection principale | Notes débrief | Commission. Remplis-le avec tes 10 derniers prospects. Mets une prochaine action sur chacun. A partir d'aujourd'hui, chaque prospect a une prochaine action planifiee."},{t:"Le débrief structure sur 10 appels",d:"Sur tes 10 prochains appels, reponds par écrit aux 6 questions après chaque appel : Quel était mon état interne ? Quel schéma cognitif j'ai détecte ? Quand ai-je contredit le cadre ? Quelle anomalie aurait pu deplacer le schéma ? Sur quelle variable était ma plus grande lacune ? Quelle était la 'petite flamme' du prospect ?"},{t:"Contacter 5 infopreneurs cette semaine",d:"Pas la semaine prochaine. Cette semaine. Identifie 5 infopreneurs dans ta niche. Envoie un message court et direct : 'Je suis closer spécialisé en [niche]. J'aide les infopreneurs a convertir leurs prospects en clients. Est-ce que vous avez un besoin en ce moment ?' 5 messages, cette semaine, pas la suivante."}],checks:["Mon CRM est construit avec les bonnes colonnes","Chaque prospect dans mon CRM a une prochaine action planifiee","J'ai fait le débrief structure sur 5 appels consecutifs","J'ai contacte 5 infopreneurs cette semaine","J'ai enregistré et reecoute 3 de mes appels","Mon ratio de parole moyen sur 10 appels est en dessous de 40%"],rp:{sc:"Simulation de prospection. Ton mentor joue un infopreneur que tu contactes pour la premiere fois. Il est occupe, un peu sceptique, et te demande ce que tu vaux en 2 minutes. Ton objectif : te présenter sans pitcher ton programme, créer de la curiosite, et obtenir un appel de découverte.",cr:["As-tu evite de pitcher ton programme directement ?","As-tu crée de la curiosite plutot que de la conviction ?","As-tu obtenu un engagement pour un prochain echange ?","Ta présentation durait-elle moins de 2 minutes ?","Comment as-tu gere le scepticisme initial de l'infopreneur ?"]}};
 exs[9]={t:"Exercice — Maitriser l'ancrage",s:"3 formats. 3 timings. Une seule regle : ça doit sonner naturel.",steps:[{t:"Ecris ton auto-admission vraie",d:"Qu'est-ce que tu pensais de ce business avant de le comprendre vraiment ? Si c'est fabrique, ça ne fonctionnera pas."},{t:"Teste les 3 formats sur un appel reel",d:"Ancre directe en ouverture. Ancre contraste en fin de diagnostic. Auto-admission avant le pitch."},{t:"Reactive l'ancre en closing",d:"Sans citer l'ancre : 'Est-ce que la, avec tout ce qu'on s'est dit, c'est aligne pour toi ?'"}],checks:["Mon auto-admission vraie est ecrite et testee","J'ai place une ancre directe en ouverture sur 3 appels","J'ai utilisé l'ancre contraste en fin de diagnostic","J'ai fait une auto-admission avant le pitch","J'ai reactive l'ancre implicitement en closing","J'ai enregistré et reecoute avec mon mentor"],rp:{sc:"Ton mentor joue un prospect méfiant qui dit 'j'ai besoin d'y réfléchir'. Tu dois avoir pose les 3 ancrages aux bons moments. L'évaluation porte sur le naturel, pas sur la technique.",cr:["L'ancre directe sonnait-elle naturelle ou calculee ?","L'ancre contraste a-t-elle crée une reaction visible ?","L'auto-admission était-elle vraie et incarnee ?","As-tu reactive l'ancre sans la citer ?","La tension interne était-elle palpable ?"]}};
-exs[10]={t:"Exercice — Incarner les analogies",s:"Connaitre une image ne suffit pas. L'objectif : qu'elle sonne comme la tienne.",steps:[{t:"Memorise puis oublie le script",d:"Lis chaque analogie plusieurs fois. Puis ferme la page. Raconte-la avec tes mots. Si tu la recites mot pour mot, elle n'est pas encore incarnee."},{t:"Enregistre-toi en train de la poser",d:"Sur un roleplay ou un vrai appel. Reecoute : est-ce que ça sonne naturel ? Il y a du silence après ?"},{t:"Une analogie par semaine sur un appel reel",d:"Pas toutes a la fois. Une par semaine, sur le bon profil, au bon moment."}],checks:["J'ai reformule avec mes propres mots 3 analogies","J'ai enregistré l'une d'elles sur un appel reel","J'ai note la reaction du prospect après le silence","J'ai identifié quelle analogie fonctionne sur quel profil","J'ai demande un retour a mon mentor sur l'incarnation"],rp:{sc:"Roleplay : ton mentor donne une objection au hasard. Tu dois placer l'analogie adaptee, naturellement, sans l'annoncer.",cr:["L'analogie était-elle adaptee a l'objection ?","A-t-elle sonne naturelle ou recitee ?","As-tu laisse le silence après l'image ?","As-tu attendu la reaction avant de continuer ?","Aurais-tu pu choisir une analogie differente — laquelle ?"]}};
+exs[10]={t:"Exercice — Incarner les analogies",s:"Connaitre une image ne suffit pas. L'objectif : qu'elle sonne comme la tienne.",steps:[{t:"Identifie la croyance avant l'image",d:"Sur tes 3 derniers appels, note l'objection exacte du prospect, puis la croyance qui etait dessous. Tant que tu ne sais pas nommer la croyance, tu n'as pas le droit de sortir une analogie."},{t:"Memorise puis oublie le script",d:"Lis chaque analogie plusieurs fois. Puis ferme la page. Raconte-la avec tes mots. Si tu la recites mot pour mot, elle n'est pas encore incarnee."},{t:"Enregistre-toi en train de la poser",d:"Sur un roleplay ou un vrai appel. Reecoute : est-ce que ça sonne naturel ? Il y a du silence après ?"},{t:"Une analogie par semaine sur un appel reel",d:"Pas toutes a la fois. Une par semaine, sur le bon profil, au bon moment."}],checks:["J'ai su nommer la croyance cachee derriere 3 objections reelles","J'ai cree une analogie de zero avec la methode en 3 etapes","J'ai reformule avec mes propres mots 3 analogies","J'ai enregistré l'une d'elles sur un appel reel","J'ai note la reaction du prospect après le silence","J'ai identifié quelle analogie fonctionne sur quel profil","J'ai demande un retour a mon mentor sur l'incarnation"],rp:{sc:"Roleplay : ton mentor donne une objection au hasard. Tu dois placer l'analogie adaptee, naturellement, sans l'annoncer.",cr:["La croyance a-t-elle ete clarifiee avant l'analogie ?","La polarite etait-elle adaptee a l'etat emotionnel du prospect ?","Une question ouverte a-t-elle suivi l'analogie ?","Le closer est-il revenu a la demande ?","L'analogie était-elle adaptee a l'objection ?","A-t-elle sonne naturelle ou recitee ?","As-tu laisse le silence après l'image ?","As-tu attendu la reaction avant de continuer ?","Aurais-tu pu choisir une analogie differente — laquelle ?"]}};
 var ex=exs[mi];
 if(!ex)return'<div style="font-size:12px;color:#64748B;padding:20px 0;text-align:center">Exercices bientot disponibles.</div>';
 var sh=ex.steps.map(function(s,i){return'<div class="estep"><div class="esn">'+(i+1)+'</div><div class="esb"><div class="estt">'+s.t+'</div><div class="esd">'+hlQ(s.d)+'</div></div></div>';}).join('');
@@ -574,7 +870,7 @@ function buildDashboard(){
   modKeys.forEach(function(i){var m=MODS[i];if(!m)return;var t=m.chs.length,d=0;m.chs.forEach(function(_,ci){if(PROG[key(i,ci)])d++;});td+=d;ta+=t;rows.push({n:nm[i]||'Module '+i,pct:Math.round(d/t*100),tp:'g'});});
   if(MODS[11]){var m11=MODS[11],t11=m11.chs.length,d11=0;m11.chs.forEach(function(_,ci){if(PROG[key(11,ci)])d11++;});}
   var at=ANC.length,ad=0;ANC.forEach(function(_,ci){if(PROG[key(9,ci)])ad++;});td+=ad;ta+=at;rows.push({n:"L\'Ancrage",pct:Math.round(ad/at*100),tp:'p'});
-  var alt=ANAL.length,ald=0;ANAL.forEach(function(_,ci){if(PROG[key(10,ci)])ald++;});td+=ald;ta+=alt;rows.push({n:'Les Analogies',pct:Math.round(ald/alt*100),tp:'t'});
+  var alt=ANAL.length+ANAM.length,ald=0;ANAL.forEach(function(_,ci){if(PROG[key(10,ci)])ald++;});ANAM.forEach(function(_,ci){if(PROG[key(10,100+ci)])ald++;});td+=ald;ta+=alt;rows.push({n:'Les Analogies',pct:Math.round(ald/alt*100),tp:'t'});
   var g=Math.round(td/ta*100);
   var nx=g===0?'Commence par le Module 0 — Fondations & Mindset.':g<30?'Continue dans l\'ordre. Chaque module s\'appuie sur le précédent.':g<60?'Intègre les bonus quand les fondations sont solides.':'Formation complète. Forme à ton tour.';
   var rh=rows.map(function(r){return'<div class="pr"><div class="prn">'+r.n+'</div><div class="prt"><div class="prtb"><div class="prtf '+r.tp+'" style="width:'+r.pct+'%"></div></div></div><div class="prp">'+r.pct+'%</div></div>';}).join('');
@@ -583,7 +879,7 @@ function buildDashboard(){
   var cardsHtml=cardOrder.map(function(mi){
     var meta=cardMeta[mi]||{ac:'var(--or)',bl:''};
     if(mi===9)return '<div class="axiscard" style="--card-accent:'+meta.ac+'" onclick="switchMod(9)"><div class="axn">Technique avancee</div><div class="axt">L\'Ancrage</div><div class="axd">'+meta.bl+'</div><div class="axc">'+ANC.length+' chapitres</div></div>';
-    if(mi===10)return '<div class="axiscard" style="--card-accent:'+meta.ac+'" onclick="switchMod(10)"><div class="axn">Technique incarnee</div><div class="axt">Les Analogies</div><div class="axd">'+meta.bl+'</div><div class="axc">'+ANAL.length+' analogies</div></div>';
+    if(mi===10)return '<div class="axiscard" style="--card-accent:'+meta.ac+'" onclick="switchMod(10)"><div class="axn">Technique incarnee</div><div class="axt">Les Analogies</div><div class="axd">'+meta.bl+'</div><div class="axc">'+(ANAM.length+ANAL.length)+' chapitres</div></div>';
     var m=MODS[mi];if(!m)return'';
     var ct=m.title.replace(/<[^>]+>/g,'');
     return '<div class="axiscard" style="--card-accent:'+meta.ac+'" onclick="switchMod('+mi+')"><div class="axn">'+m.cat+'</div><div class="axt">'+ct+'</div><div class="axd">'+meta.bl+'</div><div class="axc">'+m.chs.length+' chapitres</div></div>';
@@ -594,6 +890,7 @@ function buildBody(){
   if(CM===0)return buildDashboard();
   if(CT==='exercices')return buildExercise(CM);
   if(CM===9)return buildAnchor();
+  if(CM===6)return buildObjections();
   if(CM===10)return buildAnalogies();
   return buildChapters(CM);
 }
@@ -603,7 +900,7 @@ function renderPage(){
   var isA=CM===9,isN=CM===10,pc=isA||isN;
   var cat,tit,desc;
   if(isA){cat='Technique avancee';tit='<span class="ap">L\'Ancrage</span>';desc="3 formats de questions calibrees. Integre naturellement a la découverte selon le profil et le moment.";}
-  else if(isN){cat='Technique incarnee';tit='<span class="at">Les Analogies</span>';desc="9 analogies calibrees. Ce qui fait la difference : l'incarnation, pas la technique.";}
+  else if(isN){cat='Technique incarnee';tit='<span class="at">Les Analogies</span>';desc="La methode complete + 19 analogies calibrees par objection. Ce qui fait la difference : l'incarnation, pas la technique.";}
   else{var mo=MODS[CM];cat=mo.cat;tit=mo.title;desc=mo.desc;}
   var cl=isA?'p':isN?'t':'g';
   area.innerHTML='<div class="mh"><div class="mcat '+cl+'">'+cat+'</div><div class="mtit">'+tit+'</div><div class="mdesc">'+desc+'</div></div><div class="tabs"><div class="tab on'+(pc?' p':'')+'" data-tab="cours" onclick="switchTab(\'cours\')">Cours</div><div class="tab'+(pc?' p':'')+'" data-tab="exercices" onclick="switchTab(\'exercices\')">Exercices & Roleplay</div></div><div class="body" id="ba">'+buildBody()+'</div>';
@@ -615,7 +912,7 @@ function renderAdmin(){
     var prog=lProg(s.code),td=0,ta=0;
     for(var i=1;i<=8;i++){var m=MODS[i];if(!m)continue;var t=m.chs.length,d=0;m.chs.forEach(function(_,ci){if(prog[key(i,ci)])d++;});td+=d;ta+=t;}
     ANC.forEach(function(_,ci){if(prog[key(9,ci)])td++;});ta+=ANC.length;
-    ANAL.forEach(function(_,ci){if(prog[key(10,ci)])td++;});ta+=ANAL.length;
+    ANAL.forEach(function(_,ci){if(prog[key(10,ci)])td++;});ANAM.forEach(function(_,ci){if(prog[key(10,100+ci)])td++;});ta+=ANAL.length+ANAM.length;
     var pct=Math.round(td/ta*100);
     var nm={1:'Fondations',2:'Neuro',3:'Profils',4:'Structure',5:'Decouverte',6:'Objections',7:'Flow',8:'Performer'};
     var bars='';
@@ -636,7 +933,7 @@ function addSt(){
 }
 function renderApp(){
   if(CU.isAdmin){renderAdmin();return;}
-  document.getElementById('root').innerHTML='<div class="platform"><div class="sb" id="sbEl"><div class="sb-top"><div class="sb-brand">Mentoring Closing</div><div class="sb-user">'+CU.name+'</div><span class="sb-out" onclick="logout()">&#8592; Deconnexion</span></div><div class="sb-kpis"><div class="kpi"><b id="kDone">0</b><span>Faits</span></div><div class="kpi"><b id="kPct">0%</b><span>Global</span></div><div class="kpi"><b>9</b><span>Modules</span></div></div><div class="searchbox"><input id="chSearch" type="text" placeholder="Rechercher un chapitre…" autocomplete="off" oninput="doSearch()"><div id="searchResults" class="search-results"></div></div><div class="sb-sec">Navigation</div><div class="ni on" onclick="switchMod(0)" id="nav0"><div class="nn" style="font-size:8px">TB</div><div class="nt"><div class="ntitle">Tableau de bord</div><div class="nbar"><div class="nfill" style="width:0"></div></div></div></div><div class="sb-sec">Modules</div><div class="ni" onclick="switchMod(1)" id="nav1"><div class="nn">0</div><div class="nt"><div class="ntitle">Fondations & Mindset</div><div class="nbar"><div class="nfill" id="bar1"></div></div></div><div class="nct">7</div></div><div class="ni" onclick="switchMod(2)" id="nav2"><div class="nn">1</div><div class="nt"><div class="ntitle">Neurosciences & Decision</div><div class="nbar"><div class="nfill" id="bar2"></div></div></div><div class="nct">9</div></div><div class="ni" onclick="switchMod(3)" id="nav3"><div class="nn">2</div><div class="nt"><div class="ntitle">Profils DISC + PCM</div><div class="nbar"><div class="nfill" id="bar3"></div></div></div><div class="nct">5</div></div><div class="ni" onclick="switchMod(4)" id="nav4"><div class="nn">3</div><div class="nt"><div class="ntitle">Structure de l\'appel</div><div class="nbar"><div class="nfill" id="bar4"></div></div></div><div class="nct">10</div></div><div class="ni" onclick="switchMod(6)" id="nav6"><div class="nn">5</div><div class="nt"><div class="ntitle">Objections</div><div class="nbar"><div class="nfill" id="bar6"></div></div></div><div class="nct">12</div></div><div class="ni" onclick="switchMod(7)" id="nav7"><div class="nn">6</div><div class="nt"><div class="ntitle">Ferocite & Flow</div><div class="nbar"><div class="nfill" id="bar7"></div></div></div><div class="nct">5</div></div><div class="ni" onclick="switchMod(8)" id="nav8"><div class="nn">7</div><div class="nt"><div class="ntitle">Performer & Grandir</div><div class="nbar"><div class="nfill" id="bar8"></div></div></div><div class="nct">5</div></div><div class="ni" onclick="switchMod(9)" id="nav9"><div class="nn" style="background:#F0EEFB;color:#6B5FD4;font-size:9px">&#9889;</div><div class="nt"><div class="ntitle">L\'Ancrage</div><div class="nbar"><div class="nfill p" id="bar9"></div></div></div><div class="nct">5</div></div><div class="ni" onclick="switchMod(10)" id="nav10"><div class="nn" style="background:#E8F6F2;color:#0F7A62;font-size:9px">&#9711;</div><div class="nt"><div class="ntitle">Les Analogies</div><div class="nbar"><div class="nfill t" id="bar10"></div></div></div><div class="nct">9</div></div><div class="sb-sec">Ressources</div><div class="ni" onclick="switchMod(12)" id="nav12"><div class="nn">R</div><div class="nt"><div class="ntitle">Ressources</div><div class="nbar"><div class="nfill" id="bar12"></div></div></div><div class="nct">3</div></div><div class="sb-sec">Bonus</div><div class="ni" onclick="switchMod(13)" id="nav13"><div class="nn">B</div><div class="nt"><div class="ntitle">Bonus</div><div class="nbar"><div class="nfill" id="bar13"></div></div></div><div class="nct">1</div></div></div><div class="content-col"><div class="mobile-bar"><div class="mobile-burger" onclick="toggleMobileNav()"><span></span></div><div class="mobile-brand">Formation Closing</div></div><div class="main" id="main"></div></div><div class="mobile-overlay" id="mobOverlay" onclick="toggleMobileNav()"></div></div>';
+  document.getElementById('root').innerHTML='<div class="platform"><div class="sb" id="sbEl"><div class="sb-top"><div class="sb-brand">Mentoring Closing</div><div class="sb-user">'+CU.name+'</div><span class="sb-out" onclick="logout()">&#8592; Deconnexion</span></div><div class="sb-kpis"><div class="kpi"><b id="kDone">0</b><span>Faits</span></div><div class="kpi"><b id="kPct">0%</b><span>Global</span></div><div class="kpi"><b>9</b><span>Modules</span></div></div><div class="searchbox"><input id="chSearch" type="text" placeholder="Rechercher un chapitre…" autocomplete="off" oninput="doSearch()"><div id="searchResults" class="search-results"></div></div><div class="sb-sec">Navigation</div><div class="ni on" onclick="switchMod(0)" id="nav0"><div class="nn" style="font-size:8px">TB</div><div class="nt"><div class="ntitle">Tableau de bord</div><div class="nbar"><div class="nfill" style="width:0"></div></div></div></div><div class="sb-sec">Modules</div><div class="ni" onclick="switchMod(1)" id="nav1"><div class="nn">0</div><div class="nt"><div class="ntitle">Fondations & Mindset</div><div class="nbar"><div class="nfill" id="bar1"></div></div></div><div class="nct">7</div></div><div class="ni" onclick="switchMod(2)" id="nav2"><div class="nn">1</div><div class="nt"><div class="ntitle">Neurosciences & Decision</div><div class="nbar"><div class="nfill" id="bar2"></div></div></div><div class="nct">9</div></div><div class="ni" onclick="switchMod(3)" id="nav3"><div class="nn">2</div><div class="nt"><div class="ntitle">Profils DISC + PCM</div><div class="nbar"><div class="nfill" id="bar3"></div></div></div><div class="nct">5</div></div><div class="ni" onclick="switchMod(4)" id="nav4"><div class="nn">3</div><div class="nt"><div class="ntitle">Structure de l\'appel</div><div class="nbar"><div class="nfill" id="bar4"></div></div></div><div class="nct">10</div></div><div class="ni" onclick="switchMod(6)" id="nav6"><div class="nn">5</div><div class="nt"><div class="ntitle">Objections</div><div class="nbar"><div class="nfill" id="bar6"></div></div></div><div class="nct">12</div></div><div class="ni" onclick="switchMod(7)" id="nav7"><div class="nn">6</div><div class="nt"><div class="ntitle">Ferocite & Flow</div><div class="nbar"><div class="nfill" id="bar7"></div></div></div><div class="nct">5</div></div><div class="ni" onclick="switchMod(8)" id="nav8"><div class="nn">7</div><div class="nt"><div class="ntitle">Performer & Grandir</div><div class="nbar"><div class="nfill" id="bar8"></div></div></div><div class="nct">5</div></div><div class="ni" onclick="switchMod(9)" id="nav9"><div class="nn" style="background:#F0EEFB;color:#6B5FD4;font-size:9px">&#9889;</div><div class="nt"><div class="ntitle">L\'Ancrage</div><div class="nbar"><div class="nfill p" id="bar9"></div></div></div><div class="nct">5</div></div><div class="ni" onclick="switchMod(10)" id="nav10"><div class="nn" style="background:#E8F6F2;color:#0F7A62;font-size:9px">&#9711;</div><div class="nt"><div class="ntitle">Les Analogies</div><div class="nbar"><div class="nfill t" id="bar10"></div></div></div><div class="nct">24</div></div><div class="sb-sec">Ressources</div><div class="ni" onclick="switchMod(12)" id="nav12"><div class="nn">R</div><div class="nt"><div class="ntitle">Ressources</div><div class="nbar"><div class="nfill" id="bar12"></div></div></div><div class="nct">3</div></div><div class="sb-sec">Bonus</div><div class="ni" onclick="switchMod(13)" id="nav13"><div class="nn">B</div><div class="nt"><div class="ntitle">Bonus</div><div class="nbar"><div class="nfill" id="bar13"></div></div></div><div class="nct">1</div></div></div><div class="content-col"><div class="mobile-bar"><div class="mobile-burger" onclick="toggleMobileNav()"><span></span></div><div class="mobile-brand">Formation Closing</div></div><div class="main" id="main"></div></div><div class="mobile-overlay" id="mobOverlay" onclick="toggleMobileNav()"></div></div>';
   refreshBars();renderPage();
 }
 function renderLogin(){
