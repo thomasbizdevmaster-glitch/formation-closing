@@ -253,6 +253,9 @@ body{font-family:'Inter',sans-serif;background:var(--noir);color:var(--ivoire);-
 .simsay .sx{font-size:14px;color:var(--ivoire);line-height:1.65;font-style:italic}
 .simpath{display:flex;gap:4px;margin-bottom:14px}
 .simpath i{width:26px;height:3px;border-radius:2px;background:#26261F;font-style:normal}
+.simtabs{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+.simtab{background:var(--noir-mid);border:1px solid #2A2A2A;color:var(--gris);font-family:'Inter',sans-serif;font-size:11px;font-weight:600;letter-spacing:.5px;padding:7px 13px;border-radius:5px;cursor:pointer}
+.simtab.on{background:var(--or-bg);border-color:var(--or-border);color:var(--or)}
 .simpath i.g{background:#3E8E6A}.simpath i.b{background:#A8341F}
 .anx{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--or);font-weight:600;margin:26px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--or-border)}
 .anx:first-of-type{margin-top:18px}
@@ -474,8 +477,11 @@ var ANAL=[
 ];
 function refreshBars(){
   var td=0,ta=0;
-  for(var i=1;i<=8;i++){var m=MODS[i];if(!m)continue;var t=m.chs.length,d=0;m.chs.forEach(function(_,ci){if(PROG[key(i,ci)])d++;});td+=d;ta+=t;var el=document.getElementById('bar'+i);if(el)el.style.width=Math.round(d/t*100)+'%';}if(MODS[11]){var m11=MODS[11],t11=m11.chs.length,d11=0;m11.chs.forEach(function(_,ci){if(PROG[key(11,ci)])d11++;});td+=d11;ta+=t11;var e11=document.getElementById('bar11');if(e11)e11.style.width=Math.round(d11/t11*100)+'%';}
-  [12,13].forEach(function(i){var m=MODS[i];if(!m)return;var t=m.chs.length,d=0;m.chs.forEach(function(_,ci){if(PROG[key(i,ci)])d++;});td+=d;ta+=t;var el=document.getElementById('bar'+i);if(el)el.style.width=Math.round(d/t*100)+'%';});
+  ORDER.concat([12,13]).forEach(function(id){
+    var t=modTotal(id);if(!t)return;
+    var d=modDone(id);td+=d;ta+=t;
+    var el=document.getElementById('bar'+id);if(el)el.style.width=Math.round(d/t*100)+'%';
+  });
   var at=ANC.length,ad=0;ANC.forEach(function(_,ci){if(PROG[key(9,ci)])ad++;});td+=ad;ta+=at;var ab=document.getElementById('bar9');if(ab)ab.style.width=Math.round(ad/at*100)+'%';
   var alt=ANAL.length+ANAM.length,ald=0;ANAL.forEach(function(_,ci){if(PROG[key(10,ci)])ald++;});ANAM.forEach(function(_,ci){if(PROG[key(10,100+ci)])ald++;});td+=ald;ta+=alt;var alb=document.getElementById('bar10');if(alb)alb.style.width=Math.round(ald/alt*100)+'%';
   var e1=document.getElementById('kDone'),e2=document.getElementById('kPct');
@@ -556,6 +562,8 @@ var MODS_EXTRA = {
 };
 // Merge MODS_EXTRA into MODS
 Object.keys(MODS_EXTRA).forEach(function(k){ MODS[k] = MODS_EXTRA[k]; });
+/* certains tableaux de chapitres contiennent des trous (virgule en trop) : on compacte */
+Object.keys(MODS).forEach(function(k){if(MODS[k]&&MODS[k].chs)MODS[k].chs=MODS[k].chs.filter(function(c){return !!c;});});
 
 // Index de recherche — construit sur tous les chapitres, modules bonus inclus
 var SEARCH_IDX=[];
@@ -602,9 +610,14 @@ function hlQ(text){
 }
 function buildChapters(mi){
   var m=MODS[mi];if(!m)return'';var h='';
+  NOTES=lNotes(CU.code);
+  h+=buildCarnet(mi);
+  h+='<div class="anx">Les chapitres</div>';
   m.chs.forEach(function(ch,ci){
     var dk=!!PROG[key(mi,ci)];
     h+='<div class="ch"><div class="chh" onclick="toggleCh('+mi+','+ci+')" id="hd-'+mi+'-'+ci+'"><span class="chn '+ch.tc+'">'+ch.n+'</span><span class="chl">'+ch.t+'</span><div class="ck '+(dk?'done':'')+ '" id="tk-'+mi+'-'+ci+'" onclick="tick('+mi+','+ci+',event)">'+(dk?'&#10003;':'')+'</div><span class="ça" id="ar-'+mi+'-'+ci+'">&#9662;</span></div>';
+    h+='<div class="cbd" id="bd-'+mi+'-'+ci+'"><div id="pg-'+mi+'-'+ci+'">'+pgBody(mi,ci)+'</div></div></div>';
+    return;
     h+='<div class="cbd" id="bd-'+mi+'-'+ci+'"><span class="tag '+ch.tc+'">'+ch.tag+'</span><div class="ci">'+hlQ(ch.i)+'</div>';
     ch.pts.forEach(function(p){h+='<div class="pt"><div class="pd '+p.c+'"></div><div class="ptx"><b>'+p.b+'</b> '+hlQ(p.t)+'</div></div>';});
     if(ch.ex)h+='<div class="ibox"><div class="il">'+ch.ex.l+'</div><div class="it">'+hlQ(ch.ex.t)+'</div></div>';
@@ -612,13 +625,8 @@ function buildChapters(mi){
     if(ch.gold)h+='<div class="gbox"><div class="gl">'+ch.gold.l+'</div><div class="gt">'+hlQ(ch.gold.t)+'</div></div>';
     h+='</div></div>';
   });
-  if(MOD_PDFS[mi]){
-    h+='<div class="pdfs"><div style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gris-light);margin-bottom:12px;font-weight:600">Ressources PDF</div>';
-    MOD_PDFS[mi].forEach(function(pdf){
-      h+='<a class="pdf-card" href="./'+pdf.file+'" download="'+pdf.file+'" target="_blank"><div class="pdn">&#11015; PDF</div><div class="pdt">'+pdf.name+'</div><div class="pdd">'+pdf.desc+'</div></a>';
-    });
-    h+='</div>';
-  }
+  h+=quizBlock(mi);
+  h+=pdfBlock(mi);
   return h;
 }
 function buildAnchor(){
@@ -635,9 +643,138 @@ function buildAnchor(){
     if(ch.gold)h+='<div class="gbox"><div class="gl">'+ch.gold.l+'</div><div class="gt">'+hlQ(ch.gold.t)+'</div></div>';
     h+='</div></div>';
   });
+  h+=quizBlock(9);
   return h;
 }
-/* ====================== MODULE OBJECTIONS — expérience enrichie ====================== */
+/* ====================== STRUCTURE DES MODULES ====================== */
+var ORDER=[1,2,3,11,4,6,9,10,7,8];
+var MNAME={1:'Fondations & Mindset',2:'Neurosciences & Decision',3:'Profils DISC + PCM',11:"Avant l'Appel",4:"Structure de l'appel",6:'Objections',9:"L'Ancrage",10:'Les Analogies',7:'Ferocite & Flow',8:'Performer & Grandir',12:'Ressources',13:'Bonus'};
+function modNum(id){var i=ORDER.indexOf(id);return i<0?'':('0'+(i+1)).slice(-2);}
+function modTotal(id){if(id===9)return ANC.length;if(id===10)return ANAL.length+ANAM.length;var m=MODS[id];return m?m.chs.length:0;}
+function modDone(id,prog){
+  prog=prog||PROG;var n=0;
+  if(id===9){ANC.forEach(function(_,ci){if(prog[key(9,ci)])n++;});return n;}
+  if(id===10){ANAL.forEach(function(_,ci){if(prog[key(10,ci)])n++;});ANAM.forEach(function(_,ci){if(prog[key(10,100+ci)])n++;});return n;}
+  var m=MODS[id];if(!m)return 0;m.chs.forEach(function(_,ci){if(prog[key(id,ci)])n++;});return n;
+}
+function navItem(id,label,style,fill){
+  return '<div class="ni" onclick="switchMod('+id+')" id="nav'+id+'"><div class="nn"'+(style||'')+'>'+label+'</div><div class="nt"><div class="ntitle">'+MNAME[id]+'</div><div class="nbar"><div class="nfill'+(fill||'')+'" id="bar'+id+'"></div></div></div><div class="nct">'+modTotal(id)+'</div></div>';
+}
+function navHtml(){
+  var h='<div class="sb-sec">Modules</div>';
+  ORDER.forEach(function(id){
+    var st=(id===9?' style="background:#F0EEFB;color:#6B5FD4"':(id===10?' style="background:#E8F6F2;color:#0F7A62"':''));
+    h+=navItem(id,modNum(id),st,(id===9?' p':(id===10?' t':'')));
+  });
+  h+='<div class="sb-sec">Ressources</div>'+navItem(12,'R');
+  h+='<div class="sb-sec">Bonus</div>'+navItem(13,'B');
+  return h;
+}
+/* ====================== EXPERIENCE ELEVE — lecteur, carnet, quiz, simulateur ====================== */
+var ESS={
+1:{
+0:"Le closing est un metier de performance, pas de talent. Ce sont la discipline, la constance et la repetition des bons gestes qui produisent les resultats — y compris les jours ou rien ne rentre. Le debrief de 10 minutes apres chaque appel est ce qui transforme la repetition en progression.",
+1:"Un vendeur cherche a convaincre, un closer cherche a comprendre. Tu diagnostiques avant de prescrire, tu restes detache du resultat, et ton seul objectif sur l'appel est d'aider la personne a prendre la meilleure decision pour elle — meme si c'est non.",
+2:"Tu passeras par les trois saisons : froide, de transition, haute. Personne n'y echappe. Ceux qui durent ne sont pas ceux qui evitent les saisons froides, ce sont ceux qui continuent d'appliquer le process pendant qu'elles durent.",
+3:"80% du travail se joue avant le premier mot : l'etat depuis lequel tu parles. En mode besoin — besoin de la commission, d'etre valide, de ne pas etre rejete — tout sonne faux, parce que ton cerveau gere sa propre douleur en meme temps que celle du prospect.",
+4:"La preparation commence 10 a 15 minutes avant de decrocher, pas quand tu decroches. Trois etapes non negociables : energie (coherence cardiaque), intention declaree a voix haute, adaptation au profil probable. Et le message de confirmation part dans la minute qui suit la reservation.",
+5:"Les trois erreurs fatales — tuer le silence, parler plus de 40% du temps, repondre immediatement aux objections — ne viennent pas d'un manque de technique mais d'un systeme nerveux passe en mode survie. Chacune est un signal a lire sur toi-meme."
+},
+2:{
+0:"Le cerveau du prospect fonctionne a deux etages : l'amygdale decide en millisecondes si la porte s'ouvre, le cortex arrive apres pour justifier. Tu ne convaincs jamais l'analyste avant d'avoir rassure le gardien.",
+1:"Besoin de commission, peur du rejet, besoin d'etre valide : ces dettes emotionnelles activent ton amygdale, liberent du cortisol et reduisent ton cortex prefrontal. Concretement, tu ecoutes moins bien, tu remplis les silences et tu sur-expliques.",
+2:"Le prospect n'arrive jamais vierge : achats regrettes, promesses non tenues, closers deja croises. Ce cadre filtre tout ce que tu dis avant que tu le dises — et attaquer une croyance centrale declenche la meme reaction qu'une douleur physique.",
+3:"Perdre fait environ deux fois plus mal que gagner fait du bien (Kahneman et Tversky). C'est de la que vient l'urgence authentique : du cout de l'inaction verbalise par le prospect, jamais d'une deadline artificielle.",
+4:"Ne jamais attaquer une croyance de face. Trois etapes dans l'ordre : valider l'experience, introduire une anomalie qui ne rentre pas dans le cadre, proposer un nouveau schema par le comportement — pas par la phrase 'je suis different'.",
+5:"Le prospect evalue douze variables, traitees inconsciemment et instantanement. Les trois prioritaires : le silence, la cadence et la tonalite, le detachement du resultat.",
+6:"L'etat interne represente 80% du travail et ne peut pas etre cache. Il se travaille, mais il n'est jamais acquis : ton focus avant l'appel decide qui tu seras pendant l'appel.",
+7:"Ton etat interne n'est pas du mindset abstrait, c'est de la biochimie : cortisol, dopamine, ratio testosterone/cortisol, ocytocine. Ton seul levier d'entree volontaire est la respiration.",
+8:"Le closing consiste a rendre une decision neurologiquement sure. Le cerveau anticipe une tentative de persuasion et se protege : moins de contrainte, moins de charge cognitive, une rupture de pattern, et la permission inversee qui lui rend sa liberte."
+},
+4:{
+0:"Le mirroring traverse tout l'appel : tu repetes les deux ou trois derniers mots importants sur un ton legerement interrogatif, puis tu te tais. C'est l'outil le plus simple et le plus sous-utilise de la decouverte.",
+1:"L'appel se gagne avant de decrocher. Detachement total du resultat, protocole en trois etapes, message de confirmation dans la premiere minute suivant la reservation.",
+2:"Tout se joue dans les 90 premieres secondes : l'amygdale du prospect determine si tu es en position de force ou de besoin. La connexion n'est pas de la manipulation, c'est la condition neurologique pour que la suite existe.",
+3:"Tu accumules de la data sans juger, sans interpreter, sans projeter. Regle absolue : tu ne nommes jamais la douleur a sa place — sinon tu la lui voles, et elle ne lui appartient plus.",
+4:"La vraie douleur n'est jamais financiere : elle est identitaire ou relationnelle. Trois couches a traverser — la surface, la cause, la racine. La question de la perte est la plus puissante de l'appel.",
+5:"Trois etapes dans cet ordre avant de presenter quoi que ce soit : faire verbaliser le cout de l'inaction, creer le momentum, valider la decouverte avec ses mots exacts.",
+6:"Une prescription n'est pas un pitch : elle se construit en temps reel a partir de ce qu'il t'a dit. Cinq a sept minutes maximum, dialoguee, et le vehicule se valide avant l'annonce du prix.",
+7:"L'annonce du prix est un detail logistique apres une decision deja prise emotionnellement. Simple, calme, puis silence. La premiere objection qui sort juste apres ne se traite pas : on revalide le vehicule d'abord.",
+8:"Un non bien gere vaut mieux qu'un oui force. Savoir reconnaitre le prospect qui n'est pas pret — et le lui dire avec bienveillance — te protege autant que lui.",
+9:"La phase paiement est une phase d'engagement emotionnel, pas logistique. L'acompte n'est pas un detail administratif : c'est le principe d'engagement de Cialdini applique au bon moment."
+},
+11:{
+0:"L'appel se gagne avant de commencer — pas en connaissant mieux l'offre, mais en etant dans le bon etat neurologique au moment de decrocher. Le prospect evalue cet etat dans les premieres secondes, inconsciemment.",
+1:"Le protocole 365 : trois fois par jour, six respirations par minute, cinq minutes. Deux minutes avant un appel suffisent a activer le nerf vague et faire baisser le cortisol.",
+2:"Contacter un prospect dans la minute suivant sa reservation augmente significativement le taux de show-up. Sa dopamine est haute et son engagement encore chaud : c'est la fenetre."
+}
+};
+var QUIZ={
+1:[
+{q:"Qu'est-ce qui produit les resultats en closing ?",o:["Le talent naturel pour la vente","La discipline, la constance et la repetition","Le nombre de leads recus","La qualite des scripts utilises"],c:1,e:"Un closer qui applique une methode correcte a 80% chaque jour bat un closer brillant mais irregulier. C'est un metier de performance, comme un sport."},
+{q:"Quel est le ratio de parole a viser sur un appel ?",o:["50% toi / 50% lui","30% toi / 70% lui","70% toi / 30% lui","Peu importe, ce qui compte c'est le contenu"],c:1,e:"Si tu parles plus que ton prospect, tu vends — tu ne closes pas. Parler plus de 40% du temps est l'une des trois erreurs fatales."},
+{q:"Tu traverses une saison froide : peu de closes, des appels difficiles. Que fais-tu ?",o:["Tu changes de methode pour debloquer la situation","Tu continues d'appliquer le process et tu debriefes","Tu leves le pied en attendant que ca passe","Tu augmentes le volume d'appels sans rien changer"],c:1,e:"Tu passeras par toutes les saisons, personne n'y echappe. La difference entre ceux qui durent et ceux qui abandonnent se joue exactement la : continuer d'appliquer pendant la saison froide."},
+{q:"Qu'est-ce que le prospect percoit en premier ?",o:["La qualite de ton offre","Ton etat interne","Ton script d'ouverture","Tes references et resultats"],c:1,e:"80% du travail se passe avant de dire un mot. En mode besoin, tout sonne faux — pas parce que tu mens, mais parce que ton cerveau gere sa propre douleur en meme temps que celle du prospect."},
+{q:"Tu viens de poser une question importante. Le prospect se tait pendant 15 secondes. Tu fais quoi ?",o:["Tu reformules la question","Tu attends","Tu enchaines sur autre chose","Tu proposes une reponse pour l'aider"],c:1,e:"Le silence apres une question importante, c'est le prospect qui reflechit — exactement ce que tu veux. Le combler est un signal de malaise, et il le lit immediatement."}
+],
+2:[
+{q:"Dans le cerveau du prospect, qui decide en premier ?",o:["Le cortex prefrontal, qui analyse","L'amygdale, qui evalue la menace","Les deux simultanement","Cela depend du profil de la personne"],c:1,e:"L'amygdale decide en millisecondes si la porte s'ouvre ou se ferme. Le cortex arrive apres — uniquement pour justifier la decision deja prise."},
+{q:"Selon l'aversion a la perte, perdre 1000 fait une douleur equivalente a :",o:["Ne pas gagner 500","Ne pas gagner 1000","Ne pas gagner 2000 a 2500","Il n'y a pas de rapport stable"],c:2,e:"Kahneman et Tversky, prix Nobel 2002. C'est precisement ce mecanisme qui cree l'urgence authentique — pas les bonus ni les deadlines artificielles."},
+{q:"Le prospect exprime une croyance qui bloque. Quelle est la premiere etape ?",o:["Contredire avec un argument solide","Valider son experience","Donner des preuves et des chiffres","Changer de sujet et revenir plus tard"],c:1,e:"Attaquer une croyance centrale declenche la meme reaction qu'une douleur physique. On valide d'abord, puis on introduit une anomalie, puis on propose un nouveau schema par le comportement."},
+{q:"Une objection tombe. Combien de temps attends-tu avant de repondre ?",o:["Tu reponds immediatement pour montrer ta maitrise","2 a 3 secondes","Au moins 10 secondes","Tu ne reponds jamais directement"],c:1,e:"Repondre immediatement, c'est le pattern du closer sous pression : tu te defends. Deux a trois secondes de pause et tu es celui qui reflechit."},
+{q:"Sous stress, la memoire de travail du prospect peut traiter :",o:["2 a 3 elements","4 a 7 elements","10 a 12 elements","Cela ne depend pas du stress"],c:1,e:"C'est pour ca que noyer le prospect sous les arguments est contre-productif : tu satures son cortex prefrontal et tu consolides exactement le cadre que tu voulais deplacer."}
+],
+3:[
+{q:"Qu'identifie le PCM que le DISC n'identifie pas ?",o:["La vitesse de decision","Le besoin psychologique necessaire pour se sentir en securite","Le budget disponible","Le niveau d'experience"],c:1,e:"Le PCM, developpe par Taibi Kahler pour la NASA, identifie ce dont le prospect a BESOIN pour decider. Chaque type a son canal de communication."},
+{q:"Sur combien de signaux faut-il trianguler avant de conclure sur un profil ?",o:["Un seul suffit s'il est net","Deux : vitesse et ton","Trois : vitesse, premier sujet aborde, ton","Il faut attendre la fin de l'appel"],c:2,e:"Un seul critere ne suffit jamais. Vitesse, premier sujet et ton doivent aller dans le meme sens avant de calibrer ton canal."},
+{q:"Un prospect demande le prix dans les cinq premieres minutes, coupe la parole, parle ROI. Quel canal ?",o:["Nourricier : commencer par l'humain","Directif : phrases courtes, chiffres, rapidite","Interrogatif : questions precises et methode","Ralentir volontairement pour casser le rythme"],c:1,e:"Profil Dominant / Promoteur : il veut ROI, rapidite et controle. Trop d'emotions ou de process le ferment, et l'appel doit rester court."},
+{q:"Un prospect parle famille et securite, parle lentement, ton doux. Quelle erreur eviter ?",o:["Lui parler de sa famille","Le brusquer ou mettre une pression directe","Prevoir un deuxieme appel","Commencer par l'humain avant le business"],c:1,e:"Profil Stable / Empathique : il a besoin d'etre reconnu comme personne avant d'etre client. La pression directe et les ultimatums le ferment definitivement."},
+{q:"Face a un prospect mefiant, marque par une mauvaise experience, que fais-tu ?",o:["Tu prouves que tu es different avec des temoignages","Tu valides sa mefiance comme une force","Tu evites le sujet pour ne pas raviver la blessure","Tu proposes une garantie de remboursement"],c:1,e:"'T'as raison d'etre mefiant, la majorite des formations en ligne sont des arnaques. Je suis d'accord.' Tu ne combats pas l'armure, tu te places du meme cote."}
+],
+4:[
+{q:"En quoi consiste exactement le mirroring ?",o:["Reformuler ce que le prospect a dit avec tes mots","Repeter les 2-3 derniers mots importants sur un ton interrogatif","Adopter la meme posture que lui en visio","Copier son rythme de parole"],c:1,e:"Chris Voss l'appelle le mirroring, la neuroscience l'appelle l'isopraxie. Tu repetes, puis tu te tais — c'est le silence qui fait parler."},
+{q:"Ou se situe la vraie douleur du prospect ?",o:["Dans sa situation financiere","Dans son identite ou ses relations","Dans son manque de temps","Dans son manque de competences"],c:1,e:"L'argent est toujours le symptome, jamais la cause. Trois couches : la surface, la cause, la racine — et la racine est identitaire ou relationnelle."},
+{q:"Le prospect decrit sa situation et tu vois clairement sa douleur. Que fais-tu ?",o:["Tu la nommes pour lui montrer que tu as compris","Tu poses une question pour qu'il la nomme lui-meme","Tu la notes et tu passes a la suite","Tu la reformules avec tes mots a toi"],c:1,e:"Regle absolue : tu ne nommes jamais la douleur a sa place. Si tu la nommes, tu la lui voles — elle ne lui appartient plus, et elle perd sa force."},
+{q:"Quelle etape est obligatoire juste avant d'annoncer le prix ?",o:["Rappeler les benefices du programme","Valider le vehicule","Demander son budget","Annoncer qu'il existe un paiement en plusieurs fois"],c:1,e:"'Est-ce que tu penses que c'est ce qu'il te faut pour arriver la ?' Sans cette validation, toute objection qui suit est ingerable."},
+{q:"Une objection sort dans la seconde qui suit l'annonce du prix. Que fais-tu ?",o:["Tu la traites immediatement","Tu ne la traites pas et tu revalides le vehicule","Tu proposes l'echelonnement","Tu redonnes le prix plus lentement"],c:1,e:"C'est le piege classique. La premiere objection post-prix est presque toujours un reflexe de l'amygdale — pas la vraie objection."},
+{q:"A quoi sert l'acompte ?",o:["A securiser ta commission","A engager emotionnellement le prospect","A tester sa solvabilite","A accelerer la logistique administrative"],c:1,e:"Cialdini l'a documente dans Influence : une fois qu'on a pris un premier engagement, on agit pour rester coherent avec lui. Le cerveau a un biais de statu quo puissant — un prospect qui repart y retourne."}
+],
+7:[
+{q:"Qu'est-ce qui declenche le Flow ?",o:["La motivation","La concentration","La pression d'une deadline","La confiance en soi"],c:1,e:"Le Flow suit la concentration : il ne peut se produire que lorsque toute ton attention est engagee sur la tache. C'est un etat qu'on invite en creant les conditions, pas qu'on force."},
+{q:"La volonte est une ressource limitee. Qu'est-ce que ca implique concretement ?",o:["Il faut la menager en faisant les taches faciles d'abord","Il faut attaquer la tache la plus difficile avec l'energie maximale","Il faut la compenser par la cafeine","Il faut travailler moins longtemps"],c:1,e:"Mange le crapaud en premier. Ta reserve est maximale au reveil et s'erode ensuite — les resets partiels (sieste de 40 minutes maximum, exercice, meditation) la rechargent partiellement."},
+{q:"Par quoi commence la passion ?",o:["Par la certitude d'avoir trouve sa voie","Par la curiosite","Par un premier succes","Par un modele a suivre"],c:1,e:"Curiosite et peur utilisent la meme molecule, la noradrenaline, dans des directions opposees. Le grit selon Duckworth, c'est passion multipliee par perseverance."},
+{q:"L'amygdale traite combien d'informations negatives pour chaque positive ?",o:["1 pour 1","2 a 3 pour 1","6 a 9 pour 1","20 pour 1"],c:2,e:"Le biais de negativite est structurel, mais il se recalibre : trois gratitudes le soir, dont une developpee, produisent des effets apres deux a trois semaines."},
+{q:"La journee feroce se definit par :",o:["Ce que tu fais toujours et ce que tu ne fais jamais","Le nombre d'heures travaillees","La quantite de taches accomplies","Le respect strict d'un planning horaire"],c:0,e:"Ta vie est definie autant par tes non que par tes oui. Et tu n'ecris dans ta liste que ce que tu vas vraiment faire."}
+],
+8:[
+{q:"Que faut-il attendre de tes 100 premiers appels ?",o:["Un taux de closing correct des le depart","Qu'ils soient rates, et que ce soit normal","Qu'ils financent ta formation","Qu'ils te qualifient aupres des infopreneurs"],c:1,e:"Tes 100 premiers, tu les rates. C'est normal, prevu, necessaire — et c'est exactement ce qui construit le niveau."},
+{q:"A quoi sert de reecouter ses appels ?",o:["A se juger pour progresser plus vite","A se calibrer","A constituer des preuves pour les clients","A extraire des temoignages"],c:1,e:"Les meilleurs closers reecoutent leurs appels pour se calibrer, pas pour se juger. Six questions a se poser, et un ratio a verifier : 30% toi, 70% lui."},
+{q:"A quoi ressemble le meilleur closing ?",o:["Le prospect est impressionne par ta maitrise","Le prospect a l'impression d'avoir decide tout seul","Le prospect n'a aucune objection","Le closing est le plus court possible"],c:1,e:"Le meilleur closing ne se sent pas. Si le prospect a l'impression d'avoir ete convaincu, c'est deja rate."},
+{q:"Que contient au minimum le CRM d'un closer serieux ?",o:["Nom et numero de telephone","Nom, source, statut, date, profil, commission","Uniquement les prospects closes","Les scripts utilises par appel"],c:1,e:"Un closer sans CRM, c'est un chef sans recette. Ajoute le scoring psychologique — profil, objections, urgence — et le debrief de 10 minutes apres chaque call."},
+{q:"Pourquoi enseigner fait-il progresser ?",o:["Parce que ca genere un revenu complementaire","Parce que enseigner force a maitriser","Parce que ca construit ton personal branding","Parce que ca elargit ton reseau"],c:1,e:"Tant que tu n'as pas eu a l'expliquer a quelqu'un d'autre, tu ne sais pas vraiment si tu le maitrises."}
+],
+9:[
+{q:"Que cree un ancrage ?",o:["Une obligation morale envers toi","Une tension entre ce qu'il a dit etre et ce qu'il s'apprete a faire","Un engagement contractuel","Un lien emotionnel avec ton offre"],c:1,e:"Et c'est lui qui resout cette tension — en ta faveur. Le principe d'engagement de Cialdini : une fois qu'une personne se definit a voix haute, son cerveau protege cette image."},
+{q:"Quand poses-tu une ancre directe ?",o:["En connexion ou en debut de diagnostic","Juste avant le prix","Apres la premiere objection","A la toute fin de l'appel"],c:0,e:"Elle force le prospect a se definir lui-meme. Peu importe sa reponse : tu gagnes soit une ancre reutilisable, soit une information diagnostique precieuse."},
+{q:"Comment fonctionne l'ancre par contraste ?",o:["Tu compares ton offre a la concurrence","Tu decris un groupe negatif sans parler de lui","Tu opposes deux profils de clients","Tu montres l'ecart entre sa situation et son objectif"],c:1,e:"Il se dissocie activement du groupe. S'il hesite ensuite, c'est lui qui doit gerer l'incoherence — pas toi qui dois la pointer."},
+{q:"Quelle est la condition absolue de l'auto-admission ?",o:["Qu'elle soit courte","Qu'elle soit vraie","Qu'elle arrive en debut d'appel","Qu'elle concerne le meme business"],c:1,e:"Une auto-admission fabriquee se detecte immediatement. Elle se place en transition avant le pitch, jamais en milieu de diagnostic."},
+{q:"Qu'est-ce qu'il ne faut jamais faire ?",o:["Combiner plusieurs formats dans un appel","Poser deux ancrages consecutifs","Utiliser une ancre avec un profil Dominant","Reutiliser une ancre au moment du closing"],c:1,e:"Deux ancrages consecutifs se voient, et l'effet s'annule. Les trois formats se combinent dans un meme appel, mais espaces : connexion, fin de diagnostic, avant le pitch."}
+],
+10:[
+{q:"Qu'est-ce qui distingue une analogie d'une metaphore ?",o:["L'analogie est plus longue","L'analogie transfere une loi d'une situation connue vers une situation nouvelle","La metaphore est reservee a l'ecrit","Il n'y a pas de difference"],c:1,e:"La metaphore decore, l'analogie fait comprendre en transferant une logique. C'est ce transfert qui laisse le prospect tirer lui-meme la conclusion."},
+{q:"A quelle etape du traitement d'objection l'analogie intervient-elle ?",o:["Accueillir","Clarifier","Eliminer","Demander"],c:2,e:"Avant, tu ne connais pas encore la vraie croyance. Apres, tu es deja dans la demande."},
+{q:"Dans la methode de creation, quelle etape convainc vraiment ?",o:["Le choix de l'image","La loi universelle","La formulation","Le ton"],c:1,e:"L'image n'est que l'habillage. Une belle image posee sur une loi discutable ne convainc personne."},
+{q:"Ton prospect est emotif et se sent deja juge. Quelle polarite ?",o:["Inversee, pour declencher la prise de conscience","Affirmative, pour le rassurer","Les deux en alternance","Aucune analogie dans ce cas"],c:1,e:"L'inversee confirmerait sa peur d'etre juge. On rassure d'abord — pasteque, enfant qui apprend a marcher."},
+{q:"Que manque-t-il a une analogie qui ne produit rien ?",o:["Une image plus originale","Une citation celebre pour la renforcer","Une question ouverte qui ramene le prospect a sa situation","Plus de details dans la scene"],c:2,e:"Sans question, l'analogie reste un discours. La question transforme l'image en prise de conscience."}
+],
+11:[
+{q:"En quoi consiste le protocole 365 ?",o:["3 minutes, 6 fois par jour, 5 respirations","3 fois par jour, 6 respirations par minute, 5 minutes","3 respirations, 6 secondes, 5 fois","3 series de 6 minutes, 5 jours par semaine"],c:1,e:"Et deux minutes suffisent juste avant un appel. Source : Rollin McCraty, HeartMath Institute."},
+{q:"Que produit physiologiquement la coherence cardiaque ?",o:["Une hausse de l'adrenaline utile a la performance","L'activation du nerf vague et une baisse du cortisol","Une hausse du rythme cardiaque","Un effet uniquement psychologique"],c:1,e:"Deux minutes avant l'appel changent directement les douze variables que le prospect percoit — cadence vocale, gestion du silence, stabilite."},
+{q:"Quand envoyer le message de confirmation ?",o:["La veille de l'appel","Une heure avant","Dans la minute qui suit sa reservation","Juste apres l'appel"],c:2,e:"Etude MIT et InsideSales.com (Oldroyd, Harvard Business Review 2007) : contacter dans la premiere minute augmente significativement le show-up. Sa dopamine est haute, son engagement est chaud."},
+{q:"Que fait le prospect dans les premieres secondes de l'appel ?",o:["Il evalue ton offre","Il evalue ton etat, inconsciemment","Il compare avec d'autres appels","Il attend les informations"],c:1,e:"Il ne t'evalue pas sur ce que tu dis mais sur l'etat de ton systeme nerveux — et il le fait avant que tu aies dit quoi que ce soit de substantiel."},
+{q:"A J-2 minutes, que fais-tu ?",o:["Tu relis ton script","Tu declares ton intention a voix haute","Tu verifies ta connexion","Tu revois les tarifs"],c:1,e:"'Je viens pour diagnostiquer et servir, pas pour vendre.' Dit a voix haute — pas dans ta tete. J-10 min : coherence cardiaque. J-2 min : intention."}
+]
+};
 var OBJ_ESS=[
 "Une objection n'est presque jamais ce qu'elle dit etre. Ton premier travail n'est pas de repondre : c'est de savoir si tu as affaire a un ecran de fumee ou a une contrainte reelle. Quatre reflexes tiennent tout le module : le silence, la question plutot que l'argument, le debit constant, la qualification systematique.",
 "L'objection arnaque n'est pas rationnelle : c'est une armure construite sur une deception, souvent pas la sienne. Tu ne la combats pas, tu la valides — puis tu entres dans sa definition de l'arnaque pour la faire travailler pour toi.",
@@ -662,7 +799,129 @@ var Q6=[
 {q:"'Je ne vous connais pas' arrive typiquement :",o:["Des le debut de l'appel","Pendant la decouverte","Apres l'annonce du prix","Au moment de la prise de rendez-vous"],c:2,e:"Presque toujours apres le prix. Ce qui veut dire que la confiance existait avant — ton travail est de la lui faire constater, pas de la reconstruire."},
 {q:"Le prospect est deja engage dans un autre programme. Quel est le vrai levier ?",o:["Comparer ton offre a la sienne","Attendre la fin de son engagement","Ce qu'il a deja paye est perdu quoi qu'il arrive","Proposer une remise pour compenser"],c:2,e:"L'argent deja verse n'est plus recuperable par sa decision d'aujourd'hui. Le vrai cout, c'est ce qu'il continue de perdre — pas ce qu'il a deja paye."}
 ];
-var SIM6={
+
+QUIZ[6]=Q6;ESS[6]={};OBJ_ESS.forEach(function(t,i){ESS[6][i]=t;});
+
+var PG={},QSS={},NOTES={};
+function lNotes(c){try{var x=localStorage.getItem('n_'+c);return x?JSON.parse(x):{}}catch(e){return{}}}
+function sNotes(c,d){try{localStorage.setItem('n_'+c,JSON.stringify(d))}catch(e){}}
+function nkey(mi,ci){return mi+'_'+ci}
+function noteSave(mi,ci,el){
+  NOTES[nkey(mi,ci)]=el.value;sNotes(CU.code,NOTES);
+  var st=document.getElementById('nts-'+mi+'-'+ci);
+  if(st){st.textContent='Enregistre';setTimeout(function(){if(st)st.textContent='';},1600);}
+}
+function chapsOf(mi){var m=MODS[mi];return m?m.chs:[];}
+function screensFor(ch){
+  var sc=[],paras=(ch.i||'').split('\n\n').filter(function(p){return p.trim();}),buf='';
+  paras.forEach(function(p){if(buf&&(buf+p).length>760){sc.push({ty:'t',v:buf});buf=p;}else{buf=buf?buf+'\n\n'+p:p;}});
+  if(buf)sc.push({ty:'t',v:buf});
+  var pts=ch.pts||[];
+  for(var i=0;i<pts.length;i+=2)sc.push({ty:'p',v:pts.slice(i,i+2)});
+  if(ch.tbox)sc.push({ty:'tb',v:ch.tbox});
+  if(ch.ex)sc.push({ty:'b',cls:'ibox',l:ch.ex.l,v:ch.ex.t,il:'il',it:'it'});
+  if(ch.gold)sc.push({ty:'b',cls:'gbox',l:ch.gold.l,v:ch.gold.t,il:'gl',it:'gt'});
+  sc.push({ty:'e'});
+  return sc;
+}
+function pgBody(mi,ci){
+  var ch=chapsOf(mi)[ci];if(!ch)return'';
+  var sc=screensFor(ch),k=nkey(mi,ci),i=PG[k]||0;if(i>=sc.length)i=sc.length-1;
+  var cur=sc[i],inner='';
+  if(cur.ty==='t')inner='<div class="ci">'+hlQ(cur.v)+'</div>';
+  else if(cur.ty==='p'){inner='';cur.v.forEach(function(p){inner+='<div class="pt"><div class="pd '+p.c+'"></div><div class="ptx"><b>'+p.b+'</b> '+hlQ(p.t)+'</div></div>';});}
+  else if(cur.ty==='tb'){inner='<div class="tbox"><div class="tl">'+cur.v.l+'</div>';cur.v.pts.forEach(function(q){inner+='<div class="qitem">'+hlQ(q)+'</div>';});inner+='</div>';}
+  else if(cur.ty==='b')inner='<div class="'+cur.cls+'"><div class="'+cur.il+'">'+cur.l+'</div><div class="'+cur.it+'">'+hlQ(cur.v)+'</div></div>';
+  else{
+    var dk=!!PROG[key(mi,ci)],nv=(NOTES[k]||'');
+    inner='<div class="nt2"><div class="ntl">Ton carnet — ce que tu retiens, ou une phrase a tester en appel</div>'+
+      '<textarea id="nta-'+mi+'-'+ci+'" oninput="noteSave('+mi+','+ci+',this)">'+nv.replace(/</g,'&lt;')+'</textarea>'+
+      '<div class="nts" id="nts-'+mi+'-'+ci+'"></div></div>'+
+      '<div class="pgnav" style="margin-top:14px"><button class="pgb pri" onclick="pgDone('+mi+','+ci+')">'+(dk?'Chapitre termine &#10003;':'Marquer ce chapitre comme termine')+'</button></div>';
+  }
+  var dots='<div class="pgdots">';
+  sc.forEach(function(_,j){dots+='<span class="pgd '+(j===i?'on':(j<i?'seen':''))+'" onclick="pgGo('+mi+','+ci+','+j+')"></span>';});
+  dots+='</div>';
+  var mins=Math.max(1,Math.round(((ch.i||'').length+(ch.pts||[]).reduce(function(a,p){return a+p.t.length;},0))/1200));
+  var ess=(ESS[mi]&&ESS[mi][ci])?'<div class="pgess"><div class="pel">L\'essentiel</div><div class="pet">'+hlQ(ESS[mi][ci])+'</div></div>':'';
+  return '<div class="pgw">'+
+    (ch.tag?'<span class="tag '+ch.tc+'">'+ch.tag+'</span>':'')+
+    '<div class="pgmeta"><span>'+mins+' min</span><span>'+sc.length+' ecrans</span></div>'+ess+
+    '<div class="pgsc">'+inner+'</div>'+dots+
+    '<div class="pgnav"><button class="pgb" onclick="pgGo('+mi+','+ci+','+(i-1)+')" '+(i===0?'disabled':'')+'>&#8592; Precedent</button>'+
+    (i<sc.length-1?'<button class="pgb pri" onclick="pgGo('+mi+','+ci+','+(i+1)+')">Suivant &#8594;</button>':'')+
+    '<span class="pgstep">Ecran '+(i+1)+' / '+sc.length+'</span></div></div>';
+}
+function pgGo(mi,ci,i){
+  if(i<0)return;PG[nkey(mi,ci)]=i;
+  var el=document.getElementById('pg-'+mi+'-'+ci);if(el)el.innerHTML=pgBody(mi,ci);
+}
+function pgDone(mi,ci){
+  if(!PROG[key(mi,ci)])tick(mi,ci,null);
+  pgGo(mi,ci,PG[nkey(mi,ci)]||0);
+}
+/* ---------- Carnet ---------- */
+function carnetToggle(){var b=document.getElementById('cntb');if(b)b.classList.toggle('op');}
+function allNotes(){
+  var out=[];
+  Object.keys(MODS).forEach(function(k){
+    var mi=parseInt(k,10);
+    chapsOf(mi).forEach(function(ch,ci){var v=NOTES[nkey(mi,ci)];if(v&&v.trim())out.push({mi:mi,ci:ci,t:ch.t,n:ch.n,v:v});});
+  });
+  return out;
+}
+function carnetExport(){
+  var rows=allNotes(),h='<html><head><meta charset="utf-8"><title>Mon carnet — Formation Closing</title><style>body{font-family:Georgia,serif;max-width:720px;margin:40px auto;line-height:1.7;color:#111}h1{font-size:22px}h2{font-size:13px;margin:24px 0 6px;color:#8A6D1E}p{white-space:pre-wrap;margin:0}</style></head><body><h1>Mon carnet — Formation Closing</h1>';
+  if(!rows.length)h+='<p>Aucune note pour le moment.</p>';
+  rows.forEach(function(r){h+='<h2>'+(MNAME[r.mi]||'')+' · '+r.n+' — '+r.t+'</h2><p>'+r.v.replace(/</g,'&lt;')+'</p>';});
+  h+='</body></html>';
+  var w2=window.open('','_blank');if(!w2)return;w2.document.write(h);w2.document.close();w2.focus();setTimeout(function(){try{w2.print();}catch(e){}},400);
+}
+function buildCarnet(mi){
+  var n=0,rows='';
+  chapsOf(mi).forEach(function(ch,ci){
+    var v=NOTES[nkey(mi,ci)];
+    if(v&&v.trim()){n++;rows+='<div class="cnote"><div class="cnt1">'+ch.n+' · '+ch.t+'</div><div class="cnt2">'+v.replace(/</g,'&lt;')+'</div></div>';}
+  });
+  var tot=allNotes().length;
+  if(!n)rows='<div class="cnt2" style="color:var(--gris-light)">Tes notes de ce module apparaitront ici. Chaque chapitre se termine par un espace pour ecrire ce que tu retiens, ou une phrase a tester sur ton prochain appel.</div>';
+  return '<div class="cnt"><div class="cnth" onclick="carnetToggle()"><span class="cn1">Mon carnet</span><span class="cn2">'+n+' note'+(n>1?'s':'')+' dans ce module · '+tot+' au total &#9662;</span></div>'+
+    '<div class="cntb" id="cntb">'+rows+'<div class="pgnav" style="margin-top:12px"><button class="pgb" onclick="carnetExport()">Exporter tout mon carnet en PDF</button></div></div></div>';
+}
+/* ---------- Quiz ---------- */
+function qs(mi){if(!QSS[mi])QSS[mi]={i:0,sc:0,ans:null,done:false};return QSS[mi];}
+function buildQuiz(mi){
+  var Q=QUIZ[mi];if(!Q)return'';
+  var st=qs(mi);
+  if(st.done){
+    var p=st.sc/Q.length;
+    var v=p>=0.85?"Tu maitrises ce module. Passe au suivant — ou mieux : teste-le sur un vrai appel cette semaine.":(p>=0.6?"La base est la. Reprends les chapitres ou tu as hesite avant de passer a la suite.":"Reprends le module depuis le debut : c'est la mecanique qui manque, pas la memoire.");
+    return '<div class="qz" style="text-align:center"><div class="qzh">Auto-evaluation</div><div class="qzsc">'+st.sc+'/'+Q.length+'</div><div class="qzfb" style="text-align:left">'+v+'</div><button class="pgb" onclick="qzRestart('+mi+')">Refaire le quiz</button></div>';
+  }
+  var it=Q[st.i],h='<div class="qz"><div class="qzh">Auto-evaluation · question '+(st.i+1)+' / '+Q.length+'</div><div class="qzq">'+it.q+'</div>';
+  it.o.forEach(function(t,j){
+    var cls='qzo',dis='';
+    if(st.ans!=null){dis='disabled';if(j===it.c)cls+=' ok';else if(j===st.ans)cls+=' ko';}
+    h+='<button class="'+cls+'" '+dis+' onclick="qzAns('+mi+','+j+')">'+t+'</button>';
+  });
+  if(st.ans!=null){
+    h+='<div class="qzfb"><b>'+(st.ans===it.c?'Exact.':'Pas tout a fait.')+'</b> '+it.e+'</div>';
+    h+='<button class="pgb pri" onclick="qzNext('+mi+')">'+(st.i===Q.length-1?'Voir mon resultat':'Question suivante')+'</button>';
+  }
+  return h+'</div>';
+}
+function qzAns(mi,j){var st=qs(mi);if(st.ans!=null)return;st.ans=j;if(j===QUIZ[mi][st.i].c)st.sc++;qzR(mi);}
+function qzNext(mi){var st=qs(mi);if(st.i===QUIZ[mi].length-1){st.done=true;PROG['q'+mi]=st.sc;sProg(CU.code,PROG);}else{st.i++;st.ans=null;}qzR(mi);}
+function qzRestart(mi){QSS[mi]={i:0,sc:0,ans:null,done:false};qzR(mi);}
+function qzR(mi){var el=document.getElementById('qzbox');if(el)el.innerHTML=buildQuiz(mi);}
+function quizBlock(mi){
+  if(!QUIZ[mi])return'';
+  return '<div class="anx">Valide le module</div><div id="qzbox">'+buildQuiz(mi)+'</div>';
+}
+/* ---------- Simulateur d'appel (module Objections) ---------- */
+var SIMS={
+ref:{t:"« Je vais reflechir »",fin:"Le chemin qui marche est toujours le meme : accueillir, creuser, ancrer dans le temps, projeter, closer sans demander la permission.",
+n:{
 start:{say:"Ecoute, c'est vraiment interessant ce que tu me proposes... Je vais y reflechir et je te redis rapidement.",
 o:[{t:"Pas de souci, je te relance vendredi alors ?",v:'b',fb:"Tu viens d'accepter l'ecran de fumee. Le prospect quitte l'etat emotionnel dans lequel la decision etait possible, et vendredi il ne repond pas. Rien n'a ete explore."},
    {t:"Je comprends. Reflechir a quoi exactement ?",v:'g',fb:"C'est l'ouverture de l'entonnoir : tu accueilles, puis tu creuses immediatement. Tu ne proposes aucune objection a sa place.",n:'n2'},
@@ -679,108 +938,59 @@ n4:{say:"Dans six mois... franchement, probablement au meme endroit. Ou pire.",
 o:[{t:"Du coup, qu'est-ce qu'on fait ?",v:'g',fb:"Tu closes sans demander la permission. Court, direct, apres qu'il a formule lui-meme le cout de l'inaction.",n:'end'},
    {t:"Tu veux qu'on regarde ensemble comment je pourrais t'aider ?",v:'b',fb:"Trop mou. Tu redemandes la permission alors qu'il vient de te donner sa raison d'avancer — et l'elan retombe."},
    {t:"C'est comme un jardin qu'on laisse six mois sans s'en occuper...",v:'b',fb:"L'analogie arrive trop tard : il vient deja de faire le constat lui-meme. Tu lui reprends la conclusion des mains."}]},
-end:{say:"Ok. Je pense que j'ai besoin d'arreter de repousser. On fait comment concretement ?",fin:true}
+end:{say:"Ok. Je pense que j'ai besoin d'arreter de repousser. On fait comment concretement ?",fin:true}}},
+prix:{t:"« C'est trop cher »",fin:"L'ordre ne change jamais : separer la peur de la tresorerie, faire verbaliser la solution, et ne reveler l'echelonne qu'a la fin.",
+n:{
+start:{say:"Ah... d'accord. Ecoute, franchement c'est au-dessus de ce que j'avais en tete. C'est trop cher pour moi la.",
+o:[{t:"On peut faire en plusieurs fois si tu veux.",v:'b',fb:"Tu brules ton meilleur levier en reflexe, avant meme de savoir si le probleme est la tresorerie ou la peur. Et tu viens de confirmer que le prix etait negociable."},
+   {t:"Trop cher par rapport a quoi ?",v:'g',fb:"Tu ne defends pas, tu fais preciser. Il va te dire par rapport a quoi il compare — et c'est la que tu sauras si c'est une contrainte reelle ou une peur.",n:'p2'},
+   {t:"Je comprends, mais quand tu vois ce que ca peut te rapporter...",v:'b',fb:"Tu justifies. Dès que tu justifies, tu passes en position de besoin, et le prospect le sent immediatement."}]},
+p2:{say:"Ben... par rapport a ce que je peux mettre la maintenant. J'ai de quoi, mais c'est une somme quand meme.",
+o:[{t:"Donc l'argent est disponible, c'est la decision qui fait peur.",v:'g',fb:"Tu viens de separer la tresorerie de la peur — l'etape que personne ne fait. A partir de la, tu ne traites plus un probleme d'argent.",n:'p3'},
+   {t:"Combien tu peux mettre aujourd'hui ?",v:'b',fb:"Tu negocies avant d'avoir compris. Tu vas atterrir sur un chiffre bas qu'il aura fixe lui-meme, et tu ne pourras plus remonter."},
+   {t:"C'est un investissement, pas une depense.",v:'b',fb:"Formule de vendeur. Elle ne traite rien et elle sonne comme un argumentaire appris."}]},
+p3:{say:"Oui... c'est vrai. J'ai peur de mettre cette somme et que ca ne donne rien, comme la derniere fois.",
+o:[{t:"Qu'est-ce qui doit se passer dans trois mois pour que tu te dises que tu as bien fait ?",v:'g',fb:"Tu lui fais verbaliser lui-meme ce que la solution doit produire. C'est lui qui construit le critere de reussite — tu n'as rien promis.",n:'p4'},
+   {t:"Cette fois c'est different, tu seras accompagne.",v:'b',fb:"'Je suis different' ne se dit pas, ca se montre. Et la, tu opposes ta parole a son experience vecue : tu ne peux pas gagner."},
+   {t:"Je te garantis un resultat, sinon je te rembourse.",v:'b',fb:"Tu achetes le oui avec une promesse que tu ne controles pas. Tu gagnes le closing et tu perds le client."}]},
+p4:{say:"Il faudrait que j'aie enfin une methode que j'applique vraiment, et mes premiers resultats concrets.",
+o:[{t:"C'est exactement ce qu'on met en place. Et pour que ce soit confortable, on peut decouper le paiement.",v:'g',fb:"Maintenant seulement l'echelonne arrive — apres qu'il a verbalise ce qu'il veut. Il n'est plus percu comme une remise, mais comme une facilite.",n:'end'},
+   {t:"Donc on est d'accord que ca vaut le coup ?",v:'b',fb:"Tu cherches encore un oui de confort. Il vient de te donner son critere : sers-t'en, ne le fais pas valider une evidence."},
+   {t:"Je te laisse y reflechir et on s'en reparle.",v:'b',fb:"Tu sors de l'appel juste au moment ou il venait de formuler sa condition de reussite. Tout le travail est perdu."}]},
+end:{say:"Ok, si on peut l'etaler, ca devient faisable. On part la-dessus.",fin:true}}},
+tiers:{t:"« J'en parle a ma femme »",fin:"Jamais critiquer le tiers. Qualifier, faire monter l'emotion, projeter le non, responsabiliser — dans cet ordre.",
+n:{
+start:{say:"C'est bien, ca me parle vraiment. Mais je ne peux pas decider seul, j'en parle a ma femme ce soir et je te redis.",
+o:[{t:"Elle va forcement te dire non, tu sais.",v:'b',fb:"Tu viens de critiquer le tiers. Resistance immediate : il va la defendre, et tu es devenu l'adversaire du couple."},
+   {t:"Ca se comprend. C'est une decision que vous prenez toujours a deux, ou c'est particulier a celle-la ?",v:'g',fb:"Tu qualifies : ecran de fumee ou fonctionnement reel du couple ? La reponse change tout le traitement.",n:'t2'},
+   {t:"Pas de souci, rappelle-moi quand tu auras son accord.",v:'b',fb:"Tu delegues ta vente a quelqu'un qui n'a pas assiste a l'appel, qui n'a pas la douleur, et qui n'entendra qu'un prix."}]},
+t2:{say:"Non, franchement, sur ce genre de montant on en parle toujours ensemble. C'est pas une excuse.",
+o:[{t:"D'accord. Et si elle te dit non, tu fais quoi ?",v:'g',fb:"La projection dans le non. Tu decouvres immediatement si sa decision lui appartient ou s'il s'en remet a elle.",n:'t3'},
+   {t:"Tu veux qu'on la mette en ligne maintenant ?",v:'b',fb:"Precipite. Tu n'as pas encore verifie s'il est convaincu lui-meme : tu risques de faire porter a deux une hesitation qui est la sienne."},
+   {t:"Qu'est-ce que tu vas lui dire exactement ?",v:'b',fb:"Pas encore. C'est une bonne question, mais elle arrive apres la projection du non — sinon il te recite ton pitch sans engagement."}]},
+t3:{say:"Bah si elle dit non... je ne le fais pas. Meme si moi je le sens bien.",
+o:[{t:"Donc ta situation, celle dont tu me parles depuis quarante minutes, depend de sa reponse a elle ?",v:'g',fb:"Tu responsabilises sans accuser, et sans jamais toucher a la relation. C'est lui qui entend l'incoherence.",n:'t4'},
+   {t:"C'est ton argent quand meme, non ?",v:'b',fb:"Tu opposes le couple. Meme intention, mais la formulation attaque la relation — et il se ferme."},
+   {t:"Elle serait contre ta reussite ?",v:'b',fb:"Tu la mets en position d'obstacle. Il va la defendre, et l'appel est termine."}]},
+t4:{say:"Dit comme ca... non. C'est ma decision. Mais je veux quand meme lui en parler ce soir, par respect.",
+o:[{t:"C'est normal, et c'est sain. On bloque ta place aujourd'hui avec l'acompte, tu lui en parles ce soir, et tu as jusqu'a demain pour revenir vers moi si besoin.",v:'g',fb:"Tu respectes le tiers et tu conserves l'engagement. Le principe d'engagement de Cialdini : le premier pas cree la coherence.",n:'end'},
+   {t:"Alors appelle-moi demain.",v:'b',fb:"Tu le laisses repartir sans engagement, apres tout ce travail. Le biais de statu quo fera le reste."},
+   {t:"Si tu veux on refait un point tous les trois la semaine prochaine.",v:'b',fb:"Tu ajoutes une etape et tu perds l'elan. Ce qui etait decide aujourd'hui sera a refaire dans une semaine."}]},
+end:{say:"Ok, ca me va. On bloque et je lui en parle ce soir.",fin:true}}}
 };
-var PG={},QS={i:0,sc:0,done:false},SM={cur:'start',hist:[],tries:0};
-function lNotes(c){try{var s=localStorage.getItem('n_'+c);return s?JSON.parse(s):{}}catch(e){return{}}}
-function sNotes(c,d){try{localStorage.setItem('n_'+c,JSON.stringify(d))}catch(e){}}
-var NOTES={};
-function noteSave(ci,el){
-  NOTES[ci]=el.value;sNotes(CU.code,NOTES);
-  var st=document.getElementById('nts-'+ci);if(st){st.textContent='Enregistre';setTimeout(function(){if(st)st.textContent='';},1600);}
-}
-function screensFor(ch){
-  var sc=[],paras=(ch.i||'').split('\n\n').filter(function(p){return p.trim();}),buf='';
-  paras.forEach(function(p){if(buf&&(buf+p).length>760){sc.push({ty:'t',v:buf});buf=p;}else{buf=buf?buf+'\n\n'+p:p;}});
-  if(buf)sc.push({ty:'t',v:buf});
-  var pts=ch.pts||[];
-  for(var i=0;i<pts.length;i+=2)sc.push({ty:'p',v:pts.slice(i,i+2)});
-  if(ch.ex)sc.push({ty:'b',cls:'ibox',l:ch.ex.l,v:ch.ex.t,il:'il',it:'it'});
-  if(ch.gold)sc.push({ty:'b',cls:'gbox',l:ch.gold.l,v:ch.gold.t,il:'gl',it:'gt'});
-  sc.push({ty:'e'});
-  return sc;
-}
-function pgBody(ci){
-  var ch=MODS[6].chs[ci],sc=screensFor(ch),i=PG[ci]||0;if(i>=sc.length)i=sc.length-1;
-  var cur=sc[i],inner='';
-  if(cur.ty==='t')inner='<div class="ci">'+hlQ(cur.v)+'</div>';
-  else if(cur.ty==='p'){inner='';cur.v.forEach(function(p){inner+='<div class="pt"><div class="pd '+p.c+'"></div><div class="ptx"><b>'+p.b+'</b> '+hlQ(p.t)+'</div></div>';});}
-  else if(cur.ty==='b')inner='<div class="'+cur.cls+'"><div class="'+cur.il+'">'+cur.l+'</div><div class="'+cur.it+'">'+hlQ(cur.v)+'</div></div>';
-  else{
-    var dk=!!PROG[key(6,ci)],nv=(NOTES[ci]||'');
-    inner='<div class="nt2"><div class="ntl">Ton carnet — ce que tu retiens, ou une phrase a tester en appel</div>'+
-      '<textarea id="nta-'+ci+'" placeholder="Ex : sur mon appel de mardi, il a dit ... et je n\'ai pas creuse." oninput="noteSave('+ci+',this)">'+nv.replace(/</g,'&lt;')+'</textarea>'+
-      '<div class="nts" id="nts-'+ci+'"></div></div>'+
-      '<div class="pgnav" style="margin-top:14px"><button class="pgb pri" onclick="pgDone('+ci+')">'+(dk?'Chapitre termine &#10003;':'Marquer ce chapitre comme termine')+'</button></div>';
-  }
-  var dots='<div class="pgdots">';
-  sc.forEach(function(_,j){dots+='<span class="pgd '+(j===i?'on':(j<i?'seen':''))+'" onclick="pgGo('+ci+','+j+')"></span>';});
-  dots+='</div>';
-  var mins=Math.max(1,Math.round(((ch.i||'').length+(ch.pts||[]).reduce(function(a,p){return a+p.t.length;},0))/1200));
-  return '<div class="pgw">'+
-    '<span class="tag '+ch.tc+'">'+ch.tag+'</span>'+
-    '<div class="pgmeta"><span>'+mins+' min</span><span>'+sc.length+' ecrans</span></div>'+
-    '<div class="pgess"><div class="pel">L\'essentiel</div><div class="pet">'+hlQ(OBJ_ESS[ci]||'')+'</div></div>'+
-    '<div class="pgsc">'+inner+'</div>'+dots+
-    '<div class="pgnav"><button class="pgb" onclick="pgGo('+ci+','+(i-1)+')" '+(i===0?'disabled':'')+'>&#8592; Precedent</button>'+
-    (i<sc.length-1?'<button class="pgb pri" onclick="pgGo('+ci+','+(i+1)+')">Suivant &#8594;</button>':'')+
-    '<span class="pgstep">Ecran '+(i+1)+' / '+sc.length+'</span></div></div>';
-}
-function pgGo(ci,i){
-  if(i<0)return;PG[ci]=i;
-  var el=document.getElementById('pg-6-'+ci);if(el)el.innerHTML=pgBody(ci);
-}
-function pgDone(ci){
-  if(!PROG[key(6,ci)])tick(6,ci,null);
-  pgGo(ci,PG[ci]||0);
-}
-function carnetToggle(){
-  var b=document.getElementById('cntb');if(b)b.classList.toggle('op');
-}
-function carnetExport(){
-  var h='<html><head><meta charset="utf-8"><title>Mon carnet — Objections</title><style>body{font-family:Georgia,serif;max-width:720px;margin:40px auto;line-height:1.7;color:#111}h1{font-size:22px}h2{font-size:14px;margin:26px 0 6px;color:#8A6D1E}p{white-space:pre-wrap;margin:0}</style></head><body><h1>Mon carnet — Module Objections</h1>';
-  var n=0;
-  MODS[6].chs.forEach(function(ch,ci){if((NOTES[ci]||'').trim()){n++;h+='<h2>'+ch.n+' · '+ch.t+'</h2><p>'+NOTES[ci].replace(/</g,'&lt;')+'</p>';}});
-  if(!n)h+='<p>Aucune note pour le moment.</p>';
-  h+='</body></html>';
-  var w2=window.open('','_blank');if(!w2)return;w2.document.write(h);w2.document.close();w2.focus();setTimeout(function(){try{w2.print();}catch(e){}},400);
-}
-function buildCarnet(){
-  var n=0,rows='';
-  MODS[6].chs.forEach(function(ch,ci){if((NOTES[ci]||'').trim()){n++;rows+='<div class="cnote"><div class="cnt1">'+ch.n+' · '+ch.t+'</div><div class="cnt2">'+NOTES[ci].replace(/</g,'&lt;')+'</div></div>';}});
-  if(!n)rows='<div class="cnt2" style="color:var(--gris-light)">Tes notes apparaitront ici. Chaque chapitre se termine par un espace pour ecrire ce que tu retiens ou une phrase a tester sur ton prochain appel.</div>';
-  return '<div class="cnt"><div class="cnth" onclick="carnetToggle()"><span class="cn1">Mon carnet</span><span class="cn2">'+n+' note'+(n>1?'s':'')+' &#9662;</span></div>'+
-    '<div class="cntb" id="cntb">'+rows+'<div class="pgnav" style="margin-top:12px"><button class="pgb" onclick="carnetExport()">Exporter en PDF</button></div></div></div>';
-}
-function buildQuiz6(){
-  if(QS.done){
-    var v=QS.sc>=7?"Tu maitrises le module. Passe au simulateur, puis a tes vrais appels.":(QS.sc>=5?"La base est la. Reprends le cadre universel et l'entonnoir 'je vais reflechir' avant de pratiquer.":"Reprends le module depuis le chapitre 01 : c'est la mecanique qui manque, pas les scripts.");
-    return '<div class="qz" style="text-align:center"><div class="qzh">Auto-evaluation</div><div class="qzsc">'+QS.sc+'/'+Q6.length+'</div><div class="qzfb" style="text-align:left">'+v+'</div><button class="pgb" onclick="qzRestart()">Refaire le quiz</button></div>';
-  }
-  var it=Q6[QS.i],h='<div class="qz"><div class="qzh">Auto-evaluation · question '+(QS.i+1)+' / '+Q6.length+'</div><div class="qzq">'+it.q+'</div>';
-  it.o.forEach(function(t,j){
-    var cls='qzo',dis='';
-    if(QS.ans!=null){dis='disabled';if(j===it.c)cls+=' ok';else if(j===QS.ans)cls+=' ko';}
-    h+='<button class="'+cls+'" '+dis+' onclick="qzAns('+j+')">'+t+'</button>';
-  });
-  if(QS.ans!=null){
-    h+='<div class="qzfb"><b>'+(QS.ans===it.c?'Exact.':'Pas tout a fait.')+'</b> '+it.e+'</div>';
-    h+='<button class="pgb pri" onclick="qzNext()">'+(QS.i===Q6.length-1?'Voir mon resultat':'Question suivante')+'</button>';
-  }
-  return h+'</div>';
-}
-function qzAns(j){if(QS.ans!=null)return;QS.ans=j;if(j===Q6[QS.i].c)QS.sc++;qzR();}
-function qzNext(){if(QS.i===Q6.length-1){QS.done=true;PROG['q6']=QS.sc;sProg(CU.code,PROG);}else{QS.i++;QS.ans=null;}qzR();}
-function qzRestart(){QS={i:0,sc:0,done:false,ans:null};qzR();}
-function qzR(){var el=document.getElementById('qzbox');if(el)el.innerHTML=buildQuiz6();}
-function buildSim6(){
-  var nd=SIM6[SM.cur],h='<div class="sim">';
+var SM={sc:'ref',cur:'start',hist:[],tries:0,fb:null};
+function simSet(k){SM={sc:k,cur:'start',hist:[],tries:0,fb:null};simR();}
+function buildSim(){
+  var S=SIMS[SM.sc],nd=S.n[SM.cur],h='';
+  h+='<div class="simtabs">';
+  Object.keys(SIMS).forEach(function(k){h+='<button class="simtab'+(k===SM.sc?' on':'')+'" onclick="simSet(\''+k+'\')">'+SIMS[k].t+'</button>';});
+  h+='</div><div class="sim">';
   h+='<div class="simpath">';SM.hist.forEach(function(v){h+='<i class="'+v+'"></i>';});h+='</div>';
   h+='<div class="simsay"><div class="sw">Le prospect</div><div class="sx">'+nd.say+'</div></div>';
   if(nd.fin){
     var good=SM.hist.filter(function(v){return v==='g';}).length,bad=SM.hist.length-good;
-    h+='<div class="qzfb"><b>Appel repris.</b> Tu as trouve la bonne reponse du premier coup '+good+' fois sur 4'+(bad?', avec '+bad+' detour'+(bad>1?'s':'')+'.':'.')+' Le chemin qui marche est toujours le meme : accueillir, creuser, ancrer dans le temps, projeter, closer sans demander la permission.</div>';
-    h+='<button class="pgb" onclick="simRestart()">Refaire le simulateur</button></div>';
+    h+='<div class="qzfb"><b>Appel repris.</b> Tu as trouve la bonne reponse du premier coup '+good+' fois sur '+SM.hist.length+(bad?', avec '+bad+' detour'+(bad>1?'s':'')+'.':'.')+' '+S.fin+'</div>';
+    h+='<button class="pgb" onclick="simSet(\''+SM.sc+'\')">Refaire ce scenario</button></div>';
     return h;
   }
   if(SM.fb)h+='<div class="qzfb"><b>'+(SM.fbv==='g'?'Bien vu.':'Ca coince.')+'</b> '+SM.fb+'</div>';
@@ -788,33 +998,33 @@ function buildSim6(){
   return h+'</div>';
 }
 function simPick(j){
-  var o=SIM6[SM.cur].o[j];SM.fb=o.fb;SM.fbv=o.v;
-  if(o.v==='g'){SM.hist.push(SM.tries?'b':'g');SM.tries=0;SM.cur=o.n;SM.fb=o.fb;}
+  var o=SIMS[SM.sc].n[SM.cur].o[j];SM.fb=o.fb;SM.fbv=o.v;
+  if(o.v==='g'){SM.hist.push(SM.tries?'b':'g');SM.tries=0;SM.cur=o.n;}
   else SM.tries++;
   simR();
 }
-function simRestart(){SM={cur:'start',hist:[],tries:0,fb:null};simR();}
-function simR(){var el=document.getElementById('simbox');if(el)el.innerHTML=buildSim6();}
+function simR(){var el=document.getElementById('simbox');if(el)el.innerHTML=buildSim();}
 function buildObjections(){
   NOTES=lNotes(CU.code);
-  var h=buildCarnet();
+  var h=buildCarnet(6);
   h+='<div class="anx">Les chapitres</div>';
   MODS[6].chs.forEach(function(ch,ci){
     var dk=!!PROG[key(6,ci)];
     h+='<div class="ch"><div class="chh" onclick="toggleCh(6,'+ci+')" id="hd-6-'+ci+'"><span class="chn '+ch.tc+'">'+ch.n+'</span><span class="chl">'+ch.t+'</span><div class="ck '+(dk?'done':'')+'" id="tk-6-'+ci+'" onclick="tick(6,'+ci+',event)">'+(dk?'&#10003;':'')+'</div><span class="ça" id="ar-6-'+ci+'">&#9662;</span></div>';
-    h+='<div class="cbd" id="bd-6-'+ci+'"><div id="pg-6-'+ci+'">'+pgBody(ci)+'</div></div></div>';
+    h+='<div class="cbd" id="bd-6-'+ci+'"><div id="pg-6-'+ci+'">'+pgBody(6,ci)+'</div></div></div>';
   });
-  h+='<div class="anx">Simulateur d\'appel — "je vais reflechir"</div>';
+  h+='<div class="anx">Simulateur d\'appel</div>';
   h+='<div class="awb" style="margin-bottom:10px">Tu choisis ta reponse a chaque prise de parole du prospect. Une mauvaise reponse ne te fait pas perdre : elle t\'explique pourquoi ca coince, et tu rejoues le meme moment.</div>';
-  h+='<div id="simbox">'+buildSim6()+'</div>';
-  h+='<div class="anx">Valide le module</div>';
-  h+='<div id="qzbox">'+buildQuiz6()+'</div>';
-  if(MOD_PDFS[6]){
-    h+='<div class="pdfs"><div style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gris-light);margin-bottom:12px;font-weight:600">Ressources PDF</div>';
-    MOD_PDFS[6].forEach(function(pdf){h+='<a class="pdf-card" href="./'+pdf.file+'" download="'+pdf.file+'" target="_blank"><div class="pdn">&#11015; PDF</div><div class="pdt">'+pdf.name+'</div><div class="pdd">'+pdf.desc+'</div></a>';});
-    h+='</div>';
-  }
+  h+='<div id="simbox">'+buildSim()+'</div>';
+  h+=quizBlock(6);
+  h+=pdfBlock(6);
   return h;
+}
+function pdfBlock(mi){
+  if(!MOD_PDFS[mi])return'';
+  var h='<div class="pdfs"><div style="font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--gris-light);margin-bottom:12px;font-weight:600">Ressources PDF</div>';
+  MOD_PDFS[mi].forEach(function(pdf){h+='<a class="pdf-card" href="./'+pdf.file+'" download="'+pdf.file+'" target="_blank"><div class="pdn">&#11015; PDF</div><div class="pdt">'+pdf.name+'</div><div class="pdd">'+pdf.desc+'</div></a>';});
+  return h+'</div>';
 }
 function buildAnalogies(){
   var h='<div class="ana-warn"><div class="awh">Ce qui fait la difference — avant tout</div><div class="awb">Une analogie apprise par coeur ne vaut rien si elle n\'est pas incarnee. Ce n\'est pas <b>ce que tu vas dire</b> qui compte — c\'est <b>comment tu le dis</b>, <b>a qui</b>, et <b>au moment exact ou c\'est juste</b>.</div></div>';
@@ -842,6 +1052,7 @@ function buildAnalogies(){
     });
     h+='</div>';
   }
+  h+=quizBlock(10);
   return h;
 }
 function buildExercise(mi){
@@ -865,24 +1076,27 @@ return'<div class="exc"><div class="ext">'+ex.t+'</div><div class="exs">'+ex.s+'
 }
 function buildDashboard(){
   var td=0,ta=0,rows=[];
-  var nm={1:'Fondations',2:'Neurosciences',3:'Profils DISC+PCM',4:'Structure appel',6:'Objections',7:'Ferocite & Flow',8:'Performer',12:'Ressources',13:'Bonus'};
-  var modKeys=[1,2,3,4,6,7,8,12,13];
-  modKeys.forEach(function(i){var m=MODS[i];if(!m)return;var t=m.chs.length,d=0;m.chs.forEach(function(_,ci){if(PROG[key(i,ci)])d++;});td+=d;ta+=t;rows.push({n:nm[i]||'Module '+i,pct:Math.round(d/t*100),tp:'g'});});
-  if(MODS[11]){var m11=MODS[11],t11=m11.chs.length,d11=0;m11.chs.forEach(function(_,ci){if(PROG[key(11,ci)])d11++;});}
-  var at=ANC.length,ad=0;ANC.forEach(function(_,ci){if(PROG[key(9,ci)])ad++;});td+=ad;ta+=at;rows.push({n:"L\'Ancrage",pct:Math.round(ad/at*100),tp:'p'});
-  var alt=ANAL.length+ANAM.length,ald=0;ANAL.forEach(function(_,ci){if(PROG[key(10,ci)])ald++;});ANAM.forEach(function(_,ci){if(PROG[key(10,100+ci)])ald++;});td+=ald;ta+=alt;rows.push({n:'Les Analogies',pct:Math.round(ald/alt*100),tp:'t'});
+  ORDER.forEach(function(id){
+    var t=modTotal(id);if(!t)return;
+    var d=modDone(id);td+=d;ta+=t;
+    rows.push({n:modNum(id)+' · '+MNAME[id],pct:Math.round(d/t*100),tp:(id===9?'p':(id===10?'t':'g'))});
+  });
+  [12,13].forEach(function(id){
+    var t=modTotal(id);if(!t)return;var d=modDone(id);td+=d;ta+=t;
+    rows.push({n:MNAME[id],pct:Math.round(d/t*100),tp:'g'});
+  });
   var g=Math.round(td/ta*100);
-  var nx=g===0?'Commence par le Module 0 — Fondations & Mindset.':g<30?'Continue dans l\'ordre. Chaque module s\'appuie sur le précédent.':g<60?'Intègre les bonus quand les fondations sont solides.':'Formation complète. Forme à ton tour.';
+  var nx=g===0?'Commence par le Module 01 — Fondations & Mindset.':g<30?'Continue dans l\'ordre. Chaque module s\'appuie sur le précédent.':g<60?'Intègre les bonus quand les fondations sont solides.':'Formation complète. Forme à ton tour.';
   var rh=rows.map(function(r){return'<div class="pr"><div class="prn">'+r.n+'</div><div class="prt"><div class="prtb"><div class="prtf '+r.tp+'" style="width:'+r.pct+'%"></div></div></div><div class="prp">'+r.pct+'%</div></div>';}).join('');
   var cardMeta={1:{ac:'var(--or)',bl:"La discipline avant la technique. Les saisons du closer et l'identite force vs besoin."},2:{ac:'#6B9FD4',bl:"Le cerveau emotionnel decide en premier. 9 piliers, PDF de reference inclus."},3:{ac:'#6BAF8A',bl:"Chaque prospect est cable differemment. Detection rapide et scripts calibres."},4:{ac:'var(--or)',bl:"8 phases, de la preparation au paiement. Le coeur operationnel de la formation."},6:{ac:'#C97A6B',bl:"Prix, reflexion, tierce personne, confiance — chaque objection a son protocole."},7:{ac:'var(--or)',bl:"L'etat de performance optimal comme une habitude construite, pas subie."},8:{ac:'#6BAF8A',bl:"CRM, debrief structure, prospection — professionnaliser ton activite."},9:{ac:'#6B5FD4',bl:"3 formats de questions calibrees, integres naturellement a la decouverte."},10:{ac:'#0F7A62',bl:"9 analogies calibrees. Ce qui fait la difference : l'incarnation, pas la technique."},12:{ac:'#8A8A8A',bl:"Fiches condensees a garder sous les yeux pendant un appel — le condense, pas la pedagogie."},13:{ac:'#C9A84C',bl:"Appels reels decortiques phase par phase — structure, posture socratique, objections."}};
-  var cardOrder=[1,2,3,4,6,7,8,9,10,12,13];
+  var cardOrder=ORDER.concat([12,13]);
   var cardsHtml=cardOrder.map(function(mi){
     var meta=cardMeta[mi]||{ac:'var(--or)',bl:''};
-    if(mi===9)return '<div class="axiscard" style="--card-accent:'+meta.ac+'" onclick="switchMod(9)"><div class="axn">Technique avancee</div><div class="axt">L\'Ancrage</div><div class="axd">'+meta.bl+'</div><div class="axc">'+ANC.length+' chapitres</div></div>';
-    if(mi===10)return '<div class="axiscard" style="--card-accent:'+meta.ac+'" onclick="switchMod(10)"><div class="axn">Technique incarnee</div><div class="axt">Les Analogies</div><div class="axd">'+meta.bl+'</div><div class="axc">'+(ANAM.length+ANAL.length)+' chapitres</div></div>';
+    if(mi===9)return '<div class="axiscard" style="--card-accent:'+meta.ac+'" onclick="switchMod(9)"><div class="axn">Module '+modNum(9)+' · Technique avancee</div><div class="axt">L\'Ancrage</div><div class="axd">'+meta.bl+'</div><div class="axc">'+ANC.length+' chapitres</div></div>';
+    if(mi===10)return '<div class="axiscard" style="--card-accent:'+meta.ac+'" onclick="switchMod(10)"><div class="axn">Module '+modNum(10)+' · Technique incarnee</div><div class="axt">Les Analogies</div><div class="axd">'+meta.bl+'</div><div class="axc">'+(ANAM.length+ANAL.length)+' chapitres</div></div>';
     var m=MODS[mi];if(!m)return'';
     var ct=m.title.replace(/<[^>]+>/g,'');
-    return '<div class="axiscard" style="--card-accent:'+meta.ac+'" onclick="switchMod('+mi+')"><div class="axn">'+m.cat+'</div><div class="axt">'+ct+'</div><div class="axd">'+meta.bl+'</div><div class="axc">'+m.chs.length+' chapitres</div></div>';
+    return '<div class="axiscard" style="--card-accent:'+meta.ac+'" onclick="switchMod('+mi+')"><div class="axn">'+(modNum(mi)?'Module '+modNum(mi)+' · ':'')+m.cat+'</div><div class="axt">'+ct+'</div><div class="axd">'+meta.bl+'</div><div class="axc">'+m.chs.length+' chapitres</div></div>';
   }).join('');
   return'<div class="sec-label">Par ou commencer</div><div class="axisgrid">'+cardsHtml+'</div><div class="dash-grid"><div class="dash-card"><div class="dash-card-title">Chapitres complétés</div><div style="font-family:var(--serif,serif);font-size:40px;color:var(--or);line-height:1">'+td+'</div><div style="font-size:12px;color:var(--gris-light);margin-top:6px">sur '+ta+' au total</div></div><div class="dash-card"><div class="dash-card-title">Progression globale</div><div style="font-size:40px;color:var(--or);line-height:1;font-weight:600">'+g+'%</div><div style="height:3px;background:#222;border-radius:2px;margin-top:10px"><div style="height:100%;width:'+g+'%;background:var(--or);border-radius:2px"></div></div></div></div><div class="dash-card" style="margin-bottom:16px"><div class="dash-card-title">Progression par module</div>'+rh+'</div><div class="next-box"><div class="next-label">Prochaine étape</div><div class="next-text">'+nx+'</div></div>';
 }
@@ -910,13 +1124,13 @@ function renderAdmin(){
   var students=lSt();
   var cards=students.map(function(s){
     var prog=lProg(s.code),td=0,ta=0;
-    for(var i=1;i<=8;i++){var m=MODS[i];if(!m)continue;var t=m.chs.length,d=0;m.chs.forEach(function(_,ci){if(prog[key(i,ci)])d++;});td+=d;ta+=t;}
+    ORDER.forEach(function(id){var t=modTotal(id);if(!t)return;td+=modDone(id,prog);ta+=t;});
     ANC.forEach(function(_,ci){if(prog[key(9,ci)])td++;});ta+=ANC.length;
     ANAL.forEach(function(_,ci){if(prog[key(10,ci)])td++;});ANAM.forEach(function(_,ci){if(prog[key(10,100+ci)])td++;});ta+=ANAL.length+ANAM.length;
     var pct=Math.round(td/ta*100);
     var nm={1:'Fondations',2:'Neuro',3:'Profils',4:'Structure',5:'Decouverte',6:'Objections',7:'Flow',8:'Performer'};
     var bars='';
-    for(var i=1;i<=8;i++){var m=MODS[i];if(!m)continue;var t=m.chs.length,d=0;m.chs.forEach(function(_,ci){if(prog[key(i,ci)])d++;});var p=Math.round(d/t*100);bars+='<div class="strow"><div class="strn">'+nm[i]+'</div><div class="sttr"><div class="stbf" style="width:'+p+'%"></div></div><div class="stpp">'+p+'%</div></div>';}
+    ORDER.forEach(function(id){var t=modTotal(id);if(!t)return;var p=Math.round(modDone(id,prog)/t*100);bars+='<div class="strow"><div class="strn">'+modNum(id)+' · '+MNAME[id]+'</div><div class="sttr"><div class="stbf" style="width:'+p+'%"></div></div><div class="stpp">'+p+'%</div></div>';});
     return'<div class="stcard"><div class="stg"><div class="stav">'+(s.initials||s.name.substring(0,2).toUpperCase())+'</div><div><div class="stnm">'+s.name+'</div><div class="stco">'+s.code+'</div></div><div class="stpc">'+pct+'%</div></div><div class="stbars">'+bars+'</div></div>';
   }).join('');
   document.getElementById('root').innerHTML='<div class="platform"><div class="sb"><div class="sb-top"><div class="sb-brand">Mentoring Closing</div><div class="sb-user">Admin</div><span class="sb-out" onclick="logout()">&#8592; Deconnexion</span></div><div class="sb-kpis"><div class="kpi"><b>'+students.length+'</b><span>Eleves</span></div></div><div class="sb-sec">Vue admin</div><div class="ni on" style="border-left-color:#B8922A"><div class="nn" style="background:#FBF5E8;color:#B8922A;font-size:8px">A</div><div class="nt"><div class="ntitle">Progression élèves</div></div></div></div><div class="main"><div class="mh"><div class="mcat g">Administration</div><div class="mtit">Progression des <span class="ag">élèves</span></div><div class="mdesc">Vue globale de l\'avancement. Mise a jour en temps reel.</div></div><div class="admin-w"><div>'+cards+'</div><div class="add-s" onclick="document.getElementById(\'af\').classList.toggle(\'show\')">+ Ajouter un élève</div><div class="add-f" id="af"><input id="an" placeholder="Prenom de l\'élève" /><input id="ac" placeholder="Code d\'accès (ex: PIERRE2024)" /><div class="add-row"><button class="btn-ok" onclick="addSt()">Ajouter</button><button class="btn-no" onclick="document.getElementById(\'af\').classList.remove(\'show\')">Annuler</button></div><div class="add-err" id="ae"></div></div></div></div></div>';
@@ -933,7 +1147,7 @@ function addSt(){
 }
 function renderApp(){
   if(CU.isAdmin){renderAdmin();return;}
-  document.getElementById('root').innerHTML='<div class="platform"><div class="sb" id="sbEl"><div class="sb-top"><div class="sb-brand">Mentoring Closing</div><div class="sb-user">'+CU.name+'</div><span class="sb-out" onclick="logout()">&#8592; Deconnexion</span></div><div class="sb-kpis"><div class="kpi"><b id="kDone">0</b><span>Faits</span></div><div class="kpi"><b id="kPct">0%</b><span>Global</span></div><div class="kpi"><b>9</b><span>Modules</span></div></div><div class="searchbox"><input id="chSearch" type="text" placeholder="Rechercher un chapitre…" autocomplete="off" oninput="doSearch()"><div id="searchResults" class="search-results"></div></div><div class="sb-sec">Navigation</div><div class="ni on" onclick="switchMod(0)" id="nav0"><div class="nn" style="font-size:8px">TB</div><div class="nt"><div class="ntitle">Tableau de bord</div><div class="nbar"><div class="nfill" style="width:0"></div></div></div></div><div class="sb-sec">Modules</div><div class="ni" onclick="switchMod(1)" id="nav1"><div class="nn">0</div><div class="nt"><div class="ntitle">Fondations & Mindset</div><div class="nbar"><div class="nfill" id="bar1"></div></div></div><div class="nct">7</div></div><div class="ni" onclick="switchMod(2)" id="nav2"><div class="nn">1</div><div class="nt"><div class="ntitle">Neurosciences & Decision</div><div class="nbar"><div class="nfill" id="bar2"></div></div></div><div class="nct">9</div></div><div class="ni" onclick="switchMod(3)" id="nav3"><div class="nn">2</div><div class="nt"><div class="ntitle">Profils DISC + PCM</div><div class="nbar"><div class="nfill" id="bar3"></div></div></div><div class="nct">5</div></div><div class="ni" onclick="switchMod(4)" id="nav4"><div class="nn">3</div><div class="nt"><div class="ntitle">Structure de l\'appel</div><div class="nbar"><div class="nfill" id="bar4"></div></div></div><div class="nct">10</div></div><div class="ni" onclick="switchMod(6)" id="nav6"><div class="nn">5</div><div class="nt"><div class="ntitle">Objections</div><div class="nbar"><div class="nfill" id="bar6"></div></div></div><div class="nct">12</div></div><div class="ni" onclick="switchMod(7)" id="nav7"><div class="nn">6</div><div class="nt"><div class="ntitle">Ferocite & Flow</div><div class="nbar"><div class="nfill" id="bar7"></div></div></div><div class="nct">5</div></div><div class="ni" onclick="switchMod(8)" id="nav8"><div class="nn">7</div><div class="nt"><div class="ntitle">Performer & Grandir</div><div class="nbar"><div class="nfill" id="bar8"></div></div></div><div class="nct">5</div></div><div class="ni" onclick="switchMod(9)" id="nav9"><div class="nn" style="background:#F0EEFB;color:#6B5FD4;font-size:9px">&#9889;</div><div class="nt"><div class="ntitle">L\'Ancrage</div><div class="nbar"><div class="nfill p" id="bar9"></div></div></div><div class="nct">5</div></div><div class="ni" onclick="switchMod(10)" id="nav10"><div class="nn" style="background:#E8F6F2;color:#0F7A62;font-size:9px">&#9711;</div><div class="nt"><div class="ntitle">Les Analogies</div><div class="nbar"><div class="nfill t" id="bar10"></div></div></div><div class="nct">24</div></div><div class="sb-sec">Ressources</div><div class="ni" onclick="switchMod(12)" id="nav12"><div class="nn">R</div><div class="nt"><div class="ntitle">Ressources</div><div class="nbar"><div class="nfill" id="bar12"></div></div></div><div class="nct">3</div></div><div class="sb-sec">Bonus</div><div class="ni" onclick="switchMod(13)" id="nav13"><div class="nn">B</div><div class="nt"><div class="ntitle">Bonus</div><div class="nbar"><div class="nfill" id="bar13"></div></div></div><div class="nct">1</div></div></div><div class="content-col"><div class="mobile-bar"><div class="mobile-burger" onclick="toggleMobileNav()"><span></span></div><div class="mobile-brand">Formation Closing</div></div><div class="main" id="main"></div></div><div class="mobile-overlay" id="mobOverlay" onclick="toggleMobileNav()"></div></div>';
+  document.getElementById('root').innerHTML='<div class="platform"><div class="sb" id="sbEl"><div class="sb-top"><div class="sb-brand">Mentoring Closing</div><div class="sb-user">'+CU.name+'</div><span class="sb-out" onclick="logout()">&#8592; Deconnexion</span></div><div class="sb-kpis"><div class="kpi"><b id="kDone">0</b><span>Faits</span></div><div class="kpi"><b id="kPct">0%</b><span>Global</span></div><div class="kpi"><b>'+ORDER.length+'</b><span>Modules</span></div></div><div class="searchbox"><input id="chSearch" type="text" placeholder="Rechercher un chapitre…" autocomplete="off" oninput="doSearch()"><div id="searchResults" class="search-results"></div></div><div class="sb-sec">Navigation</div><div class="ni on" onclick="switchMod(0)" id="nav0"><div class="nn" style="font-size:8px">TB</div><div class="nt"><div class="ntitle">Tableau de bord</div><div class="nbar"><div class="nfill" style="width:0"></div></div></div></div>'+navHtml()+'</div><div class="content-col"><div class="mobile-bar"><div class="mobile-burger" onclick="toggleMobileNav()"><span></span></div><div class="mobile-brand">Formation Closing</div></div><div class="main" id="main"></div></div><div class="mobile-overlay" id="mobOverlay" onclick="toggleMobileNav()"></div></div>';
   refreshBars();renderPage();
 }
 function renderLogin(){
